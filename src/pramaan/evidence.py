@@ -126,7 +126,10 @@ def witness_scores(
     scores: list[WitnessScore] = []
     for slot in SLOTS:
         # Slots the agent left out are scored too, so a dropped value can be restored on evidence.
-        cands = candidates(proposed, hyps, slot)
+        # A malformed value (a nine-digit phone) is scored only when it is what the agent wrote. As a rival
+        # it wins on length alone: fewer words to match, so a higher likelihood than any complete number.
+        mine = canon(slot, proposed.get(slot))
+        cands = [c for c in candidates(proposed, hyps, slot) if is_valid(slot, c) or c == mine]
         rivals = [n for c in cands if is_valid(slot, c) for n in confusables.neighbours(slot, c)]
         pool = {key(c): c for c in [*cands, *rivals]}
         forms = {k: renderings(slot, c) if is_valid(slot, c) else [str(c)] for k, c in pool.items()}

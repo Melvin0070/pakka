@@ -487,3 +487,16 @@ TRUTH = {p["id"]: p["truth"] for p in PROMPTS}
 def test_asr_transcripts(key: str) -> None:
     expected = ASR_ERRORS.get(key, TRUTH[key.split("_")[1]])
     assert values(TRANSCRIPTS[key]) == expected, TRANSCRIPTS[key]
+
+
+@pytest.mark.parametrize(
+    ("text", "day"),
+    [("आई विल ट्रांसफर इट ऑन द २८।", 28), ("इट ऑन द 15थ।", 15), ("इट ऑन द सेवेनटीन।", 17), ("on the 7", 7)],
+)
+def test_english_dates_as_recognisers_write_them(text: str, day: int) -> None:
+    assert [(e.slot, e.value) for e in extract(text)] == [("day_of_month", day)]
+
+
+def test_on_the_does_not_turn_an_amount_or_a_count_into_a_date() -> None:
+    assert [(e.slot, e.value) for e in extract("I will pay on the 5 thousand")] == [("amount_rupees", 5000)]
+    assert extract("the 5 options") == [] and extract("on the 45") == []

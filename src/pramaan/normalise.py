@@ -427,13 +427,13 @@ _build()
 
 _TOKEN = re.compile(
     r"(?P<num>\d{1,3}(?:,\d{3})+(?!,?\d)|\d{1,3}(?:,\d{2})*,\d{3}(?!,?\d)|\d+(?:\.\d+)?)"
-    r"(?P<suf>(?:k|K|st|nd|rd|th)(?![A-Za-z]))?"
+    r"(?P<suf>(?:k|K|st|nd|rd|th)(?![A-Za-z])|थ(?![ऀ-ॿ]))?"
     r"|(?P<word>[A-Za-z̀-ͯऀ-ॣॱ-ॿ‌‍']+)"
     r"|(?P<sym>₹)"
 )
 _GLUE = re.compile(r"[\s,\-–—/+]*")  # may sit inside one spoken number or digit run
 _PREV_CUE_GAP = re.compile(r"[\s.:\-]*")
-_ORD_SUFFIX = ("st", "nd", "rd", "th")
+_ORD_SUFFIX = ("st", "nd", "rd", "th", "थ")  # "15थ": a recogniser writing "15th" in Devanagari
 
 
 @dataclass(frozen=True, slots=True)
@@ -685,6 +685,9 @@ class _Parser:
                 return None
         return v, end
 
+    def after_on_the(self, i: int) -> bool:
+        return i >= 2 and self.kind(i - 1) == "the" and self.kind(i - 2) == "the" and self.nx(i - 2) == i - 1
+
     def has_money_cue(self, i: int, end: int) -> bool:
         prev = self.toks[i - 1] if i > 0 else None
         if prev is not None and prev.kind == "cur" and prev.word == "pre":
@@ -726,6 +729,9 @@ class _Parser:
                         out.append(self.entity("day_of_month", value, i, end))
                 elif value >= 100 or frac or self.has_money_cue(i, end):
                     out.append(self.entity("amount_rupees", value, i, end))
+                elif 1 <= value <= 31 and self.after_on_the(i):
+                    # "on the 28" / "ऑन द सेवेनटीन": an English date with the ordinal ending lost.
+                    out.append(self.entity("day_of_month", value, i, end))
                 i = end
                 continue
             i += 1

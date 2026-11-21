@@ -20,6 +20,7 @@ test:
 eval:
 	PRAMAAN_OFFLINE=1 uv run python -m eval.run_eval
 	PRAMAAN_OFFLINE=1 uv run python -m eval.run_eval --fresh
+	PRAMAAN_OFFLINE=1 uv run python -m eval.run_eval --fresh2
 	PRAMAAN_OFFLINE=1 uv run python -m eval.analysis
 
 # Human recordings from /record.html: run the models once, then score on the frozen policy.
