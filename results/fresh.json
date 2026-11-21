@@ -129,19 +129,19 @@
    "how": "Hold the realtime model's action until the evidence supports it",
    "ours": true,
    "n": 220,
-   "wrong_silent": 4,
-   "asked": 3,
-   "asked_needed": 2,
-   "accepted": 217,
-   "caller_seconds": 0.05,
+   "wrong_silent": 3,
+   "asked": 4,
+   "asked_needed": 3,
+   "accepted": 216,
+   "caller_seconds": 0.07,
    "added_latency_p50_ms": 0,
    "added_latency_p95_ms": 1200
   }
  ],
  "certificate": {
-  "n_accepted": 217,
-  "k_wrong": 4,
-  "upper_bound": 0.0417,
+  "n_accepted": 216,
+  "k_wrong": 3,
+  "upper_bound": 0.0355,
   "confidence": 0.95,
   "n_speakers": 8,
   "speaker_level_bound": 0.7108,
@@ -391,18 +391,13 @@
     0.5334
    ],
    [
-    0.9182,
-    0.0198,
-    0.5078
-   ],
-   [
-    0.9818,
-    0.0185,
+    0.9773,
+    0.014,
     0.5
    ],
    [
-    0.9864,
-    0.0184,
+    0.9818,
+    0.0139,
     0.3825
    ]
   ],
@@ -1343,9 +1338,9 @@
   {
    "name": "Pramaan as frozen",
    "n": 220,
-   "wrong_silent": 4,
-   "asked": 3,
-   "asked_needed": 2
+   "wrong_silent": 3,
+   "asked": 4,
+   "asked_needed": 3
   },
   {
    "name": "without the acoustic model",
@@ -1371,9 +1366,9 @@
   {
    "name": "without the language check (acoustic model also judges English)",
    "n": 220,
-   "wrong_silent": 4,
-   "asked": 13,
-   "asked_needed": 2
+   "wrong_silent": 3,
+   "asked": 14,
+   "asked_needed": 3
   },
   {
    "name": "without Sarvam",
@@ -1385,23 +1380,23 @@
   {
    "name": "without the dropped-value check",
    "n": 220,
-   "wrong_silent": 7,
-   "asked": 3,
-   "asked_needed": 2
-  },
-  {
-   "name": "no deadline (wait for every source)",
-   "n": 220,
-   "wrong_silent": 4,
+   "wrong_silent": 6,
    "asked": 4,
    "asked_needed": 3
   },
   {
+   "name": "no deadline (wait for every source)",
+   "n": 220,
+   "wrong_silent": 3,
+   "asked": 5,
+   "asked_needed": 4
+  },
+  {
    "name": "deadline 300 ms",
    "n": 220,
-   "wrong_silent": 4,
-   "asked": 3,
-   "asked_needed": 2
+   "wrong_silent": 3,
+   "asked": 4,
+   "asked_needed": 3
   }
  ],
  "agent_error_by_slot": {
@@ -1434,11 +1429,11 @@
    },
    "P": {
     "n": 60,
-    "wrong_silent": 1,
-    "asked": 1,
-    "asked_needed": 1,
-    "accepted": 59,
-    "caller_seconds": 0.07
+    "wrong_silent": 0,
+    "asked": 2,
+    "asked_needed": 2,
+    "accepted": 58,
+    "caller_seconds": 0.13
    }
   },
   "phone": {
@@ -1463,5 +1458,5 @@
  "assumptions": {
   "seconds_per_question": 4.0
  },
- "generated_at": "2026-11-21T17:55:21+00:00"
+ "generated_at": "2026-11-21T19:09:03+00:00"
 }

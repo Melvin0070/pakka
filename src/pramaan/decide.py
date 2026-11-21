@@ -15,7 +15,8 @@ Reason codes:
   proposed_unsupported   no family supports the proposed value (ASK among alternatives when 2-3 exist)
   mismatch               no family supports the proposed value and exactly one alternative is plausible
   too_many_candidates    more than three plausible values: a forced choice would not help
-  repaired               PASS with a different value: the one alternative that passes every test
+  repaired               PASS with a different value: the one alternative that passes every test, when no
+                         family heard a third value
   repaired_omission      PASS with a value added: the agent left the slot out and the evidence supplies it
   omitted                the agent left out a slot that enough families agree the caller stated
 """
@@ -147,7 +148,13 @@ def decide_slot(evidence: Evidence, slot: Slot, policy: Policy) -> SlotDecision:
     if sd.verdict == Verdict.PASS or not policy.repair or sd.supporting_families:
         return sd
     fix = _repair(evidence, slot, policy, tuple(c for c in sd.candidates if c != sd.proposed))
-    if fix is None:
+    if fix is None or fix.final is None:
+        return sd
+    # Nor when a whole family heard a third value: on the tuning speakers 2 of 13 such repairs were wrong,
+    # against 0 of 86 where every family that disagreed with the agent agreed with each other.
+    lat = build(evidence, slot, policy.max_candidates)
+    rivals = (c for c in lat.candidates if c != fix.final and is_valid(slot, c))
+    if any(lat.supporting_families(c) for c in rivals):
         return sd
     return fix.model_copy(update={"proposed": sd.proposed, "reason": "repaired", "candidates": sd.candidates})
 

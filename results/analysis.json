@@ -5,26 +5,26 @@
   "B-2M": {
    "baseline_asked": 151,
    "baseline_wrong": 10,
-   "pramaan_wrong_at_no_more_questions": 6,
-   "pramaan_asked_there": 108,
-   "pramaan_asked_at_no_more_errors": 19,
-   "pramaan_wrong_there": 10
+   "pramaan_wrong_at_no_more_questions": 5,
+   "pramaan_asked_there": 118,
+   "pramaan_asked_at_no_more_errors": 31,
+   "pramaan_wrong_there": 9
   },
   "B-2S": {
    "baseline_asked": 70,
    "baseline_wrong": 6,
-   "pramaan_wrong_at_no_more_questions": 8,
-   "pramaan_asked_there": 25,
-   "pramaan_asked_at_no_more_errors": 108,
+   "pramaan_wrong_at_no_more_questions": 7,
+   "pramaan_asked_there": 37,
+   "pramaan_asked_at_no_more_errors": 117,
    "pramaan_wrong_there": 6
   }
  },
  "agent_errors": {
   "n": 176,
   "fate": {
-   "repaired to the true value": 157,
-   "acted on, wrong": 10,
-   "caller asked": 9
+   "repaired to the true value": 146,
+   "acted on, wrong": 9,
+   "caller asked": 21
   }
  },
  "shared_transcriber_errors": {
@@ -38,15 +38,15 @@
  "vendor_outage": {
   "Sarvam": {
    "wrong_silent": 11,
-   "asked": 90
+   "asked": 97
   },
   "VerbX": {
-   "wrong_silent": 7,
-   "asked": 27
+   "wrong_silent": 6,
+   "asked": 37
   },
   "OpenAI transcription": {
-   "wrong_silent": 11,
-   "asked": 88
+   "wrong_silent": 10,
+   "asked": 91
   }
  },
  "by": {
@@ -67,7 +67,7 @@
     },
     "P": {
      "wrong_silent": 5,
-     "asked": 4
+     "asked": 7
     }
    },
    "phone": {
@@ -85,8 +85,8 @@
      "asked": 47
     },
     "P": {
-     "wrong_silent": 5,
-     "asked": 15
+     "wrong_silent": 4,
+     "asked": 24
     }
    }
   },
@@ -125,8 +125,8 @@
      "asked": 62
     },
     "P": {
-     "wrong_silent": 9,
-     "asked": 12
+     "wrong_silent": 8,
+     "asked": 24
     }
    }
   },
@@ -147,7 +147,7 @@
     },
     "P": {
      "wrong_silent": 0,
-     "asked": 6
+     "asked": 7
     }
    },
    "ordinary": {
@@ -165,8 +165,8 @@
      "asked": 53
     },
     "P": {
-     "wrong_silent": 10,
-     "asked": 13
+     "wrong_silent": 9,
+     "asked": 24
     }
    }
   },
@@ -187,7 +187,7 @@
     },
     "P": {
      "wrong_silent": 1,
-     "asked": 1
+     "asked": 3
     }
    },
    "amount_rupees+day_of_month": {
@@ -205,8 +205,8 @@
      "asked": 17
     },
     "P": {
-     "wrong_silent": 4,
-     "asked": 5
+     "wrong_silent": 3,
+     "asked": 8
     }
    },
    "amount_rupees+phone": {
@@ -244,7 +244,7 @@
     },
     "P": {
      "wrong_silent": 4,
-     "asked": 2
+     "asked": 5
     }
    },
    "phone": {
@@ -263,7 +263,7 @@
     },
     "P": {
      "wrong_silent": 1,
-     "asked": 8
+     "asked": 11
     }
    },
    "phone+weekday": {
@@ -282,7 +282,7 @@
     },
     "P": {
      "wrong_silent": 0,
-     "asked": 2
+     "asked": 3
     }
    }
   }
@@ -337,20 +337,19 @@
   "note": "VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard"
  },
  "questions": {
-  "n": 17,
+  "n": 29,
   "policy_hash": "50d83054eef1",
   "split": "test",
   "answers": "synthetic, cooperative: the same voice states the true value of the slot asked, over the phone channel",
   "outcomes": {
-   "committed_right": 12,
-   "committed_wrong": 2,
+   "committed_right": 26,
    "escalated": 3
   },
-  "committed_without_asking_live": 6,
-  "questions_per_action_mean": 0.82
+  "committed_without_asking_live": 7,
+  "questions_per_action_mean": 0.97
  },
  "first_pass": {
-  "ask": 9,
+  "ask": 21,
   "block": 10
  }
 }

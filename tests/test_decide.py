@@ -138,6 +138,20 @@ def test_no_repair_when_a_family_heard_the_agents_value():
     assert set(d.slots[0].candidates) == {30, 3}
 
 
+def test_no_repair_when_a_family_heard_a_third_value():
+    hs = [
+        hyp("gt", "openai-transcribe", amount_rupees=900),
+        hyp("vx", "verbx", amount_rupees=900),
+        hyp("ic", "ai4bharat", amount_rupees=900),
+        hyp("sv", "sarvam", amount_rupees=875),
+    ]
+    w = [wit("amount_rupees", **{"950": -30.0, "900": -2.0, "875": -20.0})]
+    d = decide(ev({"amount_rupees": 950}, hs, w), POLICY)
+    assert d.verdict != Verdict.PASS and d.execute == {}
+    d = decide(ev({"amount_rupees": 950}, hs[:3], w), POLICY)
+    assert d.slots[0].reason == "repaired" and d.execute == {"amount_rupees": 900}
+
+
 def test_omitted_slot_is_filled_or_held():
     hs = [
         hyp("gt", "openai-transcribe", weekday="friday", amount_rupees=500),

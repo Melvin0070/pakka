@@ -3,12 +3,13 @@
   "kind": "human-recorded",
   "n_actions": 15,
   "n_speakers": 1,
+  "batch": "first",
   "condition": "laptop microphone, then 8 kHz AMR-NB + A-law phone channel",
-  "tune_actions": 300,
+  "tune_actions": 420,
   "tune_speakers": 4,
   "agent_failed_excluded": 0
  },
- "policy_hash": "670fc33e4999",
+ "policy_hash": "50d83054eef1",
  "policy": {
   "version": "p1",
   "deadline_ms": 1200.0,
@@ -19,9 +20,10 @@
   "max_candidates": 8,
   "guard_omissions": true,
   "repair": true,
+  "language_aware": true,
   "weights": {},
   "bias": 0.0,
-  "code_commit": ""
+  "code_commit": "a0a0046"
  },
  "alpha": 0.05,
  "arms": [
@@ -128,18 +130,18 @@
    "ours": true,
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 0,
    "asked_needed": 0,
-   "accepted": 14,
-   "caller_seconds": 0.27,
+   "accepted": 15,
+   "caller_seconds": 0.0,
    "added_latency_p50_ms": 0,
    "added_latency_p95_ms": 1200
   }
  ],
  "certificate": {
-  "n_accepted": 14,
+  "n_accepted": 15,
   "k_wrong": 0,
-  "upper_bound": 0.1926,
+  "upper_bound": 0.181,
   "confidence": 0.95,
   "n_speakers": 1,
   "speaker_level_bound": 0.95,
@@ -149,24 +151,34 @@
  "risk_coverage": {
   "P": [
    [
-    0.7333,
+    0.6667,
     0.0,
     0.88
    ],
    [
-    0.8,
+    0.7333,
     0.0,
     0.76
    ],
    [
-    0.8667,
+    0.8,
     0.0,
     0.714
    ],
    [
+    0.8667,
+    0.0,
+    0.65
+   ],
+   [
     0.9333,
     0.0,
-    0.7057
+    0.5
+   ],
+   [
+    1.0,
+    0.0,
+    0.4422
    ]
   ],
   "B-LP": [
@@ -252,7 +264,7 @@
    "name": "Pramaan as frozen",
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 0,
    "asked_needed": 0
   },
   {
@@ -273,35 +285,42 @@
    "name": "acoustic model as the only check",
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 0,
+   "asked_needed": 0
+  },
+  {
+   "name": "without the language check (acoustic model also judges English)",
+   "n": 15,
+   "wrong_silent": 0,
+   "asked": 0,
    "asked_needed": 0
   },
   {
    "name": "without Sarvam",
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 2,
    "asked_needed": 0
   },
   {
    "name": "without the dropped-value check",
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 0,
    "asked_needed": 0
   },
   {
    "name": "no deadline (wait for every source)",
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 0,
    "asked_needed": 0
   },
   {
    "name": "deadline 300 ms",
    "n": 15,
    "wrong_silent": 0,
-   "asked": 1,
+   "asked": 0,
    "asked_needed": 0
   }
  ],
@@ -336,15 +355,15 @@
    "P": {
     "n": 15,
     "wrong_silent": 0,
-    "asked": 1,
+    "asked": 0,
     "asked_needed": 0,
-    "accepted": 14,
-    "caller_seconds": 0.27
+    "accepted": 15,
+    "caller_seconds": 0.0
    }
   }
  },
  "assumptions": {
   "seconds_per_question": 4.0
  },
- "generated_at": "2026-11-21T15:14:59+00:00"
+ "generated_at": "2026-11-21T19:13:29+00:00"
 }
