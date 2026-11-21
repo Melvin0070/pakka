@@ -1,0 +1,9 @@
+{
+ "note": "recorded verbx-vocaline response (compacted)",
+ "response": {
+  "model": "verbx-vocaline",
+  "server_ms": 659,
+  "text": "लोन का सवा एक हज़ार बाकी है बुधवार को क्लियर कर दूंगा"
+ },
+ "latency_ms": 963.6
+}

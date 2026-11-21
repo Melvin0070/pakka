@@ -1,0 +1,18 @@
+{
+ "note": "recorded gpt-realtime-2.1 response; clip says sava do lakh (225000), agent proposed 212500",
+ "response": {
+  "arguments": {
+   "amount_rupees": 212500,
+   "day_of_month": 25,
+   "phone": null,
+   "weekday": null
+  },
+  "name": "log_commitment",
+  "response_ms": 1449.5
+ },
+ "latency_ms": 5130.7,
+ "expect_values": {
+  "amount_rupees": 212500,
+  "day_of_month": 25
+ }
+}
