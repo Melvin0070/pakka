@@ -28,7 +28,6 @@ from fastapi.staticfiles import StaticFiles
 
 from ..cache import offline
 from ..pipeline import Guard
-from ..speak.api import router as speak_router
 from ..types import Values
 from . import offline as offline_replay
 from .fake_guard import FakeGuard
@@ -450,5 +449,4 @@ async def ws(browser: WebSocket) -> None:
 
 
 app.include_router(record_router)
-app.include_router(speak_router)
 app.mount("/", StaticFiles(directory=UI, html=True), name="ui")
