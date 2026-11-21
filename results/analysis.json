@@ -337,17 +337,17 @@
   "note": "VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard"
  },
  "questions": {
-  "n": 77,
-  "policy_hash": "670fc33e4999",
+  "n": 45,
+  "policy_hash": "f85617771ecb",
   "split": "test",
   "answers": "synthetic, cooperative: the same voice states the true value of the slot asked, over the phone channel",
   "outcomes": {
-   "committed_right": 69,
+   "committed_right": 41,
    "committed_wrong": 1,
-   "escalated": 7
+   "escalated": 3
   },
   "committed_without_asking_live": 9,
-  "questions_per_action_mean": 1.13
+  "questions_per_action_mean": 0.89
  },
  "first_pass": {
   "ask": 14,

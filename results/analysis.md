@@ -41,4 +41,4 @@ Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the tw
 
 Checking one action (5.6 s of audio) costs about $0.0019 in recogniser calls at list prices as of 2026-11-21 ($1.92 per 1,000 actions; VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard).
 
-After a question (77 asked test actions replayed live, synthetic cooperative answers): 69 committed right; 1 committed wrong; 7 escalated. Mean questions per asked action 1.13.
+After a question (45 asked test actions replayed live, synthetic cooperative answers): 41 committed right; 1 committed wrong; 3 escalated. Mean questions per asked action 0.89.

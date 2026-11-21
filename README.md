@@ -130,7 +130,7 @@ Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the tw
 
 Checking one action (5.6 s of audio) costs about $0.0019 in recogniser calls at list prices as of 2026-11-21 ($1.92 per 1,000 actions; VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard).
 
-After a question (77 asked test actions replayed live, synthetic cooperative answers): 69 committed right; 1 committed wrong; 7 escalated. Mean questions per asked action 1.13.
+After a question (45 asked test actions replayed live, synthetic cooperative answers): 41 committed right; 1 committed wrong; 3 escalated. Mean questions per asked action 0.89.
 <!-- analysis:end -->
 
 Reading it plainly:
@@ -258,7 +258,7 @@ caller audio ──┬──────────────► gpt-realtime
   policy re-frozen on the tuning speakers only, with the rule that at least two families must always agree.
   The first test set had been scored several times by then, so its bound is optimistic; the locked set was
   scored once, after the freeze, and is the cleaner number.
-- The question-loop measurement was run under the previous policy (`670fc33e4999`), before the language check.
+- The question-loop measurement covers the first test set only, not the locked set.
 - Asking only when gpt-transcribe and Sarvam disagree (B-2S) remains a strong, much simpler baseline. Pramaan's
   measured advantage over it is fewer questions, not fewer errors.
 - One human speaker (15 clips) has been recorded and scored; see `results/human.md`. Far too few to rank arms.
