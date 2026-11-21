@@ -168,7 +168,7 @@ Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the tw
 
 Checking one action (5.6 s of audio) costs about $0.0019 in recogniser calls at list prices as of 2026-11-21 ($1.92 per 1,000 actions; VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard).
 
-After a question (45 asked test actions replayed live, synthetic cooperative answers): 41 committed right; 1 committed wrong; 3 escalated. Mean questions per asked action 0.89.
+After a question (17 asked test actions replayed live, synthetic cooperative answers): 12 committed right; 2 committed wrong; 3 escalated. Mean questions per asked action 0.82.
 <!-- analysis:end -->
 
 Reading it plainly:
@@ -373,8 +373,10 @@ caller audio ──┬──────────────► gpt-realtime
   policy re-frozen on the tuning speakers only, with the rule that at least two families must always agree.
   The first test set had been scored several times by then, so its bound is optimistic; the locked set was
   scored once, after the freeze, and is the cleaner number.
-- The question-loop measurement covers the first test set only and was run under the previous policy
-  (`f85617771ecb`), when 47 of its calls were asked; 19 are now.
+- The question-loop measurement covers the first test set only and replays the calls live, so the model and
+  the recognisers can answer differently from the cached scoring run. Under the current policy
+  (`50d83054eef1`) 17 calls were replayed: 12 ended right, 3 escalated and 2 committed a wrong value. Both wrong
+  commits were first-pass repairs made without a question, one amount (900 for 875) and one phone digit.
 - The acoustic model's contribution is not consistent. It removes questions on the tuning speakers (22 to 13)
   and on the first test set (35 to 19), but not on either locked set. It picks the true value among confusable
   candidates in 591 of 600 Hindi cases on the tuning speakers; it is rarely decisive because the transcribers
