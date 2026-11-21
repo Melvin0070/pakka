@@ -1,0 +1,24 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      # Not `make setup`: that also downloads the 481 MB acoustic model, which only live calls need.
+      - run: uv sync --locked
+      - run: make check
+      - run: make test
+      # Replays data/evidence.jsonl against data/policy.json: no model, key or network.
+      - run: make eval
+      # headline.json carries a timestamp, so the published table is what must not move.
+      - name: Published numbers match the committed evidence
+        run: git diff --exit-code -- README.md results/table.md results/fresh.md results/analysis.md
