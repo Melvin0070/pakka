@@ -12,33 +12,33 @@ model and on this system.
 ## Results
 
 <!-- results:start -->
-550 actions, 8 held-out synthetic speakers, phone-grade audio. Policy `f85617771ecb`.
+550 actions, 8 held-out synthetic speakers, phone-grade audio. Policy `50d83054eef1`.
 
 | Arm | Wrong and acted on | Caller asked | of which the value was wrong | Acted without asking |
 |---|---|---|---|---|
 | Realtime model alone (A) | 176 (32.0%) | 0 (0.0%) | 0 | 550 |
 | Transcribe, then fill the form (B) | 40 (7.3%) | 0 (0.0%) | 0 | 550 |
-| Second vendor, then fill the form (V) | 146 (26.5%) | 0 (0.0%) | 0 | 550 |
-| Sarvam, then fill the form (S) | 73 (13.3%) | 0 (0.0%) | 0 | 550 |
+| Second vendor, then fill the form (V) | 140 (25.5%) | 0 (0.0%) | 0 | 550 |
+| Sarvam, then fill the form (S) | 45 (8.2%) | 0 (0.0%) | 0 | 550 |
 | Trust one model's confidence (B-LP) | 0 (0.0%) | 550 (100.0%) | 140 | 0 |
-| Ask when two models disagree (B-2M) | 10 (1.8%) | 157 (28.5%) | 30 | 393 |
-| Ask when OpenAI and Sarvam disagree (B-2S) | 6 (1.1%) | 98 (17.8%) | 34 | 452 |
+| Ask when two models disagree (B-2M) | 10 (1.8%) | 151 (27.5%) | 30 | 399 |
+| Ask when OpenAI and Sarvam disagree (B-2S) | 6 (1.1%) | 70 (12.7%) | 34 | 480 |
 | Read everything back (A-RB) | 0 (0.0%) | 550 (100.0%) | 176 | 0 |
-| **Pramaan** (P) | 10 (1.8%) | 47 (8.5%) | 10 | 503 |
+| **Pramaan** (P) | 10 (1.8%) | 19 (3.5%) | 9 | 531 |
 
-Certificate: of 503 actions Pramaan let through, 10 were wrong; one-sided 95% Clopper-Pearson upper bound 3.4%. Speaker-level: 6 of 8 speakers had any silent error (bound 95.4%). Added hold p50 0 ms, p95 1200 ms.
+Certificate: of 531 actions Pramaan let through, 10 were wrong; one-sided 95% Clopper-Pearson upper bound 3.2%. Speaker-level: 6 of 8 speakers had any silent error (bound 95.4%). Added hold p50 0 ms, p95 1200 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 10 | 47 | 10 |
-| without the acoustic model | 11 | 59 | 16 |
+| Pramaan as frozen | 10 | 19 | 9 |
+| without the acoustic model | 11 | 35 | 16 |
 | OpenAI transcribers only | 35 | 13 | 9 |
-| acoustic model as the only check | 14 | 22 | 8 |
-| without the language check (acoustic model also judges English) | 10 | 79 | 10 |
-| without Sarvam | 11 | 101 | 18 |
-| without the dropped-value check | 20 | 47 | 10 |
-| no deadline (wait for every source) | 10 | 50 | 11 |
-| deadline 300 ms | 10 | 47 | 10 |
+| acoustic model as the only check | 14 | 17 | 7 |
+| without the language check (acoustic model also judges English) | 10 | 65 | 9 |
+| without Sarvam | 11 | 90 | 16 |
+| without the dropped-value check | 20 | 19 | 9 |
+| no deadline (wait for every source) | 10 | 22 | 10 |
+| deadline 300 ms | 10 | 19 | 9 |
 <!-- results:end -->
 
 ### Locked set
@@ -48,34 +48,72 @@ repeated digits). The tuning speakers' clips from it joined the tuning data; the
 the test speakers' clips were scored once.
 
 <!-- fresh:start -->
-220 actions, 8 held-out synthetic speakers, phone-grade audio. Policy `f85617771ecb`.
+220 actions, 8 held-out synthetic speakers, phone-grade audio. Policy `50d83054eef1`.
 
 | Arm | Wrong and acted on | Caller asked | of which the value was wrong | Acted without asking |
 |---|---|---|---|---|
 | Realtime model alone (A) | 85 (38.6%) | 0 (0.0%) | 0 | 220 |
 | Transcribe, then fill the form (B) | 17 (7.7%) | 0 (0.0%) | 0 | 220 |
 | Second vendor, then fill the form (V) | 47 (21.4%) | 0 (0.0%) | 0 | 220 |
-| Sarvam, then fill the form (S) | 12 (5.5%) | 0 (0.0%) | 0 | 220 |
+| Sarvam, then fill the form (S) | 6 (2.7%) | 0 (0.0%) | 0 | 220 |
 | Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 57 | 0 |
 | Ask when two models disagree (B-2M) | 3 (1.4%) | 56 (25.5%) | 14 | 164 |
-| Ask when OpenAI and Sarvam disagree (B-2S) | 3 (1.4%) | 21 (9.5%) | 14 | 199 |
+| Ask when OpenAI and Sarvam disagree (B-2S) | 3 (1.4%) | 15 (6.8%) | 14 | 205 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
-| **Pramaan** (P) | 3 (1.4%) | 9 (4.1%) | 3 | 211 |
+| **Pramaan** (P) | 4 (1.8%) | 3 (1.4%) | 2 | 217 |
 
-Certificate: of 211 actions Pramaan let through, 3 were wrong; one-sided 95% Clopper-Pearson upper bound 3.6%. Speaker-level: 3 of 8 speakers had any silent error (bound 71.1%). Added hold p50 0 ms, p95 1200 ms.
+Certificate: of 217 actions Pramaan let through, 4 were wrong; one-sided 95% Clopper-Pearson upper bound 4.2%. Speaker-level: 3 of 8 speakers had any silent error (bound 71.1%). Added hold p50 0 ms, p95 1200 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 3 | 9 | 3 |
-| without the acoustic model | 3 | 7 | 2 |
+| Pramaan as frozen | 4 | 3 | 2 |
+| without the acoustic model | 3 | 4 | 2 |
 | OpenAI transcribers only | 8 | 11 | 6 |
-| acoustic model as the only check | 5 | 4 | 1 |
-| without the language check (acoustic model also judges English) | 3 | 16 | 3 |
-| without Sarvam | 3 | 21 | 4 |
-| without the dropped-value check | 6 | 9 | 3 |
-| no deadline (wait for every source) | 3 | 10 | 4 |
-| deadline 300 ms | 3 | 9 | 3 |
+| acoustic model as the only check | 5 | 2 | 1 |
+| without the language check (acoustic model also judges English) | 4 | 13 | 2 |
+| without Sarvam | 4 | 18 | 2 |
+| without the dropped-value check | 7 | 3 | 2 |
+| no deadline (wait for every source) | 4 | 4 | 3 |
+| deadline 300 ms | 4 | 3 | 2 |
 <!-- fresh:end -->
+
+### Locked set 2
+
+After locked set 1, two defects found on the tuning speakers were fixed: the normaliser missed some ways a
+recogniser writes an English date ("ऑन द २८", "15थ"), and malformed short phone numbers were allowed to outrank
+complete ones in the acoustic check. The first test set and locked set 1 above are shown with those fixes, so
+they have now been scored more than once. Locked set 2 is a further 60 new prompts on the test speakers,
+generated after the fixes and scored once.
+
+<!-- fresh2:start -->
+220 actions, 8 held-out synthetic speakers, phone-grade audio. Policy `50d83054eef1`.
+
+| Arm | Wrong and acted on | Caller asked | of which the value was wrong | Acted without asking |
+|---|---|---|---|---|
+| Realtime model alone (A) | 65 (29.5%) | 0 (0.0%) | 0 | 220 |
+| Transcribe, then fill the form (B) | 9 (4.1%) | 0 (0.0%) | 0 | 220 |
+| Second vendor, then fill the form (V) | 59 (26.8%) | 0 (0.0%) | 0 | 220 |
+| Sarvam, then fill the form (S) | 11 (5.0%) | 0 (0.0%) | 0 | 220 |
+| Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 40 | 0 |
+| Ask when two models disagree (B-2M) | 2 (0.9%) | 63 (28.6%) | 7 | 157 |
+| Ask when OpenAI and Sarvam disagree (B-2S) | 0 (0.0%) | 18 (8.2%) | 9 | 202 |
+| Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 65 | 0 |
+| **Pramaan** (P) | 2 (0.9%) | 13 (5.9%) | 6 | 207 |
+
+Certificate: of 207 actions Pramaan let through, 2 were wrong; one-sided 95% Clopper-Pearson upper bound 3.0%. Speaker-level: 2 of 8 speakers had any silent error (bound 60.0%). Added hold p50 0 ms, p95 1200 ms.
+
+| Ablation | Wrong and acted on | Caller asked | of which wrong |
+|---|---|---|---|
+| Pramaan as frozen | 2 | 13 | 6 |
+| without the acoustic model | 2 | 10 | 6 |
+| OpenAI transcribers only | 5 | 6 | 5 |
+| acoustic model as the only check | 3 | 7 | 4 |
+| without the language check (acoustic model also judges English) | 2 | 21 | 6 |
+| without Sarvam | 3 | 39 | 10 |
+| without the dropped-value check | 2 | 13 | 6 |
+| no deadline (wait for every source) | 2 | 13 | 6 |
+| deadline 300 ms | 2 | 13 | 6 |
+<!-- fresh2:end -->
 
 All numbers above come from `make eval`, which replays committed evidence with no model, key or network.
 **The speakers are synthetic** (OpenAI text-to-speech voices with varied speaking instructions, passed through an
@@ -91,33 +129,33 @@ Read from the same 550 test actions and frozen policy. Not tuned; the matched ro
 
 | Against | Its result | Pramaan with no more questions | Pramaan with no more errors |
 |---|---|---|---|
-| gpt-transcribe vs VerbX (B-2M) | 10 wrong, 157 asked | 6 wrong, 121 asked | 10 wrong, 47 asked |
-| gpt-transcribe vs Sarvam (B-2S) | 6 wrong, 98 asked | 8 wrong, 55 asked | 6 wrong, 121 asked |
+| gpt-transcribe vs VerbX (B-2M) | 10 wrong, 151 asked | 6 wrong, 108 asked | 10 wrong, 19 asked |
+| gpt-transcribe vs Sarvam (B-2S) | 6 wrong, 70 asked | 8 wrong, 25 asked | 6 wrong, 108 asked |
 
-Of the 176 actions where the realtime model's value was wrong: 155 repaired to the true value; 11 caller asked; 10 acted on, wrong.
+Of the 176 actions where the realtime model's value was wrong: 157 repaired to the true value; 10 acted on, wrong; 9 caller asked.
 Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the two-model baseline acts on all of them): Pramaan 4 acted on, wrong; 2 caller asked.
 
 | If a vendor is down | Wrong and acted on | Caller asked |
 |---|---|---|
-| Pramaan without Sarvam | 11 | 101 |
-| Pramaan without VerbX | 7 | 57 |
-| Pramaan without OpenAI transcription | 13 | 98 |
-| Two-model baseline without Sarvam (falls back to VerbX) | 10 | 157 |
+| Pramaan without Sarvam | 11 | 90 |
+| Pramaan without VerbX | 7 | 27 |
+| Pramaan without OpenAI transcription | 11 | 88 |
+| Two-model baseline without Sarvam (falls back to VerbX) | 10 | 151 |
 
 | Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pramaan wrong / asked |
 |---|---|---|---|---|
-| condition: noisy | 150 | 60 (40.0%) | 3 / 33 | 5 / 16 |
-| condition: phone | 400 | 116 (29.0%) | 3 / 65 | 5 / 31 |
-| language: en | 91 | 3 (3.3%) | 0 / 36 | 1 / 31 |
-| language: hi | 459 | 173 (37.7%) | 6 / 62 | 9 / 16 |
-| difficulty: confusable | 154 | 37 (24.0%) | 2 / 30 | 0 / 19 |
-| difficulty: ordinary | 396 | 139 (35.1%) | 4 / 68 | 10 / 28 |
+| condition: noisy | 150 | 60 (40.0%) | 3 / 23 | 5 / 4 |
+| condition: phone | 400 | 116 (29.0%) | 3 / 47 | 5 / 15 |
+| language: en | 91 | 3 (3.3%) | 0 / 8 | 1 / 7 |
+| language: hi | 459 | 173 (37.7%) | 6 / 62 | 9 / 12 |
+| difficulty: confusable | 154 | 37 (24.0%) | 2 / 17 | 0 / 6 |
+| difficulty: ordinary | 396 | 139 (35.1%) | 4 / 53 | 10 / 13 |
 | values: amount_rupees | 71 | 31 (43.7%) | 0 / 4 | 1 / 1 |
-| values: amount_rupees+day_of_month | 180 | 32 (17.8%) | 2 / 45 | 4 / 29 |
-| values: amount_rupees+phone | 32 | 14 (43.8%) | 0 / 1 | 0 / 3 |
+| values: amount_rupees+day_of_month | 180 | 32 (17.8%) | 2 / 17 | 4 / 5 |
+| values: amount_rupees+phone | 32 | 14 (43.8%) | 0 / 1 | 0 / 1 |
 | values: amount_rupees+weekday | 128 | 39 (30.5%) | 1 / 30 | 4 / 2 |
-| values: phone | 102 | 36 (35.3%) | 3 / 10 | 1 / 9 |
-| values: phone+weekday | 37 | 24 (64.9%) | 0 / 8 | 0 / 3 |
+| values: phone | 102 | 36 (35.3%) | 3 / 10 | 1 / 8 |
+| values: phone+weekday | 37 | 24 (64.9%) | 0 / 8 | 0 / 2 |
 
 | Source | Latency p50 | p90 |
 |---|---|---|
@@ -135,14 +173,93 @@ After a question (45 asked test actions replayed live, synthetic cooperative ans
 
 Reading it plainly:
 
-- Against the strongest cheap alternative (ask whenever gpt-transcribe and Sarvam disagree), Pramaan asks about
-  half as many questions. On the locked set the two make the same number of wrong actions; on the first test
-  set Pramaan makes a few more, a difference within noise at this sample size.
+- Against the strongest cheap alternative (ask whenever gpt-transcribe and Sarvam disagree), Pramaan asks
+  fewer questions on every set, and makes the same or slightly more wrong actions. On locked set 2 that is 13
+  questions and 2 wrong against 18 questions and none. The error differences are within noise at these sizes.
 - Most of the saving is on Hindi and Hinglish speech, where the acoustic model is in its own language. On
   English turns the acoustic model is not consulted.
 - It degrades more gently when a vendor is unavailable, because no single recogniser is required.
 - It corrects the speech-to-speech model in place. The two-model baseline is a different product: it throws
   away what the realtime model heard and acts on a transcript.
+
+## The other direction: numbers the voice says
+
+The same fault runs the other way. A speech generator handed "₹2,75,350" or "9876004321" has to turn digits
+into words itself, and it drops digits, changes the scale or reads the figure haltingly. Here the intended value
+is known, so the check is narrower than on the hearing side: two recognisers from different families must read
+that value back, and on Hindi clips the acoustic model must rate it above every look-alike value, inside the
+script's own sentence. A failed check costs one more take, not a question to a caller, so any doubt fails.
+
+Three ways of producing each clip, same sentence and voice: **digits** (the script as written), **words** (the
+number spelt out in the target language by the same number grammar the hearing side parses with), and
+**checked** (words, then up to three takes until one passes). "Nobody heard it" means none of four recognisers
+read the intended number, which does not depend on the check's own strictness.
+
+<!-- speak:start -->
+360 script and voice pairs (3 generators, 2 voices each, Hindi and English; amounts, phone numbers, dates), 953 clips, 92 minutes of generated speech.
+
+| | Pairs | Digits: nobody heard the number | Digits: not verified | Words: nobody heard it | Words: not verified | Checked: no take passed | Takes per clip |
+|---|---|---|---|---|---|---|---|
+| **All** | 360 | 159 (44.2%) | 183 (50.8%) | 15 (4.2%) | 45 (12.5%) | 16 (4.4%) | 1.18 |
+| gpt-4o-mini-tts | 120 | 52 (43.3%) | 60 (50.0%) | 0 (0.0%) | 7 (5.8%) | 1 (0.8%) | 1.08 |
+| gpt-audio-1.5 | 120 | 38 (31.7%) | 41 (34.2%) | 3 (2.5%) | 13 (10.8%) | 4 (3.3%) | 1.14 |
+| tts-1 | 120 | 69 (57.5%) | 82 (68.3%) | 12 (10.0%) | 25 (20.8%) | 11 (9.2%) | 1.32 |
+| Hindi | 180 | 119 (66.1%) | 127 (70.6%) | 14 (7.8%) | 29 (16.1%) | 12 (6.7%) | 1.24 |
+| English | 180 | 40 (22.2%) | 56 (31.1%) | 1 (0.6%) | 16 (8.9%) | 4 (2.2%) | 1.12 |
+| amount rupees | 144 | 81 (56.2%) | 96 (66.7%) | 1 (0.7%) | 16 (11.1%) | 6 (4.2%) | 1.17 |
+| phone | 144 | 69 (47.9%) | 75 (52.1%) | 14 (9.7%) | 27 (18.8%) | 10 (6.9%) | 1.27 |
+| day of month | 72 | 9 (12.5%) | 12 (16.7%) | 0 (0.0%) | 2 (2.8%) | 0 (0.0%) | 1.03 |
+
+Held-out recognisers (never used by the check) on the clips each arm would ship:
+
+| Held-out recogniser | Digits | Words | Checked |
+|---|---|---|---|
+| gpt-4o-transcribe hears another number | 133 of 322 (41.3%) | 55 of 354 (15.5%) | 38 of 340 (11.2%) |
+| verbx-vocaline hears another number | 29 of 40 (72.5%) | 16 of 51 (31.4%) | 15 of 45 (33.3%) |
+
+Acoustic model (Hindi clips): of 294 clips both recognisers read correctly, it vetoed 4 (2 of those also disputed by a held-out recogniser) and passed 290 (58 disputed).
+
+Where gpt-4o-transcribe disputed a checked Hindi clip (36 clips), the acoustic model was asked to choose between the intended value and the disputed reading: it sided with the intended value in 36, with the other reading in 0, and was undecided in 0 (margin 3 nats). `scripts/speak/adjudicate.py`.
+
+Pauses inside the number (verified Hindi clips, first take):
+
+| Kind | Script | Clips | Median longest pause | Clips with a pause of 300 ms or more | Median time on the number |
+|---|---|---|---|---|---|
+| amount rupees | digits | 15 | 0 ms | 0 (0.0%) | 1.28 s |
+| amount rupees | words | 64 | 0 ms | 6 (9.4%) | 1.48 s |
+| phone | digits | 14 | 300 ms | 8 (57.1%) | 3.28 s |
+| phone | words | 53 | 460 ms | 39 (73.6%) | 4.08 s |
+<!-- speak:end -->
+
+`make speak-eval` rebuilds this table offline from `data/speak/evidence.jsonl`. `make speak-run` regenerates
+the clips (needs keys; the audio is not committed). The page is `/speak.html`: recorded pairs to listen to, and
+a box that generates and checks any number live. One clip from anywhere, video included:
+
+```
+uv run python -m pramaan.speak clip.mp4 --amount 275350 --lang hi \
+    --script "आपका दो लाख पचहत्तर हज़ार तीन सौ पचास रुपये का भुगतान अभी बाकी है।"
+```
+
+What this does not show:
+
+- No video generator was tested: the key used has none. The three generators are OpenAI's (`tts-1`,
+  `gpt-4o-mini-tts`, and `gpt-audio-1.5`, which writes audio directly as a video model's sound track is
+  written). For a video clip the check runs on the audio track; the repair is another generation.
+- Nobody has listened to the clips at scale. Every label comes from recognisers, which mishear numbers
+  themselves, so "not verified" overstates the fault and "nobody heard it" understates it. How many checked
+  clips still carry a wrong number is therefore not known; the held-out rows are the only outside evidence.
+- VerbX was rate-limited for most of the run and answered on about a fifth of the clips.
+- Three takes were made for some clips that needed fewer, because one recogniser was down during part of the
+  run; the takes column counts only those the loop needs once every recogniser has answered.
+- The check's rule was fixed before the run and nothing was tuned, so there is no tuning split here.
+- Hindi and English only. The number-to-words step and the acoustic model are per language; other languages
+  would rest on recogniser agreement alone until both are written.
+- The pause measure is a diagnostic, not part of the check, and has no listener study behind it.
+- A clip that fails three takes is flagged, not fixed.
+- Not new in its parts. Spelling numbers out before synthesis is text normalisation (PolyNorm, EMNLP 2025;
+  EmergentTTS-Eval, 2025); transcribing synthetic speech and regenerating on a mismatch is a known data-cleaning
+  step (S3-Bench, 2026). Known from search summaries, not read in full. What is added here is a typed value
+  check with an acoustic likelihood ratio against look-alike values, and a measurement on Indian number forms.
 
 ## Verify in five minutes
 
@@ -256,7 +373,12 @@ caller audio ──┬──────────────► gpt-realtime
   policy re-frozen on the tuning speakers only, with the rule that at least two families must always agree.
   The first test set had been scored several times by then, so its bound is optimistic; the locked set was
   scored once, after the freeze, and is the cleaner number.
-- The question-loop measurement covers the first test set only, not the locked set.
+- The question-loop measurement covers the first test set only and was run under the previous policy
+  (`f85617771ecb`), when 47 of its calls were asked; 19 are now.
+- The acoustic model's contribution is not consistent. It removes questions on the tuning speakers (22 to 13)
+  and on the first test set (35 to 19), but not on either locked set. It picks the true value among confusable
+  candidates in 591 of 600 Hindi cases on the tuning speakers; it is rarely decisive because the transcribers
+  usually already agree.
 - Asking only when gpt-transcribe and Sarvam disagree (B-2S) remains a strong, much simpler baseline. Pramaan's
   measured advantage over it is fewer questions, not fewer errors.
 - One human speaker (15 clips) has been recorded and scored; see `results/human.md`. Far too few to rank arms.
@@ -268,6 +390,7 @@ caller audio ──┬──────────────► gpt-realtime
 ## Layout
 
 ```
+src/pramaan/speak/  verbalise, generators, check, prosody, loop, api (the speaking side)
 src/pramaan/   types, normalise, render, confusables, lattice, witness, evidence, score, decide, gate,
                question, executor, bundle, cache, pipeline, sources/, live/
 eval/          tune.py (policy, tuning speakers only), run_eval.py (all arms, test speakers), analysis.py
