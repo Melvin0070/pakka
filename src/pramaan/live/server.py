@@ -28,6 +28,7 @@ from fastapi.staticfiles import StaticFiles
 
 from ..cache import offline
 from ..pipeline import Guard
+from ..speak.api import router as speak_router
 from ..types import Values
 from . import offline as offline_replay
 from .fake_guard import FakeGuard
@@ -195,7 +196,7 @@ async def health() -> dict[str, Any]:
 
 @app.get("/api/results")
 async def results(set: str = "synthetic") -> JSONResponse:
-    path = ROOT / "results" / {"human": "human.json", "fresh": "fresh.json"}.get(set, "headline.json")
+    path = ROOT / "results" / {"human": "human.json", "fresh": "fresh.json", "fresh2": "fresh2.json"}.get(set, "headline.json")
     # null, not 404: the page shows its own "no results yet" state and the console stays clean.
     return JSONResponse(json.loads(path.read_text()) if path.exists() else None)
 
@@ -449,4 +450,5 @@ async def ws(browser: WebSocket) -> None:
 
 
 app.include_router(record_router)
+app.include_router(speak_router)
 app.mount("/", StaticFiles(directory=UI, html=True), name="ui")

@@ -477,7 +477,7 @@ function dotGrid(wrong, asked, n) {
 }
 async function loadOverview() {
   const get = u => fetch('/api/' + u).then(x => x.ok ? x.json() : null).catch(() => null);
-  const [fresh, first, human, a, sc] = await Promise.all([get('results?set=fresh'), get('results?set=synthetic'), get('results?set=human'), get('analysis'), get('scenarios')]);
+  const [fresh, first, human, a, sc] = await Promise.all([get('results?set=fresh2').then(x => x || get('results?set=fresh')), get('results?set=synthetic'), get('results?set=human'), get('analysis'), get('scenarios')]);
   const r = fresh || first;
   if (r) {
     const arm = id => r.arms.find(x => x.id === id), A = arm('A'), P = arm('P'), pc = (k, n) => (100 * k / n).toFixed(1) + '%';
@@ -515,9 +515,9 @@ $('goLive').addEventListener('click', () => showView('call'));
 let resultSet = 'synthetic';
 async function loadResults() {
   try {
-    const [r, f, h, a] = await Promise.all(['results?set=synthetic', 'results?set=fresh', 'results?set=human', 'analysis'].map(s => fetch('/api/' + s).then(x => x.ok ? x.json() : null)));
-    const sets = {synthetic: r, fresh: f, human: h};
-    $('sets').hidden = !f && !h;
+    const [r, f, f2, h, a] = await Promise.all(['results?set=synthetic', 'results?set=fresh', 'results?set=fresh2', 'results?set=human', 'analysis'].map(s => fetch('/api/' + s).then(x => x.ok ? x.json() : null)));
+    const sets = {synthetic: r, fresh: f, fresh2: f2, human: h};
+    $('sets').hidden = !f && !f2 && !h;
     document.querySelectorAll('#sets button').forEach(b => { if (b.dataset.set !== 'synthetic') b.hidden = !sets[b.dataset.set]; });
     renderResults(sets[resultSet] || r);
     renderAnalysis(resultSet === 'synthetic' ? a : null);

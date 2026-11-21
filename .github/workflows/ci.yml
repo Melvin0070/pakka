@@ -21,4 +21,4 @@ jobs:
       - run: make eval
       # headline.json carries a timestamp, so the published table is what must not move.
       - name: Published numbers match the committed evidence
-        run: git diff --exit-code -- README.md results/table.md results/fresh.md results/analysis.md
+        run: git diff --exit-code -- README.md results/table.md results/fresh.md results/fresh2.md results/analysis.md

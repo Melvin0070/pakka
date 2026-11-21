@@ -1,30 +1,30 @@
 {
  "n": 550,
- "policy_hash": "f85617771ecb",
+ "policy_hash": "50d83054eef1",
  "matched": {
   "B-2M": {
-   "baseline_asked": 157,
+   "baseline_asked": 151,
    "baseline_wrong": 10,
    "pramaan_wrong_at_no_more_questions": 6,
-   "pramaan_asked_there": 121,
-   "pramaan_asked_at_no_more_errors": 47,
+   "pramaan_asked_there": 108,
+   "pramaan_asked_at_no_more_errors": 19,
    "pramaan_wrong_there": 10
   },
   "B-2S": {
-   "baseline_asked": 98,
+   "baseline_asked": 70,
    "baseline_wrong": 6,
    "pramaan_wrong_at_no_more_questions": 8,
-   "pramaan_asked_there": 55,
-   "pramaan_asked_at_no_more_errors": 121,
+   "pramaan_asked_there": 25,
+   "pramaan_asked_at_no_more_errors": 108,
    "pramaan_wrong_there": 6
   }
  },
  "agent_errors": {
   "n": 176,
   "fate": {
-   "repaired to the true value": 155,
+   "repaired to the true value": 157,
    "acted on, wrong": 10,
-   "caller asked": 11
+   "caller asked": 9
   }
  },
  "shared_transcriber_errors": {
@@ -38,15 +38,15 @@
  "vendor_outage": {
   "Sarvam": {
    "wrong_silent": 11,
-   "asked": 101
+   "asked": 90
   },
   "VerbX": {
    "wrong_silent": 7,
-   "asked": 57
+   "asked": 27
   },
   "OpenAI transcription": {
-   "wrong_silent": 13,
-   "asked": 98
+   "wrong_silent": 11,
+   "asked": 88
   }
  },
  "by": {
@@ -59,15 +59,15 @@
     },
     "B-2M": {
      "wrong_silent": 2,
-     "asked": 49
+     "asked": 45
     },
     "B-2S": {
      "wrong_silent": 3,
-     "asked": 33
+     "asked": 23
     },
     "P": {
      "wrong_silent": 5,
-     "asked": 16
+     "asked": 4
     }
    },
    "phone": {
@@ -78,15 +78,15 @@
     },
     "B-2M": {
      "wrong_silent": 8,
-     "asked": 108
+     "asked": 106
     },
     "B-2S": {
      "wrong_silent": 3,
-     "asked": 65
+     "asked": 47
     },
     "P": {
      "wrong_silent": 5,
-     "asked": 31
+     "asked": 15
     }
    }
   },
@@ -99,15 +99,15 @@
     },
     "B-2M": {
      "wrong_silent": 1,
-     "asked": 75
+     "asked": 69
     },
     "B-2S": {
      "wrong_silent": 0,
-     "asked": 36
+     "asked": 8
     },
     "P": {
      "wrong_silent": 1,
-     "asked": 31
+     "asked": 7
     }
    },
    "hi": {
@@ -126,7 +126,7 @@
     },
     "P": {
      "wrong_silent": 9,
-     "asked": 16
+     "asked": 12
     }
    }
   },
@@ -139,15 +139,15 @@
     },
     "B-2M": {
      "wrong_silent": 0,
-     "asked": 49
+     "asked": 46
     },
     "B-2S": {
      "wrong_silent": 2,
-     "asked": 30
+     "asked": 17
     },
     "P": {
      "wrong_silent": 0,
-     "asked": 19
+     "asked": 6
     }
    },
    "ordinary": {
@@ -158,15 +158,15 @@
     },
     "B-2M": {
      "wrong_silent": 10,
-     "asked": 108
+     "asked": 105
     },
     "B-2S": {
      "wrong_silent": 4,
-     "asked": 68
+     "asked": 53
     },
     "P": {
      "wrong_silent": 10,
-     "asked": 28
+     "asked": 13
     }
    }
   },
@@ -198,15 +198,15 @@
     },
     "B-2M": {
      "wrong_silent": 5,
-     "asked": 56
+     "asked": 50
     },
     "B-2S": {
      "wrong_silent": 2,
-     "asked": 45
+     "asked": 17
     },
     "P": {
      "wrong_silent": 4,
-     "asked": 29
+     "asked": 5
     }
    },
    "amount_rupees+phone": {
@@ -225,7 +225,7 @@
     },
     "P": {
      "wrong_silent": 0,
-     "asked": 3
+     "asked": 1
     }
    },
    "amount_rupees+weekday": {
@@ -263,7 +263,7 @@
     },
     "P": {
      "wrong_silent": 1,
-     "asked": 9
+     "asked": 8
     }
    },
    "phone+weekday": {
@@ -282,7 +282,7 @@
     },
     "P": {
      "wrong_silent": 0,
-     "asked": 3
+     "asked": 2
     }
    }
   }
@@ -350,7 +350,7 @@
   "questions_per_action_mean": 0.89
  },
  "first_pass": {
-  "ask": 14,
-  "block": 33
+  "ask": 9,
+  "block": 10
  }
 }

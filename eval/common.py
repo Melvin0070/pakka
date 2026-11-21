@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "data" / "evidence.jsonl"
 HUMAN_EVIDENCE = ROOT / "data" / "human" / "evidence.jsonl"
 FRESH_EVIDENCE = ROOT / "data" / "fresh" / "evidence.jsonl"
+FRESH2_EVIDENCE = ROOT / "data" / "fresh2" / "evidence.jsonl"  # test speakers only; never used for tuning
 POLICY = ROOT / "data" / "policy.json"
 RESULTS = ROOT / "results"
 ALPHA, DELTA = 0.05, 0.05

@@ -9,7 +9,7 @@
   "tune_speakers": 4,
   "agent_failed_excluded": 0
  },
- "policy_hash": "f85617771ecb",
+ "policy_hash": "50d83054eef1",
  "policy": {
   "version": "p1",
   "deadline_ms": 1200.0,
@@ -23,7 +23,7 @@
   "language_aware": true,
   "weights": {},
   "bias": 0.0,
-  "code_commit": ""
+  "code_commit": "a0a0046"
  },
  "alpha": 0.05,
  "arms": [
@@ -69,7 +69,7 @@
    "how": "Sarvam saaras:v3, then typed normalisation",
    "ours": false,
    "n": 220,
-   "wrong_silent": 12,
+   "wrong_silent": 6,
    "asked": 0,
    "asked_needed": 0,
    "accepted": 220,
@@ -106,10 +106,10 @@
    "ours": false,
    "n": 220,
    "wrong_silent": 3,
-   "asked": 21,
+   "asked": 15,
    "asked_needed": 14,
-   "accepted": 199,
-   "caller_seconds": 0.38
+   "accepted": 205,
+   "caller_seconds": 0.27
   },
   {
    "id": "A-RB",
@@ -129,19 +129,19 @@
    "how": "Hold the realtime model's action until the evidence supports it",
    "ours": true,
    "n": 220,
-   "wrong_silent": 3,
-   "asked": 9,
-   "asked_needed": 3,
-   "accepted": 211,
-   "caller_seconds": 0.16,
+   "wrong_silent": 4,
+   "asked": 3,
+   "asked_needed": 2,
+   "accepted": 217,
+   "caller_seconds": 0.05,
    "added_latency_p50_ms": 0,
    "added_latency_p95_ms": 1200
   }
  ],
  "certificate": {
-  "n_accepted": 211,
-  "k_wrong": 3,
-  "upper_bound": 0.0363,
+  "n_accepted": 217,
+  "k_wrong": 4,
+  "upper_bound": 0.0417,
   "confidence": 0.95,
   "n_speakers": 8,
   "speaker_level_bound": 0.7108,
@@ -281,54 +281,44 @@
     0.8744
    ],
    [
-    0.6864,
-    0.0132,
-    0.76
-   ],
-   [
-    0.6909,
-    0.0132,
-    0.76
-   ],
-   [
     0.6955,
     0.0131,
-    0.7597
+    0.76
    ],
    [
     0.7,
     0.013,
-    0.7594
+    0.7597
    ],
    [
     0.7045,
     0.0129,
-    0.7587
+    0.7594
    ],
    [
     0.7091,
     0.0128,
-    0.7586
+    0.7587
    ],
    [
     0.7136,
     0.0127,
-    0.7579
+    0.7586
    ],
    [
     0.7182,
     0.0127,
-    0.7578
+    0.7579
    ],
    [
     0.7227,
     0.0126,
-    0.7577
+    0.7578
    ],
    [
-    0.7909,
-    0.0115,
-    0.714
+    0.7273,
+    0.0125,
+    0.7577
    ],
    [
     0.7955,
@@ -338,82 +328,82 @@
    [
     0.8,
     0.0114,
-    0.7117
+    0.714
    ],
    [
     0.8045,
     0.0113,
-    0.7008
+    0.7117
    ],
    [
     0.8091,
     0.0112,
-    0.697
+    0.7008
    ],
    [
     0.8136,
     0.0112,
+    0.697
+   ],
+   [
+    0.8182,
+    0.0111,
     0.6945
    ],
    [
-    0.8273,
-    0.011,
+    0.8318,
+    0.0109,
     0.68
-   ],
-   [
-    0.8591,
-    0.0106,
-    0.65
-   ],
-   [
-    0.8636,
-    0.0105,
-    0.6459
-   ],
-   [
-    0.8682,
-    0.0105,
-    0.64
    ],
    [
     0.8773,
     0.0104,
-    0.612
+    0.65
    ],
    [
     0.8818,
-    0.0155,
-    0.606
+    0.0103,
+    0.646
    ],
    [
     0.8864,
-    0.0154,
+    0.0103,
+    0.64
+   ],
+   [
+    0.9,
+    0.0101,
+    0.612
+   ],
+   [
+    0.9045,
+    0.0151,
+    0.606
+   ],
+   [
+    0.9091,
+    0.015,
     0.577
    ],
    [
-    0.8909,
-    0.0153,
+    0.9136,
+    0.0149,
     0.5334
    ],
    [
-    0.9545,
-    0.0143,
+    0.9182,
+    0.0198,
+    0.5078
+   ],
+   [
+    0.9818,
+    0.0185,
     0.5
    ],
    [
-    0.9591,
-    0.0142,
+    0.9864,
+    0.0184,
     0.3825
-   ],
-   [
-    0.9636,
-    0.0142,
-    0.2484
-   ],
-   [
-    0.9682,
-    0.0141,
-    0.1963
    ]
   ],
   "B-LP": [
@@ -1353,15 +1343,15 @@
   {
    "name": "Pramaan as frozen",
    "n": 220,
-   "wrong_silent": 3,
-   "asked": 9,
-   "asked_needed": 3
+   "wrong_silent": 4,
+   "asked": 3,
+   "asked_needed": 2
   },
   {
    "name": "without the acoustic model",
    "n": 220,
    "wrong_silent": 3,
-   "asked": 7,
+   "asked": 4,
    "asked_needed": 2
   },
   {
@@ -1375,43 +1365,43 @@
    "name": "acoustic model as the only check",
    "n": 220,
    "wrong_silent": 5,
-   "asked": 4,
+   "asked": 2,
    "asked_needed": 1
   },
   {
    "name": "without the language check (acoustic model also judges English)",
    "n": 220,
-   "wrong_silent": 3,
-   "asked": 16,
-   "asked_needed": 3
+   "wrong_silent": 4,
+   "asked": 13,
+   "asked_needed": 2
   },
   {
    "name": "without Sarvam",
    "n": 220,
-   "wrong_silent": 3,
-   "asked": 21,
-   "asked_needed": 4
+   "wrong_silent": 4,
+   "asked": 18,
+   "asked_needed": 2
   },
   {
    "name": "without the dropped-value check",
    "n": 220,
-   "wrong_silent": 6,
-   "asked": 9,
-   "asked_needed": 3
+   "wrong_silent": 7,
+   "asked": 3,
+   "asked_needed": 2
   },
   {
    "name": "no deadline (wait for every source)",
    "n": 220,
-   "wrong_silent": 3,
-   "asked": 10,
-   "asked_needed": 4
+   "wrong_silent": 4,
+   "asked": 4,
+   "asked_needed": 3
   },
   {
    "name": "deadline 300 ms",
    "n": 220,
-   "wrong_silent": 3,
-   "asked": 9,
-   "asked_needed": 3
+   "wrong_silent": 4,
+   "asked": 3,
+   "asked_needed": 2
   }
  ],
  "agent_error_by_slot": {
@@ -1444,11 +1434,11 @@
    },
    "P": {
     "n": 60,
-    "wrong_silent": 0,
-    "asked": 4,
-    "asked_needed": 2,
-    "accepted": 56,
-    "caller_seconds": 0.27
+    "wrong_silent": 1,
+    "asked": 1,
+    "asked_needed": 1,
+    "accepted": 59,
+    "caller_seconds": 0.07
    }
   },
   "phone": {
@@ -1463,15 +1453,15 @@
    "P": {
     "n": 160,
     "wrong_silent": 3,
-    "asked": 5,
+    "asked": 2,
     "asked_needed": 1,
-    "accepted": 155,
-    "caller_seconds": 0.12
+    "accepted": 158,
+    "caller_seconds": 0.05
    }
   }
  },
  "assumptions": {
   "seconds_per_question": 4.0
  },
- "generated_at": "2026-11-21T17:35:29+00:00"
+ "generated_at": "2026-11-21T17:55:21+00:00"
 }

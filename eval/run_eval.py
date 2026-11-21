@@ -19,6 +19,7 @@ from pramaan.pipeline import load_policy
 from .common import (
     ALPHA,
     DELTA,
+    FRESH2_EVIDENCE,
     FRESH_EVIDENCE,
     HUMAN_EVIDENCE,
     LOCAL,
@@ -113,16 +114,17 @@ def main() -> None:
     rows, agent_failed = load()
     tune, test = split(rows)
     # Human recordings are test only: thresholds and the policy still come from the synthetic tuning speakers.
-    human, fresh = "--human" in sys.argv, "--fresh" in sys.argv
+    human, fresh2 = "--human" in sys.argv, "--fresh2" in sys.argv
+    fresh = "--fresh" in sys.argv or fresh2
     tune = tuning_rows()
     if human:
         test, agent_failed = load(HUMAN_EVIDENCE)
     elif fresh:
         # The locked batch: test speakers, new values, scored after the policy was frozen.
-        rows, agent_failed = load(FRESH_EVIDENCE)
+        rows, agent_failed = load(FRESH2_EVIDENCE if fresh2 else FRESH_EVIDENCE)
         test = split(rows)[1]
     kind = "human" if human else "synthetic"
-    stem = "human" if human else "fresh" if fresh else None
+    stem = "human" if human else "fresh2" if fresh2 else "fresh" if fresh else None
     policy = load_policy()
     has_second = any(hyp(r, SECOND) is not None for r in test)
     second = SECOND if has_second else LOCAL
