@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pramaan mock-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,300..600&display=swap" rel="stylesheet">
+<style>
+/* Direction: a bank counter. The amount is written in figures and in words, and the two must agree.
+   Surfaces stay neutral; red ink appears only on the part in doubt. */
+:root {
+  --paper: #F1F2F0;
+  --surface: #F9F9F8;
+  --raised: #FFFFFF;
+  --ink: #171A1F;
+  --ink-2: #4A515D;
+  --ink-3: #7A828F;
+  --line: rgba(23, 26, 31, .10);
+  --line-strong: rgba(23, 26, 31, .22);
+  --doubt: #B3261C;
+  --doubt-wash: #F8E8E5;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --font: "Anek Devanagari", "Noto Sans Devanagari", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0; color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.45;
+  font-variation-settings: "wdth" 100; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+
+.shell { max-width: 1440px; margin: 0 auto; padding: 0 32px 48px; }
+
+.bar { display: flex; align-items: center; gap: 32px; height: 64px; border-bottom: 1px solid var(--line); }
+.mark { display: flex; align-items: baseline; gap: 10px; font-weight: 500; font-size: 20px; letter-spacing: 0; }
+.mark span { font-size: 15px; color: var(--ink-3); font-weight: 400; }
+.tabs { display: flex; gap: 4px; }
+.tabs button {
+  height: 36px; padding: 0 14px; border: 0; background: none; border-radius: 8px; color: var(--ink-2); cursor: pointer;
+  transition: background-color .15s var(--ease), color .15s var(--ease);
+}
+.tabs button:hover { background: rgba(23, 26, 31, .05); }
+.tabs button[aria-selected="true"] { background: var(--raised); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.sample { margin-left: auto; font-size: 14px; color: var(--ink-3); }
+
+.view { display: none; padding-top: 32px; }
+.view.on { display: block; }
+h1 { margin: 0; font-size: 28px; line-height: 1.2; font-weight: 500; font-variation-settings: "wdth" 96; }
+h2 { margin: 0; font-size: 18px; font-weight: 500; }
+.lede { margin: 8px 0 0; color: var(--ink-2); max-width: 64ch; }
+
+/* What the caller said */
+.said { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; margin-top: 28px;
+  padding: 20px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.play { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px 0 14px; border: 0; border-radius: 10px;
+  background: var(--ink); color: #fff; cursor: pointer; transition: transform .1s var(--ease), background-color .15s var(--ease); }
+.play:hover { background: #2A2F38; }
+.play:active { transform: scale(.98); }
+.play svg { width: 18px; height: 18px; }
+.quote { font-size: 24px; line-height: 1.3; font-variation-settings: "wdth" 92; }
+.quote small { display: block; margin-top: 4px; font-size: 15px; color: var(--ink-3); font-variation-settings: "wdth" 100; }
+.wave { display: flex; align-items: center; gap: 3px; height: 40px; }
+.wave i { width: 3px; border-radius: 2px; background: var(--line-strong); }
+.playing .wave i { background: var(--ink-2); }
+
+/* The two agents */
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+.agent { padding: 24px; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; min-height: 468px; }
+.agent header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.agent header p { margin: 0; font-size: 15px; color: var(--ink-3); }
+.status { font-size: 15px; color: var(--ink-2); }
+.status b { font-weight: 500; color: var(--ink); }
+.status.held b { color: var(--doubt); }
+
+/* The slip: the one rich element. Boxed figures above, the same amount in words below. */
+.slip { margin-top: 20px; padding: 20px; border-radius: 10px; border: 1px solid var(--line-strong);
+  background:
+    repeating-linear-gradient(135deg, rgba(23,26,31,.028) 0 1px, transparent 1px 6px),
+    var(--surface);
+  opacity: .35; transition: opacity .3s var(--ease); }
+.slip.live { opacity: 1; }
+.row { display: grid; grid-template-columns: 108px 1fr; align-items: center; gap: 16px; }
+.row + .row { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--line-strong); }
+.row dt { font-size: 15px; color: var(--ink-3); }
+.row dd { margin: 0; min-height: 28px; }
+.cells { display: flex; align-items: stretch; gap: 6px; }
+.cells .rs { align-self: center; margin-right: 6px; font-size: 28px; color: var(--ink-2); }
+.cell { position: relative; width: 52px; height: 68px; display: grid; place-items: center; background: var(--raised);
+  border: 1px solid var(--line-strong); border-radius: 6px; font-size: 44px; line-height: 1; font-weight: 500;
+  font-variation-settings: "wdth" 112; padding-top: 6px; transition: background-color .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease); }
+.cell.gap { width: 10px; border: 0; background: none; font-size: 28px; color: var(--ink-3); }
+.cell.doubt { background: var(--doubt-wash); border-color: var(--doubt); color: var(--doubt); }
+.cell.doubt::after { content: attr(data-alt); position: absolute; right: 4px; top: 3px; font-size: 14px; font-weight: 400;
+  font-variation-settings: "wdth" 100; color: var(--doubt); opacity: .8; }
+.words { font-size: 20px; font-variation-settings: "wdth" 92; }
+.words.doubt { color: var(--doubt); }
+.day { font-size: 20px; font-variation-settings: "wdth" 92; }
+
+.note { margin: 20px 0 0; padding-left: 14px; border-left: 2px solid var(--line-strong); color: var(--ink-2); max-width: 52ch;
+  opacity: 0; transform: translateY(4px); transition: opacity .25s var(--ease), transform .25s var(--ease); }
+.note.on { opacity: 1; transform: none; }
+.note.red { border-color: var(--doubt); color: var(--ink); }
+.note strong { font-weight: 500; }
+.ask { margin: 20px 0 0; display: grid; gap: 8px; opacity: 0; transform: translateY(4px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease); }
+.ask.on { opacity: 1; transform: none; }
+.ask p { margin: 0; padding: 12px 16px; border-radius: 10px; max-width: 46ch; }
+.ask .a { background: var(--paper); }
+.ask .c { justify-self: end; background: var(--ink); color: #fff; }
+.ask span { display: block; font-size: 14px; color: var(--ink-3); margin-bottom: 2px; }
+.ask .c span { color: rgba(255,255,255,.62); }
+
+/* Evidence */
+.cols { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; margin-top: 28px; align-items: start; }
+.panel { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+th { text-align: left; font-weight: 400; font-size: 15px; color: var(--ink-3); padding: 0 12px 8px 0; border-bottom: 1px solid var(--line); }
+td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; padding-right: 0; }
+td small { display: block; color: var(--ink-3); font-size: 14px; }
+.heard { font-size: 18px; font-weight: 500; }
+.bad { color: var(--doubt); }
+.late { color: var(--ink-3); }
+
+.fall { margin-top: 20px; position: relative; padding-bottom: 28px; }
+.fall .lane { display: grid; grid-template-columns: 148px 1fr; align-items: center; gap: 12px; height: 32px; }
+.fall .lane span { font-size: 15px; color: var(--ink-2); white-space: nowrap; }
+.track { position: relative; height: 12px; }
+.track b { position: absolute; top: 0; height: 12px; border-radius: 3px; background: var(--ink-2); }
+.track b.late { background: none; box-shadow: inset 0 0 0 1px var(--line-strong);
+  background-image: repeating-linear-gradient(135deg, var(--line-strong) 0 1px, transparent 1px 5px); }
+.deadline { position: absolute; top: 0; bottom: 20px; left: calc(160px + (100% - 160px) * .75); width: 0; border-left: 1px dashed var(--doubt); }
+.deadline em { position: absolute; bottom: -22px; left: -64px; width: 128px; text-align: center; font-style: normal; font-size: 14px; color: var(--doubt); }
+.axis { display: grid; grid-template-columns: 148px 1fr; gap: 12px; margin-top: 4px; font-size: 14px; color: var(--ink-3); }
+.axis div { display: flex; justify-content: space-between; }
+.kv { margin: 16px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 15px; }
+.kv dt { color: var(--ink-3); } .kv dd { margin: 0; overflow-wrap: anywhere; }
+
+/* Results */
+.arms { margin-top: 28px; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 8px 24px; }
+.arm { display: grid; grid-template-columns: 232px 1fr 112px 112px; align-items: center; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.arm:last-child { border-bottom: 0; }
+.arm.head { padding: 12px 0 8px; font-size: 15px; color: var(--ink-3); }
+.arm h3 { margin: 0; font-size: 18px; font-weight: 500; }
+.arm p { margin: 2px 0 0; font-size: 15px; color: var(--ink-3); }
+.dots { display: grid; grid-template-columns: repeat(50, 1fr); gap: 4px; max-width: 760px; }
+.dots i { aspect-ratio: 1; border-radius: 50%; background: rgba(23,26,31,.13); }
+.dots i.w { background: var(--doubt); }
+.dots i.q { background: none; box-shadow: inset 0 0 0 1.5px var(--ink-2); }
+.fig { text-align: right; font-size: 28px; font-weight: 500; font-variation-settings: "wdth" 108; line-height: 1; }
+.fig small { font-size: 15px; font-weight: 400; color: var(--ink-3); margin-left: 2px; }
+.fig.bad { color: var(--doubt); }
+.arm.ours { margin: 0 -24px; padding-left: 24px; padding-right: 24px; background: var(--surface); border-radius: 0 0 14px 14px; }
+.legend { display: flex; gap: 24px; margin-top: 16px; font-size: 15px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 10px; height: 10px; border-radius: 50%; background: rgba(23,26,31,.13); }
+.legend i.w { background: var(--doubt); } .legend i.q { background: none; box-shadow: inset 0 0 0 1.5px var(--ink-2); }
+.cert { margin-top: 24px; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; padding: 20px 24px;
+  border: 1px solid var(--line-strong); border-radius: 10px;
+  background: repeating-linear-gradient(135deg, rgba(23,26,31,.028) 0 1px, transparent 1px 6px), var(--surface); }
+.cert .big { font-size: 44px; line-height: 1; font-weight: 500; font-variation-settings: "wdth" 112; }
+.cert p { margin: 0; color: var(--ink-2); max-width: 70ch; }
+.cert p strong { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 960px) {
+  .shell { padding: 0 16px 32px; }
+  .bar { flex-wrap: wrap; height: auto; padding: 12px 0; gap: 12px; }
+  .sample { margin-left: 0; width: 100%; }
+  .said, .pair, .cols, .cert { grid-template-columns: 1fr; }
+  .wave { display: none; }
+  .quote { font-size: 20px; }
+  .cell { width: 40px; height: 56px; font-size: 34px; }
+  .row { grid-template-columns: 1fr; gap: 6px; }
+  .arm { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .arm .dots { grid-column: 1 / -1; order: 3; grid-template-columns: repeat(25, 1fr); }
+  .arm.head { display: none; }
+  .fall .lane, .axis { grid-template-columns: 104px 1fr; }
+  .deadline { left: calc(116px + (100% - 116px) * .75); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="bar">
+    <div class="mark">प्रमाण <span>Pramaan</span></div>
+    <div class="tabs" role="tablist" aria-label="Views">
+      <button role="tab" aria-selected="true" data-view="call">Live call</button>
+      <button role="tab" aria-selected="false" data-view="evidence">Evidence</button>
+      <button role="tab" aria-selected="false" data-view="results">Results</button>
+    </div>
+    <div class="sample">Sample data, not measured results</div>
+  </div>
+
+  <section class="view on" id="call">
+    <h1>One call, two agents</h1>
+    <p class="lede">Both hear the same audio and try to log what the caller promised. One acts straight away. The other has to back the amount with evidence first.</p>
+
+    <div class="said" id="said">
+      <button class="play" id="play">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg>
+        <span id="playLabel">Play the call</span>
+      </button>
+      <div class="quote">“Agle mangalvaar ko paune teen hazaar rupaye de dunga”
+        <small>Caller, phone line, 3.4 seconds. Paune teen hazaar is 2,750</small></div>
+      <div class="wave" aria-hidden="true" id="wave"></div>
+    </div>
+
+    <div class="pair">
+      <article class="agent">
+        <header><div><h2>Realtime model alone</h2><p>Hears the audio and calls the tool</p></div>
+          <div class="status" id="stL">Waiting for the call</div></header>
+        <dl class="slip" id="slipL">
+          <div class="row"><dt>Amount</dt><dd><div class="cells" id="figL"></div></dd></div>
+          <div class="row"><dt>In words</dt><dd class="words" id="wordsL">&nbsp;</dd></div>
+          <div class="row"><dt>Due</dt><dd class="day" id="dayL">&nbsp;</dd></div>
+        </dl>
+        <p class="note red" id="noteL"><strong>Logged ₹3,500. The caller said ₹2,750.</strong> Nothing in the model's output marked the amount as uncertain, so nobody finds out until the payment is short.</p>
+      </article>
+
+      <article class="agent">
+        <header><div><h2>With Pramaan</h2><p>The same model, with its action held until checked</p></div>
+          <div class="status" id="stR">Waiting for the call</div></header>
+        <dl class="slip" id="slipR">
+          <div class="row"><dt>Amount</dt><dd><div class="cells" id="figR"></div></dd></div>
+          <div class="row"><dt>In words</dt><dd class="words" id="wordsR">&nbsp;</dd></div>
+          <div class="row"><dt>Due</dt><dd class="day" id="dayR">&nbsp;</dd></div>
+        </dl>
+        <p class="note" id="noteR">The three recognisers that answered in time all heard 2,750, and the acoustic check favours it. The model's 3,500 has no support, so the action waits.</p>
+        <div class="ask" id="askR">
+          <p class="a"><span>Agent asks</span>Do hazaar saat sau pachaas, ya teen hazaar paanch sau?</p>
+          <p class="c"><span>Caller, 2.6 seconds</span>Do hazaar saat sau pachaas</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="view" id="evidence">
+    <h1>Why the action was held</h1>
+    <p class="lede">The model proposed ₹3,500. Each recogniser listened to the same 3.4 seconds separately, and none of them was told what the model had proposed.</p>
+    <div class="cols">
+      <div class="panel">
+        <h2>What each one heard</h2>
+        <table>
+          <thead><tr><th>Listener</th><th>Heard</th><th>Amount</th><th class="n">Its own confidence</th></tr></thead>
+          <tbody>
+            <tr><td>Realtime model<small>The agent, proposing the action</small></td><td>none given</td><td class="heard bad">3,500</td><td class="n late">not exposed</td></tr>
+            <tr><td>gpt-transcribe<small>OpenAI</small></td><td>paune teen hazaar rupaye</td><td class="heard">2,750</td><td class="n late">not exposed</td></tr>
+            <tr><td>gpt-4o-transcribe<small>OpenAI, same family as above</small></td><td>पौने तीन हज़ार रुपये</td><td class="heard">2,750</td><td class="n">0.91</td></tr>
+            <tr><td>Scribe<small>ElevenLabs</small></td><td>paune teen hazar rupay</td><td class="heard">2,750</td><td class="n">0.88</td></tr>
+            <tr><td>Hindi acoustic model<small>Open model, scores each candidate against the audio</small></td><td>favours 2,750 over 3,500</td><td class="heard">2,750</td><td class="n">212 to 1</td></tr>
+            <tr><td class="late">Saaras<small>Sarvam</small></td><td class="late">arrived after the deadline</td><td class="late">not counted</td><td class="n late"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h2>When each answer arrived</h2>
+        <div class="fall">
+          <div class="lane"><span>Acoustic model</span><div class="track"><b style="left:0;width:19%"></b></div></div>
+          <div class="lane"><span>gpt-transcribe</span><div class="track"><b style="left:0;width:38%"></b></div></div>
+          <div class="lane"><span>gpt-4o-transcribe</span><div class="track"><b style="left:0;width:44%"></b></div></div>
+          <div class="lane"><span>Scribe</span><div class="track"><b style="left:0;width:58%"></b></div></div>
+          <div class="lane"><span>Saaras</span><div class="track"><b class="late" style="left:0;width:92%"></b></div></div>
+          <div class="deadline"><em>Decision at 1.2 s</em></div>
+        </div>
+        <div class="axis"><span></span><div><span>0</span><span>0.4 s</span><span>0.8 s</span><span>1.2 s</span><span>1.6 s</span></div></div>
+        <dl class="kv">
+          <dt>Decision</dt><dd>Held, then committed as ₹2,750 after one question</dd>
+          <dt>Added to the call</dt><dd>1.2 s to decide, 2.6 s for the caller's answer</dd>
+          <dt>Record</dt><dd>bundle 7f3a9c1e, policy 41d0b2, audio kept by reference</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="results">
+    <h1>The same 100 recorded calls, five ways</h1>
+    <p class="lede">Each dot is one call where a caller stated an amount, a date or a number. A red dot is a wrong value that was acted on without anyone being asked.</p>
+    <div class="arms" id="arms">
+      <div class="arm head"><span>Approach</span><span></span><span style="text-align:right">Wrong, unnoticed</span><span style="text-align:right">Caller time added</span></div>
+    </div>
+    <div class="legend"><span><i></i>Right value</span><span><i class="q"></i>Caller was asked</span><span><i class="w"></i>Wrong value, acted on</span></div>
+    <div class="cert">
+      <div class="big">≤ 5.3%</div>
+      <p><strong>Of the 88 actions Pramaan let through without asking, 1 was wrong.</strong> With 95% confidence the true rate is at most 5.3%, for callers like the 42 people recorded here. This covers decisions made without asking; calls where the caller was asked are counted separately.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+document.querySelectorAll('[role=tab]').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('[role=tab]').forEach(x => x.setAttribute('aria-selected', x === t));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === t.dataset.view));
+}));
+
+const bars = [10,18,30,22,34,14,8,26,38,30,16,24,36,28,12,20,32,18,10,6,14,26,34,22,12,8];
+$('wave').innerHTML = bars.map(h => `<i style="height:${h}px"></i>`).join('');
+
+function cells(el, digits, doubt = {}) {
+  el.innerHTML = '<span class="rs">₹</span>' + digits.map((d, i) =>
+    d === ',' ? '<span class="cell gap">,</span>'
+    : `<span class="cell${i in doubt ? ' doubt' : ''}"${i in doubt ? ` data-alt="${doubt[i]}"` : ''}>${d}</span>`).join('');
+}
+const blank = ['', ',', '', '', ''];
+
+function reset() {
+  for (const s of ['L', 'R']) {
+    cells($('fig' + s), blank); $('words' + s).innerHTML = '&nbsp;'; $('day' + s).innerHTML = '&nbsp;';
+    $('words' + s).classList.remove('doubt'); $('slip' + s).classList.remove('live');
+    $('st' + s).className = 'status'; $('st' + s).textContent = 'Waiting for the call';
+  }
+  $('noteL').classList.remove('on'); $('noteR').classList.remove('on'); $('askR').classList.remove('on');
+  $('said').classList.remove('playing');
+}
+
+const steps = [
+  [0, () => { reset(); $('said').classList.add('playing'); $('stL').textContent = $('stR').textContent = 'Listening'; }],
+  [3400, () => {
+    $('said').classList.remove('playing');
+    $('slipL').classList.add('live'); cells($('figL'), ['3', ',', '5', '0', '0']);
+    $('wordsL').textContent = 'Three thousand five hundred rupees only'; $('dayL').textContent = 'Tuesday';
+    $('stL').innerHTML = '<b>Committed</b> in 0.4 s';
+    $('slipR').classList.add('live'); cells($('figR'), ['3', ',', '5', '0', '0'], {0: '2', 2: '7', 3: '5'});
+    $('wordsR').textContent = 'Three thousand five hundred, or two thousand seven hundred and fifty'; $('wordsR').classList.add('doubt');
+    $('dayR').textContent = 'Tuesday';
+    $('stR').className = 'status held'; $('stR').innerHTML = '<b>Held</b>, checking the amount';
+  }],
+  [1400, () => {
+    $('noteL').classList.add('on'); $('noteR').classList.add('on');
+    cells($('figL'), ['3', ',', '5', '0', '0'], {0: '2', 2: '7', 3: '5'}); $('wordsL').classList.add('doubt');
+  }],
+  [1600, () => { $('askR').classList.add('on'); $('stR').innerHTML = '<b>Held</b>, asking the caller'; }],
+  [2800, () => {
+    cells($('figR'), ['2', ',', '7', '5', '0']); $('wordsR').textContent = 'Two thousand seven hundred and fifty rupees only';
+    $('wordsR').classList.remove('doubt');
+    $('stR').className = 'status'; $('stR').innerHTML = '<b>Committed</b> after 1 question, 3.8 s';
+    $('playLabel').textContent = 'Play again';
+  }],
+];
+let timers = [];
+$('play').addEventListener('click', () => {
+  timers.forEach(clearTimeout); timers = [];
+  let t = 0;
+  for (const [wait, fn] of steps) { t += wait; timers.push(setTimeout(fn, t)); }
+});
+reset();
+
+// Placeholder counts until `make eval` writes results/headline.json.
+const arms = [
+  ['Realtime model alone', 'Acts on what it heard', 23, 0, '0'],
+  ['Transcribe, then fill the form', 'A second model types the values', 9, 0, '0'],
+  ['Trust its own confidence', 'Ask when one recogniser is unsure', 6, 14, '0.9'],
+  ['Read everything back', 'Confirm every value with the caller', 1, 100, '6.2'],
+  ['Pramaan', 'Ask only when the evidence disagrees', 1, 12, '0.8', true],
+];
+for (const [name, how, wrong, asked, secs, ours] of arms) {
+  const kinds = Array.from({length: 100}, (_, i) => i < wrong ? 'w' : i < wrong + Math.min(asked, 100 - wrong) ? 'q' : '');
+  const order = kinds.map((k, i) => [(i * 37 + 11) % 100, k]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+  $('arms').insertAdjacentHTML('beforeend', `<div class="arm${ours ? ' ours' : ''}">
+    <div><h3>${name}</h3><p>${how}</p></div>
+    <div class="dots" role="img" aria-label="${wrong} of 100 wrong and unnoticed, ${asked} asked">${order.map(k => `<i class="${k}"></i>`).join('')}</div>
+    <div class="fig${wrong > 5 ? ' bad' : ''}">${wrong}<small>of 100</small></div>
+    <div class="fig">${secs}<small>s</small></div></div>`);
+}
+</script>
+</body>
+</html>
