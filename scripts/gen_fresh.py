@@ -32,9 +32,14 @@ NEAR = [(25, 35), (27, 37), (46, 56), (67, 77), (68, 78), (24, 34), (53, 63)]
 QUARTERS = [125, 150, 175, 225, 250, 275, 350, 450, 475, 525, 650, 725, 850, 950]
 
 
-def prompts() -> list[dict]:
-    rng = random.Random(SEED)
-    seen = {json.dumps(p["truth"], sort_keys=True) for p in gen_clips.load_prompts()}
+def prompts(seed: int, prefix: str) -> list[dict]:
+    rng = random.Random(seed)
+    earlier = [ROOT / "data" / "prompts.jsonl", *sorted((ROOT / "data").glob("fresh*/prompts.jsonl"))]
+    seen = {
+        json.dumps(json.loads(x)["truth"], sort_keys=True)
+        for f in earlier
+        for x in f.read_text().splitlines()
+    }
     out: list[dict] = []
 
     def when() -> dict:
@@ -70,7 +75,7 @@ def prompts() -> list[dict]:
             continue
         seen.add(tag)
         lang = "en" if rng.random() < 0.17 else "hi"
-        out.append(gen_prompts.build(f"f{len(out) + 1:02d}", truth, rng, lang=lang, hard=hard))
+        out.append(gen_prompts.build(f"{prefix}{len(out) + 1:02d}", truth, rng, lang=lang, hard=hard))
     return out
 
 
@@ -78,18 +83,21 @@ async def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-speaker", type=int, default=20)
     ap.add_argument("--concurrency", type=int, default=8)
+    ap.add_argument("--batch", type=int, default=1, help="1 writes data/fresh, 2 writes data/fresh2, ...")
     args = ap.parse_args()
 
-    FRESH.mkdir(parents=True, exist_ok=True)
-    path = FRESH / "prompts.jsonl"
+    fresh = FRESH if args.batch == 1 else FRESH.with_name(f"fresh{args.batch}")
+    seed, prefix = SEED + args.batch - 1, "fghjk"[args.batch - 1]
+    fresh.mkdir(parents=True, exist_ok=True)
+    path = fresh / "prompts.jsonl"
     if not path.exists():  # never redrawn: the locked set must not move
-        path.write_text("".join(json.dumps(p, ensure_ascii=False) + "\n" for p in prompts()))
-    gen_clips.DATA = FRESH  # prompts, assignment and manifest for this batch; clips stay under data/clips
-    gen_clips.SEED = SEED
+        path.write_text("".join(json.dumps(p, ensure_ascii=False) + "\n" for p in prompts(seed, prefix)))
+    gen_clips.DATA = fresh  # prompts, assignment and manifest for this batch; clips stay under data/clips
+    gen_clips.SEED = seed
     batch = gen_clips.load_prompts()
     by_id = {p["id"]: p for p in batch}
     assignment = gen_clips.assign(batch, args.per_speaker)
-    (FRESH / "assignment.json").write_text(json.dumps(assignment, indent=0) + "\n")
+    (fresh / "assignment.json").write_text(json.dumps(assignment, indent=0) + "\n")
 
     client = AsyncOpenAI(max_retries=4)
     sem = asyncio.Semaphore(args.concurrency)
@@ -101,7 +109,7 @@ async def main() -> None:
     print(f"\nclean+phone: {stats}")
     print(f"noisy made: {await asyncio.to_thread(gen_clips.make_noisy, assignment)}")
     print(f"manifest: {gen_clips.write_manifest(batch, assignment)}")
-    manifest = FRESH / "manifest.jsonl"
+    manifest = fresh / "manifest.jsonl"
     rows = [x for x in manifest.read_text().splitlines() if json.loads(x)["condition"] != "clean"]
     manifest.write_text("\n".join(rows) + "\n")
     n_en = sum(p["lang"] == "en" for p in batch)
