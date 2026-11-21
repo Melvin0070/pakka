@@ -1,0 +1,80 @@
+{
+ "tts_a01_clean|A": {
+  "amount_rupees": 3000,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "tts_a01_clean|B": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "अगले मंगलवार को पौने तीन हज़ार रुपए दे दूँगा।"
+ },
+ "tts_a01_phone|A": {
+  "amount_rupees": 3500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "tts_a01_phone|B": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "अगले मंगलवार को पौने तीन हज़ार रुपये दे दूँगा।"
+ },
+ "tts_a02_clean|A": {
+  "amount_rupees": 200000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null
+ },
+ "tts_a02_clean|B": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सावा दो लाख का पेमेंट पच्चीस तारीख को हो जाएगा।"
+ },
+ "tts_a02_phone|A": {
+  "amount_rupees": 212500,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null
+ },
+ "tts_a02_phone|B": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सावा दो लाख का पेमेंट पच्चीस तारीख को हो जाएगा।"
+ },
+ "tts_a03_clean|A": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null
+ },
+ "tts_a03_clean|B": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null,
+  "_transcript": "अभी ढाई हज़ार भेज रहा हूँ, बाकी शुक्रवार को।"
+ },
+ "tts_a03_phone|A": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null
+ },
+ "tts_a03_phone|B": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null,
+  "_transcript": "अभी ढाई हज़ार भेज रहा हूँ, बाकी शुक्रवार को।"
+ }
+}

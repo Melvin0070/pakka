@@ -1,0 +1,1562 @@
+{
+ "ttsalloy_a01_clean|A": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsalloy_a01_clean|B": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "अगले मंगलवार को पौने तीन हजार रुपये दे दूँगा।"
+ },
+ "ttsalloy_a01_phone|A": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsalloy_a01_phone|B": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "अगले मंगलवार को पौने तीन हज़ार रुपये दे दूँगा।"
+ },
+ "ttsalloy_a02_clean|A": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a02_clean|B": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सवा दो लाख का पेमेंट पच्चीस तारीख को हो जाएगा।"
+ },
+ "ttsalloy_a02_phone|A": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a02_phone|B": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सवा दो लाख का पेमेंट पच्चीस तारीख को हो जाएगा।"
+ },
+ "ttsalloy_a03_clean|A": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null
+ },
+ "ttsalloy_a03_clean|B": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null,
+  "_transcript": "अभी ढाई हजार भेज रहा हूँ, बाकी शुक्रवार को।"
+ },
+ "ttsalloy_a03_phone|A": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null
+ },
+ "ttsalloy_a03_phone|B": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null,
+  "_transcript": "अभी ढाई हज़ार भेज रहा हूँ, बाकी शुक्रवार को।"
+ },
+ "ttsalloy_a04_clean|A": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a04_clean|B": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "डेढ़ लाख रुपये इक्कीस तारीख तक पक्का।"
+ },
+ "ttsalloy_a04_phone|A": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a04_phone|B": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "डेढ़ लाख रुपये इक्कीस तारीख तक पक्का।"
+ },
+ "ttsalloy_a05_clean|A": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a05_clean|B": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े सात सौ रुपये COD है, कैश रेडी रखना।"
+ },
+ "ttsalloy_a05_phone|A": {
+  "amount_rupees": 700,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a05_phone|B": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े सात सौ रुपये COD है, कैश रेडी रखना।"
+ },
+ "ttsalloy_a06_clean|A": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null
+ },
+ "ttsalloy_a06_clean|B": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null,
+  "_transcript": "टोटल पचपन सौ बनता है, सोमवार को ट्रांसफर करूँगा।"
+ },
+ "ttsalloy_a06_phone|A": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null
+ },
+ "ttsalloy_a06_phone|B": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null,
+  "_transcript": "टोटल पचपन सौ बनता है, सोमवार को ट्रांसफर करूँगा।"
+ },
+ "ttsalloy_a07_clean|A": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a07_clean|B": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "उन्नीस हज़ार पाँच सौ का ईएमआई है, तीन तारीख को कटेगा।"
+ },
+ "ttsalloy_a07_phone|A": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a07_phone|B": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "उन्नीस हज़ार पाँच सौ का ईएमआई है, तीन तारीख को कटेगा।"
+ },
+ "ttsalloy_a08_clean|A": {
+  "amount_rupees": 49000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsalloy_a08_clean|B": {
+  "amount_rupees": 48000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "अड़तालिस हज़ार रुपये बुधवार को दे दूँगा।"
+ },
+ "ttsalloy_a08_phone|A": {
+  "amount_rupees": 44000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsalloy_a08_phone|B": {
+  "amount_rupees": 48000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "अड़तालिस हज़ार रुपये बुधवार को दे दूँगा।"
+ },
+ "ttsalloy_a09_clean|A": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null
+ },
+ "ttsalloy_a09_clean|B": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null,
+  "_transcript": "उन सात हज़ार का चेक गुरुवार को मिलेगा।"
+ },
+ "ttsalloy_a09_phone|A": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null
+ },
+ "ttsalloy_a09_phone|B": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null,
+  "_transcript": "उन सात हज़ार का चेक गुरुवार को मिलेगा।"
+ },
+ "ttsalloy_a10_clean|A": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a10_clean|B": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "I will pay fifteen thousand on the fifteenth."
+ },
+ "ttsalloy_a10_phone|A": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a10_phone|B": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "I will pay fifteen thousand on the fifteenth."
+ },
+ "ttsalloy_a11_clean|A": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a11_clean|B": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Fifty thousand का पेमेंट सत्रह तारीख को आएगा।"
+ },
+ "ttsalloy_a11_phone|A": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a11_phone|B": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Fifty thousand का पेमेंट सत्रह तारीख को आएगा।"
+ },
+ "ttsalloy_a12_clean|A": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null
+ },
+ "ttsalloy_a12_clean|B": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null,
+  "_transcript": "सत्रह हज़ार रुपए शनिवार तक भेज दूँगा।"
+ },
+ "ttsalloy_a12_phone|A": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null
+ },
+ "ttsalloy_a12_phone|B": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null,
+  "_transcript": "सत्रह हज़ार रुपए शनिवार तक भेज दूँगा।"
+ },
+ "ttsalloy_a13_clean|A": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a13_clean|B": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सत्तर हजार का बैलेंस है, सत्ताईस तारीख को क्लियर।"
+ },
+ "ttsalloy_a13_phone|A": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a13_phone|B": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सत्तर हज़ार का बैलेंस है, सत्ताईस तारीख को क्लियर।"
+ },
+ "ttsalloy_a14_clean|A": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a14_clean|B": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े बारह हजार का बिल है सर।"
+ },
+ "ttsalloy_a14_phone|A": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a14_phone|B": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े बारह हज़ार का बिल है सर।"
+ },
+ "ttsalloy_a15_clean|A": {
+  "amount_rupees": 150,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a15_clean|B": {
+  "amount_rupees": 175,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "पौने दो सौ रुपए डिलीवरी चार्ज लगेगा।"
+ },
+ "ttsalloy_a15_phone|A": {
+  "amount_rupees": 175,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a15_phone|B": {
+  "amount_rupees": 175,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "पौने दो सौ रुपए डिलीवरी चार्ज लगेगा।"
+ },
+ "ttsalloy_a16_clean|A": {
+  "amount_rupees": 300,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null
+ },
+ "ttsalloy_a16_clean|B": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null,
+  "_transcript": "सवा तीन सौ का रिचार्ज कर देना रविवार से पहले।"
+ },
+ "ttsalloy_a16_phone|A": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null
+ },
+ "ttsalloy_a16_phone|B": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null,
+  "_transcript": "सवा तीन सौ का रिचार्ज कर देना, रविवार से पहले।"
+ },
+ "ttsalloy_a17_clean|A": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a17_clean|B": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "एक लाख बीस हजार उनत्तीस तारीख को दूंगा।"
+ },
+ "ttsalloy_a17_phone|A": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a17_phone|B": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "एक लाख बीस हजार उनतीस तारीख को दूंगा।"
+ },
+ "ttsalloy_a18_clean|A": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsalloy_a18_clean|B": {
+  "amount_rupees": 7500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "पचहत्तर सौ रुपये एडवांस, बाकी मंगलवार को।"
+ },
+ "ttsalloy_a18_phone|A": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsalloy_a18_phone|B": {
+  "amount_rupees": 7500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "पचहत्तर सौ रुपये एडवांस बाकी मंगलवार को।"
+ },
+ "ttsalloy_a19_clean|A": {
+  "amount_rupees": 3030,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a19_clean|B": {
+  "amount_rupees": 3330,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "तीन हज़ार तीन सौ तीस रुपये का ऑर्डर है।"
+ },
+ "ttsalloy_a19_phone|A": {
+  "amount_rupees": 3030,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a19_phone|B": {
+  "amount_rupees": 3330,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "तीन हज़ार तीन सौ तीस रुपए का ऑर्डर है।"
+ },
+ "ttsalloy_a20_clean|A": {
+  "amount_rupees": 54000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a20_clean|B": {
+  "amount_rupees": 94000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "चौरनवे हजार का लोन अमाउंट है, उन्नीस तारीख को ड्यू।"
+ },
+ "ttsalloy_a20_phone|A": {
+  "amount_rupees": 54000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a20_phone|B": {
+  "amount_rupees": 94000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "चॉरनवे हजार का लोन अमाउंट है, उन्नीस तारीख को दियो।"
+ },
+ "ttsalloy_a21_clean|A": {
+  "amount_rupees": 1999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a21_clean|B": {
+  "amount_rupees": 9999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "नौ हज़ार नौ सौ निन्यानवे का फोन है ईएमआई पे।"
+ },
+ "ttsalloy_a21_phone|A": {
+  "amount_rupees": 999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a21_phone|B": {
+  "amount_rupees": 9999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "नौ हज़ार नौ सौ निन्यानवे का फोन है ईएमआई पे।"
+ },
+ "ttsalloy_a22_clean|A": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a22_clean|B": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Thirteen hundred rupees, I'll send it on the thirtieth."
+ },
+ "ttsalloy_a22_phone|A": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a22_phone|B": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Thirteen hundred rupees, I'll send it on the thirtieth."
+ },
+ "ttsalloy_a23_clean|A": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsalloy_a23_clean|B": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "ढाई लाख का डाउन पेमेंट बुधवार को करेंगे।"
+ },
+ "ttsalloy_a23_phone|A": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsalloy_a23_phone|B": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "ढाई लाख का डाउन पेमेंट बुधवार को करेंगे।"
+ },
+ "ttsalloy_a24_clean|A": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a24_clean|B": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "छह हज़ार छह सौ सात रुपए, छब्बीस तारीख को।"
+ },
+ "ttsalloy_a24_phone|A": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsalloy_a24_phone|B": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "छह हज़ार छह सौ सात रुपए, छब्बीस तारीख को।"
+ },
+ "ttsalloy_p01_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000"
+ },
+ "ttsalloy_p01_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000",
+  "_transcript": "मेरा नंबर नोट करो, nine eight double four seven one two triple zero."
+ },
+ "ttsalloy_p01_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9884471200"
+ },
+ "ttsalloy_p01_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000",
+  "_transcript": "मेरा नंबर नोट करो, nine eight double four seven one two triple zero."
+ },
+ "ttsalloy_p02_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334856"
+ },
+ "ttsalloy_p02_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334156",
+  "_transcript": "इस नंबर पे कॉल करना सात ज़ीरो नौ दो तीन तीन चार एक पाँच छह।"
+ },
+ "ttsalloy_p02_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334856"
+ },
+ "ttsalloy_p02_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334156",
+  "_transcript": "इस नंबर पे कॉल करना सात ज़ीरो नौ दो तीन तीन चार एक पाँच छह।"
+ },
+ "ttsalloy_p03_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9986051227"
+ },
+ "ttsalloy_p03_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9986051227",
+  "_transcript": "कॉलबैक नंबर है डबल नाइन एट सिक्स ज़ीरो फाइव वन दो दो सात।"
+ },
+ "ttsalloy_p03_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9986051207"
+ },
+ "ttsalloy_p03_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9986051227",
+  "_transcript": "कॉलबैक नंबर है डबल नाइन एट सिक्स ज़ीरो फाइव वन दो दो सात।"
+ },
+ "ttsalloy_p04_clean|A": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "8311907654"
+ },
+ "ttsalloy_p04_clean|B": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "8311907654",
+  "_transcript": "आठ तीन एक एक नौ ज़ीरो सात छह पाँच चार पे फोन करो, साढ़े चार हज़ार के बारे में।"
+ },
+ "ttsalloy_p04_phone|A": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "8311907654"
+ },
+ "ttsalloy_p04_phone|B": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "8311907654",
+  "_transcript": "आठ तीन एक एक नौ ज़ीरो सात छह पाँच चार पे फोन करो, साढ़े चार हज़ार के बारे में।"
+ },
+ "ttsalloy_p05_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472"
+ },
+ "ttsalloy_p05_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472",
+  "_transcript": "My number is six three double zero one nine eight four seven two."
+ },
+ "ttsalloy_p05_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472"
+ },
+ "ttsalloy_p05_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472",
+  "_transcript": "My number is six three double zero one nine eight four seven two."
+ },
+ "ttsalloy_p06_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "411182730"
+ },
+ "ttsalloy_p06_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "9411182730",
+  "_transcript": "नौ चार ट्रिपल वन आठ दो सात तीन ज़ीरो पे शुक्रवार को कॉल करना।"
+ },
+ "ttsalloy_p06_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "941182730"
+ },
+ "ttsalloy_p06_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "9411182730",
+  "_transcript": "नौ चार ट्रिपल वन आठ दो सात तीन ज़ीरो पे शुक्रवार को कॉल करना।"
+ },
+ "ttsonyx_a01_clean|A": {
+  "amount_rupees": 3500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsonyx_a01_clean|B": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "अगले मंगलवार को पौने तीन हज़ार रुपये दे दूँगा।"
+ },
+ "ttsonyx_a01_phone|A": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsonyx_a01_phone|B": {
+  "amount_rupees": 2750,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "अगले मंगलवार को पौने तीन हज़ार रुपये दे दूँगा।"
+ },
+ "ttsonyx_a02_clean|A": {
+  "amount_rupees": 212500,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a02_clean|B": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सावा दो लाख का पेमेंट पच्चीस तारीख को हो जाएगा।"
+ },
+ "ttsonyx_a02_phone|A": {
+  "amount_rupees": 212500,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a02_phone|B": {
+  "amount_rupees": 225000,
+  "day_of_month": 25,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सावा दो लाख का पेमेंट पच्चीस तारीख को हो जाएगा।"
+ },
+ "ttsonyx_a03_clean|A": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null
+ },
+ "ttsonyx_a03_clean|B": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null,
+  "_transcript": "अभी ढाई हज़ार भेज रहा हूँ, बाकी शुक्रवार को।"
+ },
+ "ttsonyx_a03_phone|A": {
+  "amount_rupees": 2000,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null
+ },
+ "ttsonyx_a03_phone|B": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": null,
+  "_transcript": "अभी ढाई हजार भेज रहा हूँ, बाकी शुक्रवार को।"
+ },
+ "ttsonyx_a04_clean|A": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a04_clean|B": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "डेढ़ लाख रुपये इक्कीस तारीख तक पक्का।"
+ },
+ "ttsonyx_a04_phone|A": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a04_phone|B": {
+  "amount_rupees": 150000,
+  "day_of_month": 21,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "डेढ़ लाख रुपये इक्कीस तारीख तक पक्का।"
+ },
+ "ttsonyx_a05_clean|A": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a05_clean|B": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े सात सौ रुपये सीओडी है, कैश रेडी रखना।"
+ },
+ "ttsonyx_a05_phone|A": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a05_phone|B": {
+  "amount_rupees": 750,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े सात सौ रुपये सीओडी है, कैश रेडी रखना।"
+ },
+ "ttsonyx_a06_clean|A": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null
+ },
+ "ttsonyx_a06_clean|B": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null,
+  "_transcript": "टोटल पचपन सौ बनता है, सोमवार को ट्रांसफर करूँगा।"
+ },
+ "ttsonyx_a06_phone|A": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null
+ },
+ "ttsonyx_a06_phone|B": {
+  "amount_rupees": 5500,
+  "day_of_month": null,
+  "weekday": "monday",
+  "phone": null,
+  "_transcript": "टोटल पचपन सौ बनता है, सोमवार को ट्रांसफर करूँगा।"
+ },
+ "ttsonyx_a07_clean|A": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a07_clean|B": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "उन्नीस हज़ार पाँच सौ का ईएमआई है, तीन तारीख को कटेगा।"
+ },
+ "ttsonyx_a07_phone|A": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a07_phone|B": {
+  "amount_rupees": 19500,
+  "day_of_month": 3,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "उन्नीस हज़ार पाँच सौ का ईएमआई है, तीन तारीख को कटेगा।"
+ },
+ "ttsonyx_a08_clean|A": {
+  "amount_rupees": 40000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsonyx_a08_clean|B": {
+  "amount_rupees": 40000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "उन चालीस हज़ार रुपये बुधवार को दे दूँगा।"
+ },
+ "ttsonyx_a08_phone|A": {
+  "amount_rupees": 49000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsonyx_a08_phone|B": {
+  "amount_rupees": 43000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "उन तैंतालीस हज़ार रुपये बुधवार को दे दूँगा।"
+ },
+ "ttsonyx_a09_clean|A": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null
+ },
+ "ttsonyx_a09_clean|B": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null,
+  "_transcript": "उन सात हज़ार का चेक गुरुवार को मिलेगा।"
+ },
+ "ttsonyx_a09_phone|A": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null
+ },
+ "ttsonyx_a09_phone|B": {
+  "amount_rupees": 7000,
+  "day_of_month": null,
+  "weekday": "thursday",
+  "phone": null,
+  "_transcript": "उन सात हज़ार का चेक गुरुवार को मिलेगा।"
+ },
+ "ttsonyx_a10_clean|A": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a10_clean|B": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "I will pay fifteen thousand on the fifteenth."
+ },
+ "ttsonyx_a10_phone|A": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a10_phone|B": {
+  "amount_rupees": 15000,
+  "day_of_month": 15,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "I will pay fifteen thousand on the fifteenth."
+ },
+ "ttsonyx_a11_clean|A": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a11_clean|B": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "फिफ्टी थाउजंड का पेमेंट सत्रह तारीख को आएगा।"
+ },
+ "ttsonyx_a11_phone|A": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a11_phone|B": {
+  "amount_rupees": 50000,
+  "day_of_month": 17,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Fifty thousand का पेमेंट सत्रह तारीख को आएगा।"
+ },
+ "ttsonyx_a12_clean|A": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null
+ },
+ "ttsonyx_a12_clean|B": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null,
+  "_transcript": "सत्रह हज़ार रुपये शनिवार तक भेज दूँगा।"
+ },
+ "ttsonyx_a12_phone|A": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null
+ },
+ "ttsonyx_a12_phone|B": {
+  "amount_rupees": 17000,
+  "day_of_month": null,
+  "weekday": "saturday",
+  "phone": null,
+  "_transcript": "सत्रह हज़ार रुपये शनिवार तक भेज दूँगा।"
+ },
+ "ttsonyx_a13_clean|A": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a13_clean|B": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सत्तर हज़ार का बैलेंस है, सत्ताईस तारीख को क्लियर।"
+ },
+ "ttsonyx_a13_phone|A": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a13_phone|B": {
+  "amount_rupees": 70000,
+  "day_of_month": 27,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "सत्तर हज़ार का बैलेंस है, सत्ताईस तारीख को क्लियर।"
+ },
+ "ttsonyx_a14_clean|A": {
+  "amount_rupees": 2500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a14_clean|B": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े बारह हजार का बिल है सर।"
+ },
+ "ttsonyx_a14_phone|A": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a14_phone|B": {
+  "amount_rupees": 12500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "साढ़े बारह हज़ार का बिल है सर।"
+ },
+ "ttsonyx_a15_clean|A": {
+  "amount_rupees": 200,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a15_clean|B": {
+  "amount_rupees": 175,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "पौने दो सौ रुपये डिलीवरी चार्ज लगेगा।"
+ },
+ "ttsonyx_a15_phone|A": {
+  "amount_rupees": 200,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a15_phone|B": {
+  "amount_rupees": 175,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "पौने दो सौ रुपये डिलीवरी चार्ज लगेगा।"
+ },
+ "ttsonyx_a16_clean|A": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null
+ },
+ "ttsonyx_a16_clean|B": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null,
+  "_transcript": "सवा तीन सौ, कारी चार्ज कर देना रविवार से पहले।"
+ },
+ "ttsonyx_a16_phone|A": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null
+ },
+ "ttsonyx_a16_phone|B": {
+  "amount_rupees": 325,
+  "day_of_month": null,
+  "weekday": "sunday",
+  "phone": null,
+  "_transcript": "सवा तीन सौ, का रीचार्ज कर देना रविवार से पहले।"
+ },
+ "ttsonyx_a17_clean|A": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a17_clean|B": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "एक लाख बीस हजार उनतीस तारीख को दूंगा।"
+ },
+ "ttsonyx_a17_phone|A": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a17_phone|B": {
+  "amount_rupees": 120000,
+  "day_of_month": 29,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "एक लाख बीस हज़ार उनतीस तारीख को दूंगा।"
+ },
+ "ttsonyx_a18_clean|A": {
+  "amount_rupees": 7500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsonyx_a18_clean|B": {
+  "amount_rupees": 7500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "पचहत्तर सौ रुपये एडवांस, बाकी मंगलवार को।"
+ },
+ "ttsonyx_a18_phone|A": {
+  "amount_rupees": 7500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null
+ },
+ "ttsonyx_a18_phone|B": {
+  "amount_rupees": 7500,
+  "day_of_month": null,
+  "weekday": "tuesday",
+  "phone": null,
+  "_transcript": "पचहत्तर सौ रुपये एडवांस, बाकी मंगलवार को।"
+ },
+ "ttsonyx_a19_clean|A": {
+  "amount_rupees": 3030,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a19_clean|B": {
+  "amount_rupees": 3330,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "तीन हजार तीन सौ तीस रुपये का ऑर्डर है।"
+ },
+ "ttsonyx_a19_phone|A": {
+  "amount_rupees": 3330,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a19_phone|B": {
+  "amount_rupees": 3330,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "तीन हज़ार तीन सौ तीस रुपए का ऑर्डर है।"
+ },
+ "ttsonyx_a20_clean|A": {
+  "amount_rupees": 94000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a20_clean|B": {
+  "amount_rupees": 94000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "चौरानवे हज़ार का लोन अमाउंट है, उन्नीस तारीख को ड्यू।"
+ },
+ "ttsonyx_a20_phone|A": {
+  "amount_rupees": 94000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a20_phone|B": {
+  "amount_rupees": 94000,
+  "day_of_month": 19,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "चौरानवे हज़ार का लोन अमाउंट है, उन्नीस तारीख को ड्यू।"
+ },
+ "ttsonyx_a21_clean|A": {
+  "amount_rupees": 9999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a21_clean|B": {
+  "amount_rupees": 9999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "नौ हज़ार नौ सौ निन्यानवे का फोन है, ईएमआई पे।"
+ },
+ "ttsonyx_a21_phone|A": {
+  "amount_rupees": 9999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a21_phone|B": {
+  "amount_rupees": 9999,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "नौ हज़ार नौ सौ निन्यानवे का फोन है, ईएमआई पे।"
+ },
+ "ttsonyx_a22_clean|A": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a22_clean|B": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Thirteen hundred rupees. I'll send it on the thirtieth."
+ },
+ "ttsonyx_a22_phone|A": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a22_phone|B": {
+  "amount_rupees": 1300,
+  "day_of_month": 30,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "Thirteen hundred rupees. I'll send it on the 30th."
+ },
+ "ttsonyx_a23_clean|A": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsonyx_a23_clean|B": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "ढाई लाख का डाउन पेमेंट बुधवार को करेंगे।"
+ },
+ "ttsonyx_a23_phone|A": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null
+ },
+ "ttsonyx_a23_phone|B": {
+  "amount_rupees": 250000,
+  "day_of_month": null,
+  "weekday": "wednesday",
+  "phone": null,
+  "_transcript": "ढाई लाख का डाउन पेमेंट बुधवार को करेंगे।"
+ },
+ "ttsonyx_a24_clean|A": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a24_clean|B": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "छह हज़ार छह सौ सात रुपए, छब्बीस तारीख को।"
+ },
+ "ttsonyx_a24_phone|A": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null
+ },
+ "ttsonyx_a24_phone|B": {
+  "amount_rupees": 6607,
+  "day_of_month": 26,
+  "weekday": null,
+  "phone": null,
+  "_transcript": "छह हज़ार छह सौ सात रुपये छब्बीस तारीख को।"
+ },
+ "ttsonyx_p01_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000"
+ },
+ "ttsonyx_p01_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000",
+  "_transcript": "मेरा नंबर नोट करो, nine eight double four seven one two triple zero।"
+ },
+ "ttsonyx_p01_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000"
+ },
+ "ttsonyx_p01_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9844712000",
+  "_transcript": "मेरा नंबर नोट करो, nine eight double four seven one two triple zero।"
+ },
+ "ttsonyx_p02_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334156"
+ },
+ "ttsonyx_p02_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334156",
+  "_transcript": "इस नंबर पे कॉल करना सात ज़ीरो नौ दो तीन तीन चार एक पाँच छह।"
+ },
+ "ttsonyx_p02_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334156"
+ },
+ "ttsonyx_p02_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7092334156",
+  "_transcript": "इस नंबर पे कॉल करना सात ज़ीरो नौ दो तीन तीन चार एक पाँच छह।"
+ },
+ "ttsonyx_p03_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "998605177"
+ },
+ "ttsonyx_p03_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9986051227",
+  "_transcript": "कॉलबैक नंबर है डबल नाइन एट सिक्स ज़ीरो फाइव वन दो दो सात।"
+ },
+ "ttsonyx_p03_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "998605127"
+ },
+ "ttsonyx_p03_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "9986051227",
+  "_transcript": "कॉल बैक नंबर है डबल नाइन एट सिक्स ज़ीरो फाइव वन दो दो सात।"
+ },
+ "ttsonyx_p04_clean|A": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "881907654"
+ },
+ "ttsonyx_p04_clean|B": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "8311907654",
+  "_transcript": "आठ तीन एक एक नौ ज़ीरो सात छह पांच चार पे फोन करो साढ़े चार हज़ार के बारे में।"
+ },
+ "ttsonyx_p04_phone|A": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "8311907654"
+ },
+ "ttsonyx_p04_phone|B": {
+  "amount_rupees": 4500,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "7311907654",
+  "_transcript": "सात तीन एक एक नौ ज़ीरो सात छह पाँच चार पे फोन करो साढ़े चार हज़ार के बारे में।"
+ },
+ "ttsonyx_p05_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472"
+ },
+ "ttsonyx_p05_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472",
+  "_transcript": "My number is six three double zero one nine eight four seven two."
+ },
+ "ttsonyx_p05_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472"
+ },
+ "ttsonyx_p05_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": null,
+  "phone": "6300198472",
+  "_transcript": "My number is six three double zero one nine eight four seven two."
+ },
+ "ttsonyx_p06_clean|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "411182730"
+ },
+ "ttsonyx_p06_clean|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "9411182730",
+  "_transcript": "नौ चार ट्रिपल वन आठ दो सात तीन ज़ीरो पे शुक्रवार को कॉल करना।"
+ },
+ "ttsonyx_p06_phone|A": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "41182730"
+ },
+ "ttsonyx_p06_phone|B": {
+  "amount_rupees": null,
+  "day_of_month": null,
+  "weekday": "friday",
+  "phone": "9411182730",
+  "_transcript": "नौ चार ट्रिपल वन आठ दो सात तीन ज़ीरो पे शुक्रवार को कॉल करना।"
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "accept_threshold": 0.3,
+ "bias": 0.0,
+ "code_commit": "",
+ "deadline_ms": 1200.0,
+ "guard_omissions": true,
+ "language_aware": true,
+ "max_candidates": 8,
+ "min_families": 2,
+ "repair": true,
+ "require_witness": true,
+ "version": "p1",
+ "weights": {},
+ "witness_llr_min": 8.0
+}

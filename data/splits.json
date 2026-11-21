@@ -1,0 +1,19 @@
+{
+ "tune": [
+  "alloy",
+  "ash",
+  "coral",
+  "onyx"
+ ],
+ "test": [
+  "ballad",
+  "echo",
+  "fable",
+  "nova",
+  "sage",
+  "shimmer",
+  "verse",
+  "marin"
+ ],
+ "note": "Split by speaker, fixed before any results were seen. Never tune on 'test'."
+}
