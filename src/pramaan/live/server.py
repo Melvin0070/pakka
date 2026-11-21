@@ -200,6 +200,12 @@ async def results(set: str = "synthetic") -> JSONResponse:
     return JSONResponse(json.loads(path.read_text()) if path.exists() else None)
 
 
+@app.get("/api/scenarios")
+async def scenarios() -> JSONResponse:
+    path = ROOT / "demo" / "scenarios.json"
+    return JSONResponse(json.loads(path.read_text()) if path.exists() else [])
+
+
 @app.get("/api/analysis")
 async def analysis() -> JSONResponse:
     path = ROOT / "results" / "analysis.json"

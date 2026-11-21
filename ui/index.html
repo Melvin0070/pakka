@@ -15,7 +15,8 @@
   <div class="bar">
     <div class="mark">प्रमाण <span>Pramaan</span></div>
     <div class="tabs" role="tablist" aria-label="Views">
-      <button role="tab" aria-selected="true" data-view="call">Live call</button>
+      <button role="tab" aria-selected="true" data-view="overview">Before and after</button>
+      <button role="tab" aria-selected="false" data-view="call">Live call</button>
       <button role="tab" aria-selected="false" data-view="evidence">Evidence</button>
       <button role="tab" aria-selected="false" data-view="results">Results</button>
     </div>
@@ -25,7 +26,41 @@
   <div class="banner" id="offline" role="status">OFFLINE REPLAY. No network is used. Both agents repeat the tool call the realtime model made for this recording; the recognisers answer from the recorded cache, and the acoustic check, the decision and the ledger run for real.</div>
   <div class="banner" id="err" role="alert"></div>
 
-  <section class="view on" id="call">
+  <section class="view on" id="overview">
+    <h1>A voice agent acts on what it heard. Pramaan checks it first.</h1>
+    <p class="lede">A speech-to-speech model goes from sound straight to action. When it logs an amount, a date or a phone number, nothing in between checks the value. Pramaan holds that action for up to 1.2 seconds, compares it with independent recognisers, and then lets it through, corrects it, or asks one question.</p>
+
+    <div class="ba" id="ba" hidden>
+      <article class="panel before">
+        <span class="tag">Before</span>
+        <h2>The realtime model alone</h2>
+        <div class="big bad" id="baBefore"></div>
+        <p id="baBeforeText"></p>
+        <div class="dots" id="baBeforeDots" role="img"></div>
+      </article>
+      <article class="panel after">
+        <span class="tag">After</span>
+        <h2>The same model, with Pramaan</h2>
+        <div class="big" id="baAfter"></div>
+        <p id="baAfterText"></p>
+        <div class="dots" id="baAfterDots" role="img"></div>
+      </article>
+    </div>
+    <div class="legend"><span><i></i>Right value</span><span><i class="q"></i>Caller was asked</span><span><i class="w"></i>Wrong value, acted on</span></div>
+    <p class="lede" id="baNote"></p>
+
+    <div class="panel flow" id="flow" hidden>
+      <h2>What happened to the model's wrong values</h2>
+      <div class="tiles" id="flowTiles"></div>
+    </div>
+
+    <h2 class="sec">Watch it happen</h2>
+    <p class="lede">Four recorded calls, played through the real models. The left side acts at once; the right side is checked. The model alone does not make the identical mistake every time, so its value on screen can differ from the one shown here.</p>
+    <div class="cards" id="cards"></div>
+    <p class="lede"><button class="ghost" id="goLive">Or try your own voice</button></p>
+  </section>
+
+  <section class="view" id="call">
     <h1>One call, two agents</h1>
     <p class="lede">Both hear the same audio and try to log what the caller promised. One acts straight away. The other has to back each value with evidence first.</p>
 

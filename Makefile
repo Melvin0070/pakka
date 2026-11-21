@@ -37,3 +37,7 @@ demo:
 # No network and no keys: recorded calls only, the model's answers and every recogniser come from the cache.
 demo-offline:
 	PRAMAAN_OFFLINE=1 uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port 8765
+
+# Speaking side (numbers said by a TTS or video model). Separate data and results; never touches eval.
+speak-probe:
+	uv run python scripts/speak/probe.py

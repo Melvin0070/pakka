@@ -211,8 +211,9 @@ const handlers = {
     const q = e.questions;
     status('R', q ? `<b>Committed</b> after ${q} question${q > 1 ? 's' : ''}, ${secs(e.total_ms)}`
       : `<b>Committed</b>, checked in ${secs(S.evidence ? S.evidence.waited_ms : 0)} after the tool call`);
-    if (e.repaired_from) status('R', `<b>Corrected and committed</b>, checked in ${secs(S.evidence ? S.evidence.waited_ms : 0)} after the tool call`);
+    if (e.repaired_from && !q) status('R', `<b>Corrected and committed</b>, checked in ${secs(S.evidence ? S.evidence.waited_ms : 0)} after the tool call`);
     if (!q) note('R', S.decision ? S.decision.slots.map(s => `${esc(show(s.slot, s.final ?? s.proposed))}${s.final != null && s.proposed != null && s.final !== s.proposed ? ` (model proposed ${esc(show(s.slot, s.proposed))})` : ''}: ${esc(reason(s.reason))}`).join('<br>') : '');
+    if (q) note('R', `<strong>${esc(showAll(e.values))}</strong>: confirmed by the caller's answer and the recognisers.`);
     leftNote(); renderEvidence();
   },
   'right.duplicate'() { status('R', '<b>Committed</b> already; a repeated tool call was not executed again'); },
@@ -450,17 +451,16 @@ async function startMic() {
   }
 }
 $('mic').addEventListener('click', () => (ws ? endCall() : startMic()));
-$('replay').addEventListener('click', () => {
-  const id = $('clip').value; if (!id) return;
+function playClip(id, answer, meta) {
   if (ws) endCall();
   audio();
-  current = clips.find(c => c.clip_id === id) || null;
+  current = meta || clips.find(c => c.clip_id === id) || null;
   $('quote').firstChild.textContent = current && current.say ? `“${current.say}”` : id;
   $('quoteSub').textContent = current && current.truth ? `Recorded call. The caller's actual words mean ${showAll(current.truth)}` : 'Recorded call';
-  const ans = $('answer').value;
-  connect(`?replay=${encodeURIComponent(id)}${ans === '-' ? '' : ',' + encodeURIComponent(ans || id)}`);
+  connect(`?replay=${encodeURIComponent(id)}${answer === '-' ? '' : ',' + encodeURIComponent(answer || id)}`);
   $('replay').disabled = true; $('mic').disabled = true;
-});
+}
+$('replay').addEventListener('click', () => { if ($('clip').value) playClip($('clip').value, $('answer').value); });
 $('clip').addEventListener('change', () => { $('replay').disabled = !$('clip').value || !!ws; });
 
 document.querySelectorAll('[role=tab]').forEach(t => t.addEventListener('click', () => {
@@ -468,6 +468,49 @@ document.querySelectorAll('[role=tab]').forEach(t => t.addEventListener('click',
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === t.dataset.view));
   if (t.dataset.view === 'results') loadResults();
 }));
+
+function showView(name) { document.querySelector(`[role=tab][data-view=${name}]`).click(); }
+function dotGrid(wrong, asked, n) {
+  const w = Math.round(100 * wrong / n), q = Math.min(Math.round(100 * asked / n), 100 - w);
+  const kinds = Array.from({length: 100}, (_, i) => i < w ? 'w' : i < w + q ? 'q' : '');
+  return kinds.map((k, i) => [(i * 37 + 11) % 100, k]).sort((x, y) => x[0] - y[0]).map(x => `<i class="${x[1]}"></i>`).join('');
+}
+async function loadOverview() {
+  const get = u => fetch('/api/' + u).then(x => x.ok ? x.json() : null).catch(() => null);
+  const [fresh, first, human, a, sc] = await Promise.all([get('results?set=fresh'), get('results?set=synthetic'), get('results?set=human'), get('analysis'), get('scenarios')]);
+  const r = fresh || first;
+  if (r) {
+    const arm = id => r.arms.find(x => x.id === id), A = arm('A'), P = arm('P'), pc = (k, n) => (100 * k / n).toFixed(1) + '%';
+    $('ba').hidden = false;
+    $('baBefore').innerHTML = `${pc(A.wrong_silent, A.n)}<small>wrong</small>`;
+    $('baBeforeText').textContent = `Acted on a wrong amount, date or phone number in ${A.wrong_silent} of ${A.n} calls. Nobody was asked; nothing flagged it.`;
+    $('baAfter').innerHTML = `${pc(P.wrong_silent, P.n)}<small>wrong</small>`;
+    $('baAfterText').textContent = `${P.wrong_silent} of ${P.n} calls. The caller was asked one short question on ${P.asked} (${pc(P.asked, P.n)}); the rest went through or were corrected silently.`;
+    $('baBeforeDots').innerHTML = dotGrid(A.wrong_silent, 0, A.n);
+    $('baAfterDots').innerHTML = dotGrid(P.wrong_silent, P.asked, P.n);
+    const c = r.certificate, ds = r.dataset;
+    $('baNote').textContent = `The same ${ds.n_actions} recorded calls on both sides, from ${ds.n_speakers} held-out synthetic voices over a phone channel` +
+      (fresh ? ', scored once after the policy was frozen' : '') + `. With 95% confidence, at most ${(100 * c.upper_bound).toFixed(1)}% of actions let through are wrong.` +
+      (human ? ` Recorded people so far: ${human.dataset.n_speakers}, ${human.dataset.n_actions} calls (see Results).` : ' No recordings of people yet.');
+  }
+  if (a) {
+    const tile = (n, label, bad) => `<div><b${bad ? ' class="bad"' : ''}>${n}</b><span>${esc(label)}</span></div>`;
+    const f = a.agent_errors.fate, q = a.questions;
+    $('flow').hidden = false;
+    $('flowTiles').innerHTML = tile(a.agent_errors.n, `wrong values proposed in ${a.n} calls`) + tile(f['repaired to the true value'] ?? 0, 'corrected without asking') +
+      tile(f['caller asked'] ?? 0, 'held for a question') + tile(f['acted on, wrong'] ?? 0, 'got through', true) +
+      (q ? tile(`${q.outcomes.committed_right ?? 0} of ${q.n}`, 'asked calls ended with the right value') : '');
+  }
+  $('cards').innerHTML = (sc || []).map((s, i) => `<article class="card"><h3>${esc(s.title)}</h3><p class="said" lang="hi">“${esc(s.say)}”</p>
+    <dl><dt>Model alone</dt><dd class="bad">${esc(s.alone)}</dd><dt>With Pramaan</dt><dd>${esc(s.guarded)} · ${esc(s.outcome)}</dd></dl>
+    <p class="why">${esc(s.note)}</p><button class="ghost" data-scenario="${i}">Play this call</button></article>`).join('');
+  document.querySelectorAll('[data-scenario]').forEach(b => b.addEventListener('click', () => {
+    const s = sc[+b.dataset.scenario];
+    showView('call');
+    playClip(s.id, s.answer || '-', {clip_id: s.id, say: s.say, truth: s.truth});
+  }));
+}
+$('goLive').addEventListener('click', () => showView('call'));
 
 let resultSet = 'synthetic';
 async function loadResults() {
@@ -487,6 +530,7 @@ document.querySelectorAll('#sets button').forEach(b => b.addEventListener('click
 }));
 async function boot() {
   resetCall();
+  loadOverview();
   try {
     health = await (await fetch('/api/health')).json();
     const ok = health.offline || (health.key_present && health.model_reachable);
@@ -508,8 +552,9 @@ async function boot() {
       `<optgroup label="${esc(speaker)}">` + list.map(c =>
         `<option value="${esc(c.clip_id)}">${esc(c.truth ? showAll(c.truth) : c.clip_id)}${c.condition && c.condition !== 'phone' ? ' (' + esc(c.condition) + ')' : ''}</option>`).join('') + '</optgroup>').join(''));
     const want = new URLSearchParams(location.search).get('clip');
-    if (want && clips.some(c => c.clip_id === want)) { $('clip').value = want; $('replay').disabled = false; }
+    if (want && clips.some(c => c.clip_id === want)) { $('clip').value = want; $('replay').disabled = false; showView('call'); }
   } catch (e) { /* the page still works with the microphone */ }
+  if (location.hash === '#call') showView('call');
   if (location.hash === '#results') document.querySelector('[data-view=results]').click();
   if (location.hash === '#evidence') document.querySelector('[data-view=evidence]').click();
 }

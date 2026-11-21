@@ -156,14 +156,12 @@ make demo-offline   # replay demo with no network or keys (after make setup): re
 
 ## Demo without a microphone
 
-`make serve`, then open one of these (tuning-speaker clips, replayed through the real models):
+`make serve`, then open http://127.0.0.1:8765. The first view shows the before and after numbers and four
+recorded calls (`demo/scenarios.json`) that play through the real models: an amount the agent dropped, a
+wrong phone digit, a split that leads to one question, and a misheard Hindi fraction. `DEMO.md` is the
+two-minute run of show, with how often each call reproduced live.
 
-- `/?clip=alloy_h33_phone`: the bare model logs a wrong phone number; the guarded model also proposes a wrong one,
-  and the evidence corrects it before it executes.
-- `/?clip=coral_h16_phone`: the recognisers split on "thirtieth"; the action is held and the agent asks
-  "Tees taarikh, ya teen taarikh?".
-
-If the network is down, `make demo-offline` plays the same two clips from `demo/` with nothing leaving the
+If the network is down, `make demo-offline` plays the same calls from `demo/` with nothing leaving the
 machine. Both agents then repeat the tool call the realtime model made for that recording, the recognisers
 answer from `data/cache.sqlite`, and the acoustic check, the decision and the ledger run for real. The agent's
 reply is text only, and a replay stops at the question.
