@@ -1,0 +1,242 @@
+{
+ "note": "synthetic speech (2 TTS voices x 30 prompts); phone = 8 kHz mu-law round trip",
+ "accuracy": {
+  "context|phone|all": {
+   "won": 325,
+   "pairs": 328
+  },
+  "context|phone|base_arm_error": {
+   "won": 59,
+   "pairs": 62
+  },
+  "context|phone|amount_rupees": {
+   "won": 193,
+   "pairs": 196
+  },
+  "context|phone|day_of_month": {
+   "won": 36,
+   "pairs": 36
+  },
+  "context|phone|weekday": {
+   "won": 40,
+   "pairs": 40
+  },
+  "context|phone|phone": {
+   "won": 56,
+   "pairs": 56
+  },
+  "context|phone|truth_top": {
+   "won": 95,
+   "slots": 98
+  },
+  "context|clean|all": {
+   "won": 325,
+   "pairs": 328
+  },
+  "context|clean|base_arm_error": {
+   "won": 59,
+   "pairs": 62
+  },
+  "context|clean|amount_rupees": {
+   "won": 193,
+   "pairs": 196
+  },
+  "context|clean|day_of_month": {
+   "won": 36,
+   "pairs": 36
+  },
+  "context|clean|weekday": {
+   "won": 40,
+   "pairs": 40
+  },
+  "context|clean|phone": {
+   "won": 56,
+   "pairs": 56
+  },
+  "context|clean|truth_top": {
+   "won": 95,
+   "slots": 98
+  },
+  "star-max|phone|all": {
+   "won": 317,
+   "pairs": 328
+  },
+  "star-max|phone|base_arm_error": {
+   "won": 53,
+   "pairs": 62
+  },
+  "star-max|phone|amount_rupees": {
+   "won": 187,
+   "pairs": 196
+  },
+  "star-max|phone|day_of_month": {
+   "won": 36,
+   "pairs": 36
+  },
+  "star-max|phone|weekday": {
+   "won": 40,
+   "pairs": 40
+  },
+  "star-max|phone|phone": {
+   "won": 54,
+   "pairs": 56
+  },
+  "star-max|phone|truth_top": {
+   "won": 87,
+   "slots": 98
+  },
+  "star-max|clean|all": {
+   "won": 316,
+   "pairs": 328
+  },
+  "star-max|clean|base_arm_error": {
+   "won": 52,
+   "pairs": 62
+  },
+  "star-max|clean|amount_rupees": {
+   "won": 187,
+   "pairs": 196
+  },
+  "star-max|clean|day_of_month": {
+   "won": 35,
+   "pairs": 36
+  },
+  "star-max|clean|weekday": {
+   "won": 40,
+   "pairs": 40
+  },
+  "star-max|clean|phone": {
+   "won": 54,
+   "pairs": 56
+  },
+  "star-max|clean|truth_top": {
+   "won": 86,
+   "slots": 98
+  },
+  "star-free|phone|all": {
+   "won": 313,
+   "pairs": 328
+  },
+  "star-free|phone|base_arm_error": {
+   "won": 51,
+   "pairs": 62
+  },
+  "star-free|phone|amount_rupees": {
+   "won": 184,
+   "pairs": 196
+  },
+  "star-free|phone|day_of_month": {
+   "won": 35,
+   "pairs": 36
+  },
+  "star-free|phone|weekday": {
+   "won": 40,
+   "pairs": 40
+  },
+  "star-free|phone|phone": {
+   "won": 54,
+   "pairs": 56
+  },
+  "star-free|phone|truth_top": {
+   "won": 83,
+   "slots": 98
+  },
+  "star-free|clean|all": {
+   "won": 311,
+   "pairs": 328
+  },
+  "star-free|clean|base_arm_error": {
+   "won": 51,
+   "pairs": 62
+  },
+  "star-free|clean|amount_rupees": {
+   "won": 183,
+   "pairs": 196
+  },
+  "star-free|clean|day_of_month": {
+   "won": 34,
+   "pairs": 36
+  },
+  "star-free|clean|weekday": {
+   "won": 40,
+   "pairs": 40
+  },
+  "star-free|clean|phone": {
+   "won": 54,
+   "pairs": 56
+  },
+  "star-free|clean|truth_top": {
+   "won": 81,
+   "slots": 98
+  }
+ },
+ "failures_context": [
+  {
+   "clip": "ttsalloy_a08_clean",
+   "slot": "amount_rupees",
+   "truth": 39000,
+   "preferred": 48000,
+   "llr": -5.74,
+   "greedy": "अनतालीस हज़ार रुपए बुधवार को दे दूँंग",
+   "from_base_arm": true
+  },
+  {
+   "clip": "ttsalloy_a08_phone",
+   "slot": "amount_rupees",
+   "truth": 39000,
+   "preferred": 48000,
+   "llr": -5.19,
+   "greedy": "अड़तालीस हज़ार रुपये बुधवार को दे दूँगा",
+   "from_base_arm": true
+  },
+  {
+   "clip": "ttsalloy_a24_clean",
+   "slot": "amount_rupees",
+   "truth": 6660,
+   "preferred": 6607,
+   "llr": -11.15,
+   "greedy": "छः हज़ार छः सौ सात रुपये छब्बीस तरीख को",
+   "from_base_arm": true
+  },
+  {
+   "clip": "ttsalloy_a24_phone",
+   "slot": "amount_rupees",
+   "truth": 6660,
+   "preferred": 6607,
+   "llr": -8.76,
+   "greedy": "छः हज़ार छः सौ सात रुपये छब्बीस तारीख को",
+   "from_base_arm": true
+  },
+  {
+   "clip": "ttsonyx_a24_clean",
+   "slot": "amount_rupees",
+   "truth": 6660,
+   "preferred": 6607,
+   "llr": -10.33,
+   "greedy": "छः हज़ार छः सौ सात रुपाये छब्बीस तरीख को",
+   "from_base_arm": true
+  },
+  {
+   "clip": "ttsonyx_a24_phone",
+   "slot": "amount_rupees",
+   "truth": 6660,
+   "preferred": 6607,
+   "llr": -8.3,
+   "greedy": "छः हज़ार छः सौ सात रुपये छब्बीस तारीख को",
+   "from_base_arm": true
+  }
+ ],
+ "timing": {
+  "score_ms_per_candidate_mean": 2.42,
+  "fp32": {
+   "ms_per_clip_mean": 52.7,
+   "ms_per_clip_max": 65.0,
+   "audio_s_mean": 4.42
+  },
+  "int8": {
+   "ms_per_clip_mean": 52.7,
+   "ms_per_clip_max": 63.5,
+   "audio_s_mean": 4.42
+  }
+ }
+}

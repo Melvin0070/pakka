@@ -1,0 +1,356 @@
+{
+ "n": 550,
+ "policy_hash": "f85617771ecb",
+ "matched": {
+  "B-2M": {
+   "baseline_asked": 157,
+   "baseline_wrong": 10,
+   "pramaan_wrong_at_no_more_questions": 6,
+   "pramaan_asked_there": 121,
+   "pramaan_asked_at_no_more_errors": 47,
+   "pramaan_wrong_there": 10
+  },
+  "B-2S": {
+   "baseline_asked": 98,
+   "baseline_wrong": 6,
+   "pramaan_wrong_at_no_more_questions": 8,
+   "pramaan_asked_there": 55,
+   "pramaan_asked_at_no_more_errors": 121,
+   "pramaan_wrong_there": 6
+  }
+ },
+ "agent_errors": {
+  "n": 176,
+  "fate": {
+   "repaired to the true value": 155,
+   "acted on, wrong": 10,
+   "caller asked": 11
+  }
+ },
+ "shared_transcriber_errors": {
+  "n": 6,
+  "two_model_baseline": "acted on, wrong",
+  "pramaan": {
+   "acted on, wrong": 4,
+   "caller asked": 2
+  }
+ },
+ "vendor_outage": {
+  "Sarvam": {
+   "wrong_silent": 11,
+   "asked": 101
+  },
+  "VerbX": {
+   "wrong_silent": 7,
+   "asked": 57
+  },
+  "OpenAI transcription": {
+   "wrong_silent": 13,
+   "asked": 98
+  }
+ },
+ "by": {
+  "condition": {
+   "noisy": {
+    "n": 150,
+    "A": {
+     "wrong_silent": 60,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 2,
+     "asked": 49
+    },
+    "B-2S": {
+     "wrong_silent": 3,
+     "asked": 33
+    },
+    "P": {
+     "wrong_silent": 5,
+     "asked": 16
+    }
+   },
+   "phone": {
+    "n": 400,
+    "A": {
+     "wrong_silent": 116,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 8,
+     "asked": 108
+    },
+    "B-2S": {
+     "wrong_silent": 3,
+     "asked": 65
+    },
+    "P": {
+     "wrong_silent": 5,
+     "asked": 31
+    }
+   }
+  },
+  "language": {
+   "en": {
+    "n": 91,
+    "A": {
+     "wrong_silent": 3,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 1,
+     "asked": 75
+    },
+    "B-2S": {
+     "wrong_silent": 0,
+     "asked": 36
+    },
+    "P": {
+     "wrong_silent": 1,
+     "asked": 31
+    }
+   },
+   "hi": {
+    "n": 459,
+    "A": {
+     "wrong_silent": 173,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 9,
+     "asked": 82
+    },
+    "B-2S": {
+     "wrong_silent": 6,
+     "asked": 62
+    },
+    "P": {
+     "wrong_silent": 9,
+     "asked": 16
+    }
+   }
+  },
+  "difficulty": {
+   "confusable": {
+    "n": 154,
+    "A": {
+     "wrong_silent": 37,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 0,
+     "asked": 49
+    },
+    "B-2S": {
+     "wrong_silent": 2,
+     "asked": 30
+    },
+    "P": {
+     "wrong_silent": 0,
+     "asked": 19
+    }
+   },
+   "ordinary": {
+    "n": 396,
+    "A": {
+     "wrong_silent": 139,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 10,
+     "asked": 108
+    },
+    "B-2S": {
+     "wrong_silent": 4,
+     "asked": 68
+    },
+    "P": {
+     "wrong_silent": 10,
+     "asked": 28
+    }
+   }
+  },
+  "values": {
+   "amount_rupees": {
+    "n": 71,
+    "A": {
+     "wrong_silent": 31,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 0,
+     "asked": 7
+    },
+    "B-2S": {
+     "wrong_silent": 0,
+     "asked": 4
+    },
+    "P": {
+     "wrong_silent": 1,
+     "asked": 1
+    }
+   },
+   "amount_rupees+day_of_month": {
+    "n": 180,
+    "A": {
+     "wrong_silent": 32,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 5,
+     "asked": 56
+    },
+    "B-2S": {
+     "wrong_silent": 2,
+     "asked": 45
+    },
+    "P": {
+     "wrong_silent": 4,
+     "asked": 29
+    }
+   },
+   "amount_rupees+phone": {
+    "n": 32,
+    "A": {
+     "wrong_silent": 14,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 0,
+     "asked": 13
+    },
+    "B-2S": {
+     "wrong_silent": 0,
+     "asked": 1
+    },
+    "P": {
+     "wrong_silent": 0,
+     "asked": 3
+    }
+   },
+   "amount_rupees+weekday": {
+    "n": 128,
+    "A": {
+     "wrong_silent": 39,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 3,
+     "asked": 25
+    },
+    "B-2S": {
+     "wrong_silent": 1,
+     "asked": 30
+    },
+    "P": {
+     "wrong_silent": 4,
+     "asked": 2
+    }
+   },
+   "phone": {
+    "n": 102,
+    "A": {
+     "wrong_silent": 36,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 1,
+     "asked": 44
+    },
+    "B-2S": {
+     "wrong_silent": 3,
+     "asked": 10
+    },
+    "P": {
+     "wrong_silent": 1,
+     "asked": 9
+    }
+   },
+   "phone+weekday": {
+    "n": 37,
+    "A": {
+     "wrong_silent": 24,
+     "asked": 0
+    },
+    "B-2M": {
+     "wrong_silent": 1,
+     "asked": 12
+    },
+    "B-2S": {
+     "wrong_silent": 0,
+     "asked": 8
+    },
+    "P": {
+     "wrong_silent": 0,
+     "asked": 3
+    }
+   }
+  }
+ },
+ "latency": {
+  "gpt-4o-transcribe": {
+   "p50_ms": 666,
+   "p90_ms": 4988
+  },
+  "gpt-transcribe": {
+   "p50_ms": 672,
+   "p90_ms": 830
+  },
+  "gpt-transcribe+hints": {
+   "p50_ms": 680,
+   "p90_ms": 852
+  },
+  "indicconformer-greedy": {
+   "p50_ms": 1,
+   "p90_ms": 1
+  },
+  "saaras": {
+   "p50_ms": 333,
+   "p90_ms": 400
+  },
+  "verbx-vocaline": {
+   "p50_ms": 804,
+   "p90_ms": 1145
+  }
+ },
+ "cost": {
+  "audio_seconds_per_action": 5.6,
+  "usd_per_action_by_source": {
+   "gpt-transcribe": 0.00042,
+   "gpt-transcribe+hints": 0.00042,
+   "gpt-4o-transcribe": 0.00056,
+   "saaras": 0.00052,
+   "indicconformer-greedy": 0.0
+  },
+  "usd_per_1000_actions": 1.92,
+  "not_priced": [
+   "verbx-vocaline"
+  ],
+  "as_of": "2026-11-21",
+  "sources": {
+   "gpt-transcribe": "https://platform.openai.com/docs/models/gpt-transcribe ($0.0045 per minute)",
+   "gpt-4o-transcribe": "https://platform.openai.com/docs/models/gpt-4o-transcribe (billed per audio token, $2.50 per 1M input; $0.006 per minute is an estimate, not a listed price)",
+   "saaras": "https://www.sarvam.ai/api-pricing (speech to text Rs 0.49 per minute pay-as-you-go, converted at an assumed Rs 88 per USD)",
+   "verbx-vocaline": "no public price found",
+   "indicconformer-greedy": "runs locally on CPU"
+  },
+  "note": "VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard"
+ },
+ "questions": {
+  "n": 77,
+  "policy_hash": "670fc33e4999",
+  "split": "test",
+  "answers": "synthetic, cooperative: the same voice states the true value of the slot asked, over the phone channel",
+  "outcomes": {
+   "committed_right": 69,
+   "committed_wrong": 1,
+   "escalated": 7
+  },
+  "committed_without_asking_live": 9,
+  "questions_per_action_mean": 1.13
+ },
+ "first_pass": {
+  "ask": 14,
+  "block": 33
+ }
+}

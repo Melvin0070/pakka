@@ -1,0 +1,5325 @@
+{
+ "n": 77,
+ "policy_hash": "670fc33e4999",
+ "split": "test",
+ "answers": "synthetic, cooperative: the same voice states the true value of the slot asked, over the phone channel",
+ "outcomes": {
+  "committed_right": 69,
+  "committed_wrong": 1,
+  "escalated": 7
+ },
+ "committed_without_asking_live": 9,
+ "questions_per_action_mean": 1.13,
+ "actions": [
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "proposed": [
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    },
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      15000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      15,
+      "block",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      15,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_g0_a10_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      1300,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_g0_a22_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Solah taarikh, ya chhah taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "proposed": [
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    },
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      16000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      16,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      16,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_h15_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_h17_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Number chhah shunya saat shunya aath, aath aath saat aath aath, ya chhah shunya saat shunya ek, ek aath saat aath aath?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6070118788"
+   },
+   "proposed": [
+    {
+     "phone": "6070888788"
+    },
+    {
+     "phone": "607018788"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6070888788",
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "607018788",
+      "pass",
+      "repaired",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_h33_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6070118788"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Number chhah chhah ek paanch ek, chhah teen chaar saat teen, ya chhah chhah ek paanch ek, chhah do chaar saat do?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6615162472"
+   },
+   "proposed": [
+    {
+     "phone": "6615162472"
+    },
+    {
+     "phone": "6615162472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6615162472",
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6615162472",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_n16_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6615162472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    },
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    },
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      2250,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      10,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      2250,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      10,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      2250,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      10,
+      "block",
+      "invented",
+      []
+     ]
+    ]
+   ],
+   "clip_id": "ballad_n28_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 2250,
+    "day_of_month": 10
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 4500,
+    "phone": "9207131107"
+   },
+   "proposed": [
+    {
+     "amount_rupees": 4500,
+     "phone": "920781107"
+    },
+    {
+     "amount_rupees": 4500,
+     "phone": "920781107"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      4500,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "phone",
+      "920781107",
+      "block",
+      "malformed",
+      []
+     ]
+    ],
+    [
+     [
+      "phone",
+      "920781107",
+      "pass",
+      "repaired",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_n32_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "9207131107",
+    "amount_rupees": 4500
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Bayaalees hazaar, ya ek hazaar?",
+     "slot": "amount_rupees",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 42000
+   },
+   "proposed": [
+    {
+     "amount_rupees": 42000
+    },
+    {
+     "amount_rupees": 42000
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      42000,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      42000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "ballad_n35_phone",
+   "slot": "amount_rupees",
+   "truth": {
+    "amount_rupees": 42000
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "proposed": [
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    },
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      15000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      15,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      15,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_g0_a10_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_g0_a22_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      13000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_h12_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "proposed": [
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    },
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      16000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      16,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      16,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_h15_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "block",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "verbx"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_h17_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 2250,
+    "day_of_month": 10
+   },
+   "proposed": [
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    },
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    },
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      2250,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      10,
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      2250,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      10,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      2250,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_n28_phone",
+   "slot": "amount_rupees",
+   "truth": {
+    "amount_rupees": 2250,
+    "day_of_month": 10
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "proposed": [
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      7800,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      28,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      28,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "echo_n47_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 17000,
+    "day_of_month": 17
+   },
+   "proposed": [
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    },
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      17000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe"
+      ]
+     ],
+     [
+      "day_of_month",
+      17,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      17,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "fable_h08_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 17000,
+    "day_of_month": 17
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 30000,
+    "weekday": "saturday"
+   },
+   "proposed": [
+    {
+     "amount_rupees": 30000,
+     "weekday": "saturday"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      30000,
+      "pass",
+      "families_agree",
+      [
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "weekday",
+      "saturday",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "fable_h13_phone",
+   "slot": "amount_rupees",
+   "truth": {
+    "amount_rupees": 30000,
+    "weekday": "saturday"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Number chhah chhah ek paanch ek, chhah teen chaar saat teen, ya chhah chhah ek paanch ek, chhah do chaar saat do?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6615162472"
+   },
+   "proposed": [
+    {
+     "phone": "6615162472"
+    },
+    {
+     "phone": "6615162472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6615162472",
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6615162472",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "fable_n16_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6615162472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Aakhri se teesra ank teen hai ya do?",
+     "slot": "phone",
+     "kind": "ask"
+    },
+    {
+     "text": "Aakhri ank do hai ya teen?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "weekday": "friday",
+    "phone": "8084057262"
+   },
+   "proposed": [
+    {
+     "weekday": "friday",
+     "phone": "8084057262"
+    },
+    {
+     "weekday": "friday",
+     "phone": "8084057262"
+    },
+    {
+     "weekday": "friday",
+     "phone": "8084057262"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "weekday",
+      "friday",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "phone",
+      "8084057262",
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "8084057262",
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "8084057262",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "fable_n24_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "8084057262",
+    "weekday": "friday"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Aakhri se paanchvaan ank ek hai ya aath?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6589013245"
+   },
+   "proposed": [
+    {
+     "phone": "6589013245"
+    },
+    {
+     "phone": "6589013245"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6589013245",
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6589013245",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "fable_n26_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6589013245"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "weekday": "sunday",
+    "phone": "8464060169"
+   },
+   "proposed": [
+    {
+     "weekday": "sunday",
+     "phone": "8464060169"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "weekday",
+      "sunday",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "phone",
+      "8464060169",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "fable_n27_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "8464060169",
+    "weekday": "sunday"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "proposed": [
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    },
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      15000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      15,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      15,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_g0_a10_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_g0_a22_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_g0_a22_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      13000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_h12_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Solah taarikh, ya chhah taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "proposed": [
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    },
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      16000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      16,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      16,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_h15_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "proposed": [
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      16000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      16,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_h15_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_h17_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_h17_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 42000,
+    "day_of_month": 7
+   },
+   "proposed": [
+    {
+     "amount_rupees": 42000,
+     "day_of_month": 7
+    },
+    {
+     "amount_rupees": 42000,
+     "day_of_month": 7
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      42000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      7,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      7,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_n11_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 42000,
+    "day_of_month": 7
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "proposed": [
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      7800,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      28,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      28,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_n47_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "proposed": [
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      7800,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      28,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      7800,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      28,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      7800,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "marin_n47_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      1300,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_g0_a22_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      1300,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_g0_a22_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "phone": "6380019472"
+    },
+    {
+     "phone": "6380019472"
+    },
+    {
+     "phone": "6380019472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6380019472",
+      "block",
+      "mismatch",
+      []
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6380019472",
+      "block",
+      "proposed_unsupported",
+      []
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6380019472",
+      "block",
+      "mismatch",
+      []
+     ]
+    ]
+   ],
+   "clip_id": "nova_g0_p05_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "6300198472"
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6300198472"
+   },
+   "proposed": [
+    {
+     "phone": "6300198472"
+    },
+    {
+     "phone": "6300198472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6300198472",
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6300198472",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_g0_p05_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6300198472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "weekday": "friday",
+    "phone": "9411182730"
+   },
+   "proposed": [
+    {
+     "weekday": "friday",
+     "phone": "9481827300"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "weekday",
+      "friday",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "phone",
+      "9481827300",
+      "pass",
+      "repaired",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_g0_p06_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "9411182730",
+    "weekday": "friday"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      13000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h12_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      13000,
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      13000,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      13000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h12_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      60000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h16_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      60000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h16_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      25000,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h17_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    },
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h17_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "8777877707"
+   },
+   "proposed": [
+    {
+     "phone": "8777878707"
+    },
+    {
+     "phone": "8777878707"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "8777878707",
+      "block",
+      "proposed_unsupported",
+      []
+     ]
+    ],
+    [
+     [
+      "phone",
+      "8777878707",
+      "pass",
+      "repaired",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h30_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "8777877707"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "8777877707"
+   },
+   "proposed": [
+    {
+     "phone": "8777877870"
+    },
+    {
+     "phone": "87778778707"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "8777877870",
+      "block",
+      "proposed_unsupported",
+      []
+     ]
+    ],
+    [
+     [
+      "phone",
+      "87778778707",
+      "pass",
+      "repaired",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_h30_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "8777877707"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 42000,
+    "day_of_month": 7
+   },
+   "proposed": [
+    {
+     "amount_rupees": 42000,
+     "day_of_month": 7
+    },
+    {
+     "amount_rupees": 42000,
+     "day_of_month": 7
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      42000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      7,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      7,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_n11_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 42000,
+    "day_of_month": 7
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "proposed": [
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      7800,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      28,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      7800,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      28,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      7800,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_n47_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "proposed": [
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      7800,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      28,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      28,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "nova_n47_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6300198472"
+   },
+   "proposed": [
+    {
+     "phone": "6300198472"
+    },
+    {
+     "phone": "6300198472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6300198472",
+      "block",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6300198472",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "sage_g0_p05_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6300198472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    },
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    },
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      17000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      17,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      17,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      17,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "sage_h08_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 17000,
+    "day_of_month": 17
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Ek hazaar, saath hazaar, ya ek sau?",
+     "slot": "amount_rupees",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      60000,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      60000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "block",
+      "invented",
+      []
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "sage_h16_phone",
+   "slot": "amount_rupees",
+   "truth": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Aakhri se paanchvaan ank ek hai ya aath?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6589013245"
+   },
+   "proposed": [
+    {
+     "phone": "6589018245"
+    },
+    {
+     "phone": "6589013245"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6589018245",
+      "ask",
+      "insufficient_families",
+      []
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6589013245",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "sage_n26_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6589013245"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, amount ek baar phir se boliye?",
+     "slot": "amount_rupees",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "proposed": [
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    },
+    {
+     "amount_rupees": 7800,
+     "day_of_month": 28
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      7800,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      28,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      7800,
+      "block",
+      "invented",
+      []
+     ],
+     [
+      "day_of_month",
+      28,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      7800,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "sage_n47_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 7800,
+    "day_of_month": 28
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "proposed": [
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      15000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      15,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_g0_a10_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 1300,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      1300,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_g0_a22_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 1300,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 13000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      13000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_h12_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 13000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Solah taarikh, ya chhah taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "proposed": [
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    },
+    {
+     "amount_rupees": 16000,
+     "day_of_month": 16
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      16000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      16,
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      16,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_h15_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 16000,
+    "day_of_month": 16
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "proposed": [
+    {
+     "amount_rupees": 25000,
+     "day_of_month": 25
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      25000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      25,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_h17_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 25000,
+    "day_of_month": 25
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Teen hazaar, do hazaar do sau pachaas, ya do hazaar?",
+     "slot": "amount_rupees",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 2250,
+    "day_of_month": 10
+   },
+   "proposed": [
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    },
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    },
+    {
+     "amount_rupees": 2250,
+     "day_of_month": 10
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      2250,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      10,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "amount_rupees",
+      2250,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      10,
+      "block",
+      "invented",
+      []
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      10,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_n28_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 2250,
+    "day_of_month": 10
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 900,
+    "day_of_month": 9
+   },
+   "proposed": [
+    {
+     "amount_rupees": 950,
+     "day_of_month": 9
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      950,
+      "pass",
+      "repaired",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      9,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "shimmer_n43_phone",
+   "slot": "amount_rupees",
+   "truth": {
+    "amount_rupees": 875,
+    "day_of_month": 9
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "9844712000"
+   },
+   "proposed": [
+    {
+     "phone": "9844712000"
+    },
+    {
+     "phone": "9844712000"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "9844712000",
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "9844712000",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_g0_p01_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "9844712000"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6300198472"
+   },
+   "proposed": [
+    {
+     "phone": "6300198472"
+    },
+    {
+     "phone": "6300198472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6300198472",
+      "block",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6300198472",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_g0_p05_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "6300198472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6300198472"
+   },
+   "proposed": [
+    {
+     "phone": "6300198472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6300198472",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_g0_p05_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6300198472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Satrah taarikh, ya saat taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 17000,
+    "day_of_month": 17
+   },
+   "proposed": [
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    },
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      17000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      17,
+      "ask",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      17,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h08_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 17000,
+    "day_of_month": 17
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Satrah taarikh, ya saat taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    },
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    },
+    {
+     "amount_rupees": 17000,
+     "day_of_month": 17
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      17000,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      17,
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      17,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      17,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h08_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 17000,
+    "day_of_month": 17
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "proposed": [
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    },
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      15000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      15,
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      15,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h10_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, taarikh ek baar phir se boliye?",
+     "slot": "day_of_month",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "proposed": [
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    },
+    {
+     "amount_rupees": 15000,
+     "day_of_month": 15
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      15000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ],
+     [
+      "day_of_month",
+      15,
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      15,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h10_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 15000,
+    "day_of_month": 15
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      60000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h16_noisy",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Tees taarikh, ya teen taarikh?",
+     "slot": "day_of_month",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "proposed": [
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    },
+    {
+     "amount_rupees": 60000,
+     "day_of_month": 30
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      60000,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "day_of_month",
+      30,
+      "ask",
+      "witness_prefers_other",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "day_of_month",
+      30,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h16_phone",
+   "slot": "day_of_month",
+   "truth": {
+    "amount_rupees": 60000,
+    "day_of_month": 30
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "8777877707"
+   },
+   "proposed": [
+    {
+     "phone": "8777877707"
+    },
+    {
+     "phone": "8777877707"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "8777877707",
+      "block",
+      "insufficient_families",
+      [
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "8777877707",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_h30_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "8777877707"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, din ek baar phir se boliye?",
+     "slot": "weekday",
+     "kind": "block"
+    },
+    {
+     "text": "Maaf kijiye, din ek baar phir se boliye?",
+     "slot": "weekday",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "amount_rupees": 3500,
+     "weekday": "tuesday"
+    },
+    {
+     "amount_rupees": 3500,
+     "weekday": "tuesday"
+    },
+    {
+     "amount_rupees": 3500,
+     "weekday": "tuesday"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      3500,
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "weekday",
+      "tuesday",
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "weekday",
+      "tuesday",
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "weekday",
+      "tuesday",
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_n05_noisy",
+   "slot": "weekday",
+   "truth": {
+    "amount_rupees": 3500,
+    "weekday": "tuesday"
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Guruvaar, ya mangalvaar?",
+     "slot": "weekday",
+     "kind": "ask"
+    },
+    {
+     "text": "Maaf kijiye, din ek baar phir se boliye?",
+     "slot": "weekday",
+     "kind": "block"
+    }
+   ],
+   "outcome": "escalated",
+   "committed": null,
+   "proposed": [
+    {
+     "amount_rupees": 3500,
+     "weekday": "tuesday"
+    },
+    {
+     "amount_rupees": 3500,
+     "weekday": "tuesday"
+    },
+    {
+     "amount_rupees": 3500,
+     "weekday": "tuesday"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      3500,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "weekday",
+      "tuesday",
+      "ask",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "verbx"
+      ]
+     ]
+    ],
+    [
+     [
+      "weekday",
+      "tuesday",
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ],
+    [
+     [
+      "weekday",
+      "tuesday",
+      "block",
+      "insufficient_families",
+      [
+       "openai-transcribe"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_n05_phone",
+   "slot": "weekday",
+   "truth": {
+    "amount_rupees": 3500,
+    "weekday": "tuesday"
+   },
+   "agent_was_wrong": false,
+   "right": false
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6615162472"
+   },
+   "proposed": [
+    {
+     "phone": "6615162472"
+    },
+    {
+     "phone": "6615162472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6615162472",
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6615162472",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_n16_noisy",
+   "slot": "phone",
+   "truth": {
+    "phone": "6615162472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Maaf kijiye, number ek baar phir se dheere boliye?",
+     "slot": "phone",
+     "kind": "block"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6615162472"
+   },
+   "proposed": [
+    {
+     "phone": "6615162472"
+    },
+    {
+     "phone": "6615162472"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6615162472",
+      "block",
+      "below_threshold",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6615162472",
+      "pass",
+      "families_agree",
+      [
+       "openai-transcribe",
+       "sarvam"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_n16_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6615162472"
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [],
+   "outcome": "committed",
+   "committed": {
+    "amount_rupees": 2500,
+    "phone": "8264395788"
+   },
+   "proposed": [
+    {
+     "amount_rupees": 2500,
+     "phone": "8264395788"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "amount_rupees",
+      2500,
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ],
+     [
+      "phone",
+      "8264395788",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_n21_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "8264395788",
+    "amount_rupees": 2500
+   },
+   "agent_was_wrong": false,
+   "right": true
+  },
+  {
+   "questions": [
+    {
+     "text": "Number chhah paanch aath nau shunya, ek aath do chaar paanch, ya chhah paanch aath nau shunya, aath teen do chaar paanch?",
+     "slot": "phone",
+     "kind": "ask"
+    }
+   ],
+   "outcome": "committed",
+   "committed": {
+    "phone": "6589013245"
+   },
+   "proposed": [
+    {
+     "phone": "6589018245"
+    },
+    {
+     "phone": "6589013245"
+    }
+   ],
+   "decisions": [
+    [
+     [
+      "phone",
+      "6589018245",
+      "ask",
+      "insufficient_families",
+      [
+       "sarvam"
+      ]
+     ]
+    ],
+    [
+     [
+      "phone",
+      "6589013245",
+      "pass",
+      "families_agree",
+      [
+       "ai4bharat",
+       "openai-transcribe",
+       "sarvam",
+       "verbx"
+      ]
+     ]
+    ]
+   ],
+   "clip_id": "verse_n26_phone",
+   "slot": "phone",
+   "truth": {
+    "phone": "6589013245"
+   },
+   "agent_was_wrong": true,
+   "right": true
+  }
+ ]
+}
