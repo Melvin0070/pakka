@@ -16,13 +16,13 @@ from typing import Protocol
 import numpy as np
 from pydantic import BaseModel, Field
 
-from . import audio
+from . import audio, lang
 from .bundle import BundleStore, make_bundle
-from .decide import decide
+from .decide import decide, resolve_answer
 from .evidence import GREEDY_SOURCE, assemble
 from .sources.base import Source
 from .sources.registry import available_sources
-from .types import Decision, Evidence, Hypothesis, Policy, Values
+from .types import Asked, Decision, Evidence, Hypothesis, Policy, Values
 from .witness import Witness
 
 
@@ -50,7 +50,9 @@ class Guard(Protocol):
         """Called at end of caller speech, before any tool call: start the speculative evidence fan-out."""
         ...
 
-    async def judge(self, turn_id: str, proposed: Values, confirming: bool = False) -> Judgement:
+    async def judge(
+        self, turn_id: str, proposed: Values, confirming: bool = False, asked: Asked | None = None
+    ) -> Judgement:
         """Called when the agent proposes a tool call for that turn. Waits at most the policy deadline."""
         ...
 
@@ -122,7 +124,9 @@ class Pipeline:
         turn.tasks = {s.name: asyncio.create_task(run(s)) for s in self.sources}
         self._turns[turn_id] = turn
 
-    async def judge(self, turn_id: str, proposed: Values, confirming: bool = False) -> Judgement:
+    async def judge(
+        self, turn_id: str, proposed: Values, confirming: bool = False, asked: Asked | None = None
+    ) -> Judgement:
         turn = self._turns[turn_id]
         asked_at = time.perf_counter()
         pending = [*turn.tasks.values(), turn.witness]
@@ -146,6 +150,8 @@ class Pipeline:
         policy = self.policy
         if confirming:
             policy = policy.model_copy(update={"require_witness": False, "accept_threshold": 0.0})
+            if asked is not None and asked.slot in proposed:
+                evidence = resolve_answer(evidence, policy, asked)
         decision = decide(evidence, policy)
         decided_ms = (time.perf_counter() - asked_at) * 1000
         bundle = self.bundles.append(make_bundle(turn_id, evidence, decision))
@@ -186,7 +192,7 @@ class Pipeline:
                 break
         out.append(
             SourceTiming(
-                source="Hindi acoustic model",
+                source=f"{lang.get(self.witness.lang).name} acoustic model",
                 family="ai4bharat",
                 latency_ms=witness_ms,
                 in_time=g is not None,

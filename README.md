@@ -123,6 +123,66 @@ these numbers say nothing certain about real callers. To test on people: `make s
 recordings on the frozen policy and writes `results/human.md` without touching the table above. The recorder
 serves `data/human/prompts.jsonl`: 150 prompts for ten people, with values absent from every synthetic batch.
 
+After those 15 lines each person reads a made-up PIN code and account number and answers five forced-choice
+questions in their own words. These stay out of the locked set; `make human-extras` scores them into
+`results/human_extras.json`. Answers are judged worst-case, with the agent still holding the wrong option, and
+without the agent's own next turn. A short answer ("saat", "doosra wala") counts only when at least two
+independent recogniser families name the same option and none hears another. PIN and account values are
+recognised only after a spoken label, and this path has no recorded results from people yet.
+
+### Telugu, on the policy frozen on Hindi
+
+A second language is a number lexicon, a renderer and a swap of the open acoustic model (IndicConformer
+Telugu, same architecture, same numpy CTC code). The lattice, the decision rule and the policy are untouched:
+the Telugu calls below are judged by policy `50d83054eef1`, whose thresholds were chosen on Hindi speakers.
+60 Telugu prompts, weighted towards pairs a Telugu listener confuses (ఇరవై / అరవై, పదిహేను / పదిహేడు,
+తొమ్మిది / తొంభై), on the same twelve voices and the same speaker split. The four tuning speakers' Telugu
+clips were used to fix the Telugu parser on real recogniser output; the eight test speakers were scored once.
+
+<!-- te:start -->
+220 Telugu actions, 8 held-out synthetic speakers, phone-grade audio. Policy `50d83054eef1`.
+
+| Arm | Wrong and acted on | Caller asked | of which the value was wrong | Acted without asking |
+|---|---|---|---|---|
+| Realtime model alone (A) | 85 (38.6%) | 0 (0.0%) | 0 | 220 |
+| Transcribe, then fill the form (B) | 31 (14.1%) | 0 (0.0%) | 0 | 220 |
+| Second vendor, then fill the form (V) | 38 (17.3%) | 0 (0.0%) | 0 | 220 |
+| Sarvam, then fill the form (S) | 24 (10.9%) | 0 (0.0%) | 0 | 220 |
+| Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 84 | 0 |
+| Ask when two models disagree (B-2M) | 7 (3.2%) | 46 (20.9%) | 24 | 174 |
+| Ask when OpenAI and Sarvam disagree (B-2S) | 8 (3.6%) | 32 (14.5%) | 23 | 188 |
+| Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
+| **Pramaan** (P) | 7 (3.2%) | 17 (7.7%) | 13 | 203 |
+
+Certificate: of 203 actions Pramaan let through, 7 were wrong; one-sided 95% Clopper-Pearson upper bound 6.4%. Speaker-level: 4 of 8 speakers had any silent error (bound 80.7%). Added hold p50 0 ms, p95 0 ms.
+
+| Ablation | Wrong and acted on | Caller asked | of which wrong |
+|---|---|---|---|
+| Pramaan as frozen | 7 | 17 | 13 |
+| without the acoustic model | 6 | 21 | 16 |
+| OpenAI transcribers only | 16 | 21 | 14 |
+| acoustic model as the only check | 10 | 21 | 9 |
+| without the language check (acoustic model also judges English) | 7 | 15 | 12 |
+| without Sarvam | 6 | 24 | 15 |
+| without the dropped-value check | 11 | 17 | 13 |
+| no deadline (wait for every source) | 7 | 17 | 13 |
+| deadline 300 ms | 7 | 17 | 13 |
+
+Telugu acoustic model alone: the true value outscored every transcribed and confusable rival in 321 of 336 values it scored.
+<!-- te:end -->
+
+Reading it plainly: the model alone acts on a wrong Telugu value on 38.6% of calls; Pramaan on 3.2%, asking on
+7.7%. Asking whenever gpt-transcribe and Sarvam disagree gets 3.6% while asking on 14.5%. The upper bound
+here is 6.4%, above the 5% the policy was frozen for on Hindi: an untuned transfer, and these 220 calls are too
+few to separate 7 errors from 8. Single-recogniser pipelines are much weaker in Telugu than in Hindi (10.9% to
+17.3% wrong), which is where agreement across families earns more.
+
+What changes with the language sits in the lexer: a Telugu scale alone means one of it (లక్ష యాభై వేలు is
+1,50,000), scales inflect (వందలు, వందల, వేలకు), halves and quarters are suffixes on the multiplier
+(రెండున్నర వేలు, లక్షన్నర, రెండుంపావు లక్షలు), ten and unit fuse (డెబ్బయైదు), and recognisers often write a
+number as one word (రెండువేల). `tests/test_telugu.py` checks that every rendering of every amount parses back
+to its value. `make te` reprints the table offline; `make serve-te` runs the live demo in Telugu on port 8766.
+
 ### With a stronger agent prompt
 
 The agent in the tables above has a short, generic prompt. `make strong-baseline` reruns locked set 2 with a
@@ -208,6 +268,9 @@ recorded calls (`demo/scenarios.json`) that play through the real models: an amo
 wrong phone digit, a split that leads to one question, and a misheard Hindi fraction. `DEMO.md` is the
 two-minute run of show, with how often each call reproduced live.
 
+Both panes show one tool call from one realtime session: the left executes it as it stands, the right holds
+it for the check. `/ws?left=independent` runs a second, bare agent on the left instead.
+
 If the network is down, `make demo-offline` plays the same calls from `demo/` with nothing leaving the
 machine. Both agents then repeat the tool call the realtime model made for that recording, the recognisers
 answer from `data/cache.sqlite`, and the acoustic check, the decision and the ledger run for real. The agent's
@@ -233,8 +296,8 @@ caller audio ──┬──────────────► gpt-realtime
                                              ledger (at-most-once) + hash-chained evidence bundle
 ```
 
-- **Typed normaliser** (`normalise.py`): hand-written inverse text normalisation for Hindi, Hinglish and English in
-  Devanagari or Roman script: सवा / साढ़े / पौने / डेढ़ / ढाई, "pachpan sau", lakh and crore, double and triple
+- **Typed normaliser** (`normalise.py`): hand-written inverse text normalisation for Hindi, Hinglish, Telugu and
+  English in Devanagari, Telugu or Roman script: सवा / साढ़े / पौने / डेढ़ / ढाई, "pachpan sau", lakh and crore, double and triple
   digits, ordinals, weekdays. Values are typed (integer rupees, 10-digit string), so "paune teen hazaar",
   "पौने तीन हज़ार" and "2,750" are the same candidate.
 - **Value lattice** (`lattice.py`): candidates per slot with support counted per model family, never per model
@@ -292,8 +355,13 @@ caller audio ──┬──────────────► gpt-realtime
   already passed could be lost the same way.
 - A live call is not deterministic: the realtime model does not always make the same tool call for the same
   audio, so live outcomes differ slightly from the offline table.
-- The witness is a Hindi model. English number words are scored through Devanagari spellings, which is weaker,
-  and without a Devanagari transcript for context the witness abstains.
+- The witness is a Hindi model (or the Telugu one under `PRAMAAN_LANG=te`). English number words are scored
+  through Devanagari or Telugu spellings, which is weaker, and without a transcript in the model's own script
+  for context the witness abstains.
+- One language per deployment: `PRAMAAN_LANG` picks the recogniser settings and the acoustic model at start.
+  A call that switches between Hindi and Telugu is not routed between the two models.
+- Telugu has no tuned policy, no locked second set, no human recordings and no measured question loop. Its
+  questions are phrased in Telugu but have not been played to a Telugu speaker. Tamil is not built.
 - VerbX Vocaline's lineage is not documented; it is counted as its own family on that assumption.
 - Sarvam was added as a source after the first full results. The policy was re-derived on the tuning speakers
   and came out identical (same hash), but the test speakers have now been scored with and without it; the
@@ -328,12 +396,12 @@ caller audio ──┬──────────────► gpt-realtime
 ## Layout
 
 ```
-src/pramaan/   types, normalise, render, confusables, lattice, witness, evidence, score, decide, gate,
-               question, executor, bundle, cache, pipeline, sources/, live/
+src/pramaan/   types, lang (per-language settings), normalise, render, confusables, lattice, witness,
+               evidence, score, decide, gate, question, executor, bundle, cache, pipeline, sources/, live/
 eval/          tune.py (policy, tuning speakers only), run_eval.py (all arms, test speakers), analysis.py
                (baselines at matched budgets, slices, cost), g2.py (witness gate)
-scripts/       gen_prompts, gen_clips, gen_fresh (locked set), collect, build_evidence, measure_questions,
-               fetch_model, selfcheck
+scripts/       gen_prompts, gen_clips, gen_fresh (locked set), gen_te (Telugu), collect, build_evidence,
+               measure_questions, fetch_model, selfcheck
 data/          prompts, manifest, splits, cache.sqlite (raw responses), evidence.jsonl, policy.json
 ui/            live call, evidence and results views
 ```

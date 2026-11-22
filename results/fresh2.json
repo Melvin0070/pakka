@@ -1,6 +1,7 @@
 {
  "dataset": {
   "kind": "synthetic-tts",
+  "language": "hi",
   "n_actions": 220,
   "n_speakers": 8,
   "batch": "locked: new values, scored once after the policy was frozen",
@@ -1458,5 +1459,5 @@
  "assumptions": {
   "seconds_per_question": 4.0
  },
- "generated_at": "2026-11-21T19:09:04+00:00"
+ "generated_at": "2026-11-22T04:04:32+00:00"
 }

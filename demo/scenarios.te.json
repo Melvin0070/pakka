@@ -1,0 +1,46 @@
+[
+ {
+  "id": "te_ninety_thousand",
+  "title": "తొంభై heard as తొమ్మిది",
+  "hint": "Telugu: ninety thousand, and a mobile number",
+  "say": "eight two one one, zero five six, eight three eight కి phone చేయండి, తొంభై వేల రూపాయల గురించి.",
+  "truth": {"phone": "8211056838", "amount_rupees": 90000},
+  "alone": "₹9,000",
+  "guarded": "₹90,000",
+  "outcome": "Corrected",
+  "note": "తొంభై (ninety) and తొమ్మిది (nine) differ by a syllable. The model logs nine thousand; four recogniser families and the Telugu acoustic model say ninety."
+ },
+ {
+  "id": "te_eight_and_a_half_lakh",
+  "title": "A Telugu half, lost",
+  "hint": "Telugu: ఎనిమిదిన్నర లక్షలు",
+  "say": "ఎనిమిదిన్నర లక్షల రూపాయలు COD, cash ready గా ఉంచండి.",
+  "truth": {"amount_rupees": 850000},
+  "alone": "₹1,00,000",
+  "guarded": "₹8,50,000",
+  "outcome": "Corrected",
+  "note": "In Telugu the half is a suffix on the multiplier: ఎనిమిది + న్నర is eight and a half. The model alone keeps only the lakh."
+ },
+ {
+  "id": "te_phone_digits",
+  "title": "A number read in Telugu digits",
+  "hint": "Telugu: ఆరు and ఏడు, six and seven",
+  "say": "callback number ఆరు ఏడు ఆరు ఎనిమిది, డబుల్ ఆరు జీరో, ఏడు జీరో ఆరు.",
+  "truth": {"phone": "6768660706"},
+  "alone": "87866 00706",
+  "guarded": "67686 60706",
+  "outcome": "Corrected",
+  "note": "Sixes and sevens with a doubled digit. The model alone gets several digits wrong; the digit grammar scores the exact ten digits against the audio."
+ },
+ {
+  "id": "te_dropped_twenty",
+  "title": "A dropped ఇరవై",
+  "hint": "Telugu-English: a number, then an amount",
+  "say": "seven one double two, six one six, one three eight కి phone చేయండి, ఇరవై రెండు వేల ఐదు వందల రూపాయల గురించి.",
+  "truth": {"phone": "7122616138", "amount_rupees": 22500},
+  "alone": "₹2,500",
+  "guarded": "₹22,500",
+  "outcome": "Corrected",
+  "note": "The model drops the first word of the amount and logs two thousand five hundred instead of twenty-two thousand five hundred."
+ }
+]

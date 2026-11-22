@@ -11,10 +11,10 @@ from typing import Protocol
 
 import numpy as np
 
-from . import confusables, normalise
+from . import confusables, lang, normalise
 from .lattice import canon, is_valid, key
 from .render import renderings
-from .types import SLOTS, Evidence, Hypothesis, Slot, Value, Values, WitnessScore
+from .types import DIGIT_SLOTS, SLOTS, Evidence, Hypothesis, Slot, Value, Values, WitnessScore
 
 GREEDY_SOURCE = "indicconformer-greedy"
 _DEVANAGARI = re.compile("[ऀ-ॿ]")
@@ -77,12 +77,14 @@ def typed(h: Hypothesis) -> Hypothesis:
     return h.model_copy(update={"values": values, "value_min_logprob": min_lp})
 
 
-def _contexts(hyps: list[Hypothesis], slot: Slot) -> list[tuple[str, str] | None]:
+def _contexts(
+    hyps: list[Hypothesis], slot: Slot, script: re.Pattern[str] = _DEVANAGARI
+) -> list[tuple[str, str] | None]:
     by_source = {h.source: h for h in hyps}
     out: list[tuple[str, str] | None] = []
     for name in _CONTEXT_ORDER:
         h = by_source.get(name)
-        if h is None or not _DEVANAGARI.search(h.text):
+        if h is None or not script.search(h.text):
             continue
         e = next((e for e in normalise.extract(h.text) if e.slot == slot), None)
         if e is None:
@@ -106,7 +108,7 @@ def acoustic_vote(free: Hypothesis, witness: list[WitnessScore]) -> Hypothesis:
         values.pop(w.slot, None)
         if len(ranked) > 1 and ranked[0][1] - ranked[1][1] >= VOTE_MARGIN:
             best = ranked[0][0]
-            values[w.slot] = best if w.slot in ("phone", "weekday") else int(best)
+            values[w.slot] = best if w.slot in (*DIGIT_SLOTS, "weekday") else int(best)
     return free.model_copy(update={"values": values})
 
 
@@ -115,7 +117,7 @@ def candidates(proposed: Values, hyps: list[Hypothesis], slot: Slot) -> list[Val
     for v in [proposed.get(slot), *(h.values.get(slot) for h in hyps)]:
         c = canon(slot, v)
         # A malformed phone is still scored: the guard should see how the audio rates what the agent wrote.
-        if c is not None and (is_valid(slot, c) or slot == "phone"):
+        if c is not None and (is_valid(slot, c) or slot in DIGIT_SLOTS):
             out.setdefault(key(c), c)
     return list(out.values())[:MAX_CANDIDATES]
 
@@ -124,19 +126,22 @@ def witness_scores(
     scorer: Scorer, log_probs: np.ndarray, proposed: Values, hyps: list[Hypothesis], free: Hypothesis
 ) -> list[WitnessScore]:
     scores: list[WitnessScore] = []
+    # The acoustic model's language decides how a value is spoken, which rivals sound like it, and which
+    # transcripts can serve as sentence context (only those in its own script).
+    cur = lang.get(getattr(scorer, "lang", "hi"))
     for slot in SLOTS:
         # Slots the agent left out are scored too, so a dropped value can be restored on evidence.
         # A malformed value (a nine-digit phone) is scored only when it is what the agent wrote. As a rival
         # it wins on length alone: fewer words to match, so a higher likelihood than any complete number.
         mine = canon(slot, proposed.get(slot))
         cands = [c for c in candidates(proposed, hyps, slot) if is_valid(slot, c) or c == mine]
-        rivals = [n for c in cands if is_valid(slot, c) for n in confusables.neighbours(slot, c)]
+        rivals = [n for c in cands if is_valid(slot, c) for n in confusables.neighbours(slot, c, cur.code)]
         pool = {key(c): c for c in [*cands, *rivals]}
-        forms = {k: renderings(slot, c) if is_valid(slot, c) else [str(c)] for k, c in pool.items()}
+        forms = {k: renderings(slot, c, cur.code) if is_valid(slot, c) else [str(c)] for k, c in pool.items()}
         if not forms:
             continue
         # Each candidate keeps its best context: a full-sentence likelihood, comparable across contexts.
-        contexts = [c for c in _contexts([free, *hyps], slot) if c is not None]
+        contexts = [c for c in _contexts([free, *hyps], slot, cur.script) if c is not None]
         if not contexts:
             # Without sentence context the score favours short phrases ("five" over "fifteen"): no witness
             # is more honest than a biased one.

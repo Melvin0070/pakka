@@ -2,14 +2,14 @@
 
 ## Built for this project
 - The action guard: holding a tool call, the decision rule, repair, the one-question loop and the at-most-once ledger.
-- The typed Hindi, Hinglish and English number normaliser, the value lattice and the phone digit alignment.
+- The typed Hindi, Hinglish, Telugu and English number normaliser, the value lattice and the phone digit alignment.
 - CTC scoring of candidate values on top of the acoustic model's output.
 - The evaluation harness, baselines, policy tuning, risk bound, evidence bundles and the demo UI.
 
 ## Reused
 - OpenAI `gpt-realtime-2.1`, `gpt-transcribe`, `gpt-4o-transcribe` and text-to-speech, through their APIs.
 - Sarvam `saaras:v3` and VerbX Vocaline speech-to-text, through their APIs.
-- The open AI4Bharat IndicConformer Hindi model, in the OpenVoiceOS ONNX export.
+- The open AI4Bharat IndicConformer Hindi and Telugu models, in the OpenVoiceOS ONNX exports.
 - Open-source libraries listed in `pyproject.toml`.
 
 ## Simulated

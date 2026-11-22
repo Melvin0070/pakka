@@ -1,11 +1,16 @@
-"""One short forced-choice question in Roman Hinglish that the agent can speak. Pure and deterministic."""
+"""One short forced-choice question the agent can speak: Roman Hinglish, or Telugu. Pure and deterministic."""
 
 from __future__ import annotations
 
 import hashlib
+import re
 from collections.abc import Sequence
 
-from .types import Slot, SlotDecision, Value, Verdict
+from .lattice import canon
+from .lexicon import TE_0_99, TE_WEEKDAYS
+from .normalise import small_numbers
+from .render import telugu_cardinal, telugu_ordinal
+from .types import DIGIT_SLOTS, Slot, SlotDecision, Value, Verdict
 
 ROMAN_0_99: tuple[str, ...] = (
     "shunya", "ek", "do", "teen", "chaar", "paanch", "chhah", "saat", "aath", "nau",
@@ -46,7 +51,31 @@ _REPEAT = {
     "day_of_month": "Maaf kijiye, taarikh ek baar phir se boliye?",
     "weekday": "Maaf kijiye, din ek baar phir se boliye?",
     "phone": "Maaf kijiye, number ek baar phir se dheere boliye?",
+    "pincode": "Maaf kijiye, PIN code ek baar phir se dheere boliye?",
+    "account_number": "Maaf kijiye, account number ek baar phir se dheere boliye?",
 }
+# Bare पहले and "second" are everyday words ("earlier", "one second"), so they need a "wala" or "the".
+_WALA = r"\s*(?:wala|wali|wale|वाला|वाली|वाले)"
+_PICK_ORDINAL = (
+    re.compile(rf"(?<!\w)(?:pehla|pahla|पहला|पहली|(?:pehle|pahle|पहले){_WALA}|the\s+first|first\s+(?:one|option))(?!\w)", re.I),
+    re.compile(rf"(?<!\w)(?:doosra|dusra|दूसरा|दूसरी|(?:doosre|dusre|दूसरे){_WALA}|the\s+second|second\s+(?:one|option))(?!\w)", re.I),
+    re.compile(rf"(?<!\w)(?:teesra|tisra|तीसरा|तीसरी|(?:teesre|tisre|तीसरे){_WALA}|the\s+third|third\s+(?:one|option))(?!\w)", re.I),
+)  # fmt: skip
+_PICK_ORDINAL_TE = tuple(
+    re.compile(rf"(?<!\w)(?:{words})", re.I)
+    for words in ("మొదటి|ఫస్ట్|modati", "రెండో|రెండవ|సెకండ్|rendo", "మూడో|మూడవ|థర్డ్|moodo")
+)
+_REPEAT_TE = {
+    "amount_rupees": "క్షమించండి, amount మరోసారి చెప్తారా?",
+    "day_of_month": "క్షమించండి, తేదీ మరోసారి చెప్తారా?",
+    "weekday": "క్షమించండి, ఏ రోజో మరోసారి చెప్తారా?",
+    "phone": "క్షమించండి, నంబర్ మరోసారి నెమ్మదిగా చెప్తారా?",
+    "pincode": "క్షమించండి, PIN code మరోసారి నెమ్మదిగా చెప్తారా?",
+    "account_number": "క్షమించండి, account number మరోసారి నెమ్మదిగా చెప్తారా?",
+}
+_ORDINALS_TE = ("మొదటి", "రెండో", "మూడో", "నాలుగో", "ఐదో", "ఆరో", "ఏడో", "ఎనిమిదో", "తొమ్మిదో", "పదో")
+_AMOUNT_UNITS = (100, 1000, 100_000, 10_000_000)
+MAX_SPOKEN_OPTIONS = 3
 
 
 def roman_cardinal(n: int) -> str:
@@ -78,9 +107,37 @@ def say(slot: Slot, value: Value) -> str:
         return f"{roman_cardinal(int(value))} taarikh"
     if slot == "weekday":
         return ROMAN_WEEKDAYS.get(str(value), str(value))
-    if slot == "phone":
+    if slot in DIGIT_SLOTS:
         return roman_digits(str(value))
     raise ValueError(slot)
+
+
+def say_te(slot: Slot, value: Value) -> str:
+    if slot == "amount_rupees":
+        return f"{telugu_cardinal(int(value), oblique=True)} రూపాయలు"
+    if slot == "day_of_month":
+        return f"{telugu_ordinal(int(value))[0]} తేదీ"
+    if slot == "weekday":
+        return TE_WEEKDAYS[str(value)][0] if str(value) in TE_WEEKDAYS else str(value)
+    if slot in DIGIT_SLOTS:
+        words = [TE_0_99[int(d)] for d in str(value)]
+        half = len(words) // 2
+        return " ".join(words[:half]) + ", " + " ".join(words[half:]) if len(words) == 10 else " ".join(words)
+    raise ValueError(slot)
+
+
+def _phrase_te(sd: SlotDecision, ordered: Sequence[Value]) -> str:
+    if sd.slot in DIGIT_SLOTS:
+        strs = [str(o) for o in ordered]
+        if len({len(s) for s in strs}) == 1:
+            diff = [i for i in range(len(strs[0])) if len({s[i] for s in strs}) > 1]
+            if len(diff) == 1:
+                i, n = diff[0], len(strs[0])
+                where = "చివరి అంకె" if n - i == 1 else (
+                    f"{_ORDINALS_TE[i]} అంకె" if i < n // 2 else f"చివరి నుంచి {_ORDINALS_TE[n - i - 1]} అంకె"
+                )  # fmt: skip
+                return f"{where} " + ", లేదా ".join(TE_0_99[int(s[i])] for s in strs) + "?"
+    return ", లేదా ".join(say_te(sd.slot, o) for o in ordered) + "?"
 
 
 def option_order(options: Sequence[Value]) -> list[Value]:
@@ -108,17 +165,19 @@ def _cap(s: str) -> str:
     return s[:1].upper() + s[1:]
 
 
-def repeat(slot: Slot) -> str:
-    return _REPEAT[slot]
+def repeat(slot: Slot, lang: str = "hi") -> str:
+    return (_REPEAT_TE if lang == "te" else _REPEAT)[slot]
 
 
-def phrase(sd: SlotDecision) -> str:
+def phrase(sd: SlotDecision, lang: str = "hi") -> str:
     """ASK: forced choice over the decision's candidates (at most three). Otherwise a request to repeat."""
-    options = list(sd.candidates[:3])
+    options = list(sd.candidates[:MAX_SPOKEN_OPTIONS])
     if sd.verdict != Verdict.ASK or len(options) < 2:
-        return repeat(sd.slot)
+        return repeat(sd.slot, lang)
     ordered = option_order(options)
-    if sd.slot == "phone":
+    if lang == "te":
+        return _phrase_te(sd, ordered)
+    if sd.slot in DIGIT_SLOTS:
         strs = [str(o) for o in ordered]
         if len({len(s) for s in strs}) == 1:
             diff = [i for i in range(len(strs[0])) if len({s[i] for s in strs}) > 1]
@@ -128,5 +187,37 @@ def phrase(sd: SlotDecision) -> str:
                 if len(digits) == 2:
                     return _cap(f"{position_phrase(i, len(strs[0]))} {digits[0]} hai ya {digits[1]}?")
                 return _cap(f"{position_phrase(i, len(strs[0]))} " + _choice(digits))
-        return _cap("number " + _choice([say("phone", o) for o in ordered]))
+        return _cap("number " + _choice([say(sd.slot, o) for o in ordered]))
     return _cap(_choice([say(sd.slot, o) for o in ordered]))
+
+
+def _short_matches(slot: Slot, options: Sequence[Value], numbers: Sequence[int]) -> set[Value]:
+    if slot in DIGIT_SLOTS:
+        strs = [str(o) for o in options]
+        if len({len(s) for s in strs}) != 1:
+            return set()
+        diff = [i for i in range(len(strs[0])) if len({s[i] for s in strs}) > 1]
+        if len(diff) != 1:
+            return set()
+        said = {str(n) for n in numbers if n < 10}
+        return {o for o, s in zip(options, strs, strict=True) if s[diff[0]] in said}
+    if slot == "day_of_month":
+        return {o for o in options if o in numbers}
+    if slot == "amount_rupees":
+        return {o for o in options for n in numbers if n and any(n * u == o for u in _AMOUNT_UNITS)}
+    return set()
+
+
+def pick(slot: Slot, options: Sequence[Value], text: str, heard: Value | None = None) -> Value | None:
+    """The option one transcript of the caller's answer chooses, or None unless it names exactly one.
+
+    `options` must be in spoken order, because "the second one" refers to that order. An answer naming two
+    options ("do nahi, saat") is left unresolved: which one was rejected is not safe to infer from words.
+    """
+    full = canon(slot, heard)
+    if full is not None and full in options:
+        return full
+    chosen = {options[i] for i, rx in enumerate(_PICK_ORDINAL[: len(options)]) if rx.search(text)}
+    chosen |= {options[i] for i, rx in enumerate(_PICK_ORDINAL_TE[: len(options)]) if rx.search(text)}
+    chosen |= _short_matches(slot, options, small_numbers(text))
+    return next(iter(chosen)) if len(chosen) == 1 else None

@@ -8,24 +8,36 @@
 ## Two minutes
 | Time | Screen | Say |
 |---|---|---|
-| 0:00 | Before and after | "A speech-to-speech agent goes from sound straight to action. Even prompted specifically for Indian numbers, it acted on a wrong amount, date or phone number on 18.2% of the same recorded calls. With Pramaan checking each action, 0.5%, with a question on 4.5% of calls." |
-| 0:25 | Play "An amount the agent left out" | "Left: the model alone logs Thursday and drops the amount. Right: the same model, held for about a second, and the amount is restored from the evidence." |
-| 0:50 | Play "Evidence is split, so it asks" | "Here the recognisers disagree on one digit, so the agent asks about that digit only, and commits after the answer." |
+| 0:00 | Demo, comparison at the top | "A speech-to-speech agent goes from sound straight to action. Even prompted specifically for Indian numbers, it acted on a wrong amount, date or phone number on 18.2% of the same recorded calls. With Pramaan checking each action, 0.5%, with a question on 4.5% of calls." |
+| 0:25 | Demo: click "An amount the agent left out" | "Left: the model alone logs Thursday and drops the amount. Right: the same model, held for about a second, and the amount is restored from the evidence." |
+| 0:50 | Demo: click "Evidence is split, so it asks" | "Here the recognisers disagree on one digit, so the agent asks about that digit only, and commits after the answer." |
 | 1:20 | Evidence | "Every decision is recorded: what each recogniser heard, when it answered, and why the action went through." |
-| 1:35 | Live call, microphone | Ask a judge to say an amount and a date in Hindi or Hinglish. |
+| 1:35 | Demo: "Use your voice" | Ask a judge to say an amount and a date in Hindi or Hinglish. |
 | 1:55 | Results | "Every number here is reproduced offline by `make eval`, including the baselines we did not beat on errors." |
 
 ## Which calls to trust live
-Five live runs each, real models:
+Five live runs each, real models. Both panes show the same tool call from one realtime session:
 
-| Call | Model alone wrong | Pramaan right |
+| Call | Model's call wrong | Pramaan right |
 |---|---|---|
 | An amount the agent left out | 5 of 5 | 5 of 5 |
-| One digit of a phone number | 5 of 5 | 5 of 5 |
+| One digit of a phone number | 1 of 5 | 5 of 5 |
 | Evidence is split, so it asks | 5 of 5 | 5 of 5 |
-| A Hindi fraction, misheard | 3 of 5 | 5 of 5 |
+| A Hindi fraction, misheard | 5 of 5 | 5 of 5 |
 
-Lead with the first and third. The model alone does not make the identical mistake each time.
+Lead with the first and third, then the fraction. Skip the phone digit unless there is time: the guarded agent
+now usually hears it correctly, so both panes agree. The model does not make the identical mistake each time
+(the fraction came out as ₹2,00,000 three times and ₹2,12,500 twice).
+
+## Telugu (optional, about 30 seconds)
+`make serve-te` in a second terminal, then http://127.0.0.1:8766. Same page, Telugu recognisers, the Telugu
+acoustic model, Telugu questions and four recorded Telugu calls (`demo/scenarios.te.json`).
+
+Say: "Nothing in the decision rule knows Hindi. For Telugu we swapped the number lexicon and the open acoustic
+model, and kept the policy that was frozen on Hindi." Play "తొంభై heard as తొమ్మిది": the model alone logs
+₹9,000, the guarded side logs ₹90,000. Then the Results tab, "Telugu".
+
+The Telugu calls are live only: `make demo-offline` covers the Hindi calls.
 
 ## If something breaks
 - Network or API down: `make demo-offline`. Same four calls, recorded model answers, real checks. It stops at the question and has no agent voice.

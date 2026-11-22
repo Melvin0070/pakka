@@ -35,6 +35,15 @@ Choices worth knowing:
   ("... teen zero, do sau rupaye").
 - Not handled: years vs amounts (2025 is an amount), paise, numbers above 99 crore,
   Hindi ordinals (पहली, दूसरी), month names.
+
+Telugu (Telugu script, a little Roman) shares the parser and differs in four ways, all in the lexer:
+- A scale alone is one of it (వంద = 100, లక్ష యాభై వేలు = 1,50,000), and scales inflect (వందలు, వందల,
+  వేలకు), so they match by stem.
+- Above twenty a number is two words, ten then unit (ఇరవై ఐదు), composed like English "twenty five".
+- Fractions are suffixes on the multiplier, not words before it: రెండున్నర వేలు = 2,500,
+  లక్షన్నర = 1,50,000, రెండుంపావు లక్షలు = 2,25,000. Hundreds fuse too: రెండొందలు = 200.
+- Recognisers often write a number without spaces (రెండువేల, ఇరవైఐదు). An unknown Telugu word is
+  split where both halves are number words. Day ordinals are a suffix (ఇరవై ఐదో తేదీ, పదిహేనవ తేదీ).
 """
 
 from __future__ import annotations
@@ -50,11 +59,22 @@ from pydantic import BaseModel
 from .lexicon import (
     EN_DIGITS,
     EN_DIGITS_DEV,
+    EN_DIGITS_TE,
     EN_WEEKDAYS_DEV,
+    EN_WEEKDAYS_TE,
     HI_0_99,
     HI_FRACTIONS,
     HI_SCALES,
     HI_WEEKDAYS,
+    TE_0_99,
+    TE_FRACTIONS,
+    TE_HALF_SUFFIX,
+    TE_HUNDRED_AND,
+    TE_SCALE_OBLIQUE,
+    TE_SCALE_ONE,
+    TE_SCALE_PLURAL,
+    TE_TENS,
+    TE_WEEKDAYS,
     WEEKDAYS,
 )
 from .types import Slot, Value
@@ -107,8 +127,32 @@ def _rom_key(w: str) -> str:
     return re.sub(r"([aeiou])h$", r"\1", w)
 
 
+_TEL_RE = re.compile("[ఀ-౿]")
+_TEL_FOLD = str.maketrans(
+    {
+        "‌": None,
+        "‍": None,
+        "ః": None,
+        "ఁ": "ం",
+        "ీ": "ి", "ూ": "ు", "ే": "ె", "ో": "ొ", "ఈ": "ఇ", "ఊ": "ఉ", "ఏ": "ఎ", "ఓ": "ఒ",
+        # Aspiration and retroflex l/n are written inconsistently: యాభై / యాబై, ముప్పై / ముప్ఫై.
+        "ఖ": "క", "ఘ": "గ", "ఛ": "చ", "ఝ": "జ", "ఠ": "ట", "ఢ": "డ", "థ": "త", "ధ": "ద", "ఫ": "ప",
+        "భ": "బ", "ళ": "ల", "ణ": "న", "ఱ": "ర",
+    }
+)  # fmt: skip
+_TEL_HALF_NASAL = re.compile("[ఙఞనమ]్(?=[క-హ])")
+_TEL_GEMINATE = re.compile("([క-హ])్\\1")
+
+
+def _tel_key(w: str) -> str:
+    w = unicodedata.normalize("NFC", w).translate(_TEL_FOLD)
+    return _TEL_HALF_NASAL.sub("ం", _TEL_GEMINATE.sub(r"\1", w))
+
+
 def _key(w: str) -> str:
-    return _dev_key(w) if _DEV_RE.search(w) else _rom_key(w)
+    if _DEV_RE.search(w):
+        return _dev_key(w)
+    return _tel_key(w) if _TEL_RE.search(w) else _rom_key(w)
 
 
 # ---------------------------------------------------------------- lexicon
@@ -121,10 +165,13 @@ _Kind = Literal[
 @dataclass(frozen=True, slots=True)
 class _Lex:
     kind: _Kind
-    n: int = 0
+    n: int | Fraction = 0
     word: str = ""  # fraction name or weekday
     en: bool = False  # English number word: tens compose with a following unit
     weak: bool = False
+    te: bool = False  # Telugu number word: tens compose with a following unit, as in English
+    bare: bool = False  # a scale that means one of itself when nothing multiplies it (Telugu వంద)
+    unit: int = 1  # a word that already contains its scale (రెండొందలు, లక్షన్నర)
 
 
 _LEX: dict[str, _Lex] = {}
@@ -423,17 +470,229 @@ def _build() -> None:
 
 _build()
 
+# One line per value; the first word is the lexicon spelling, the rest are variants recognisers write.
+_TE_ALT: dict[int, tuple[str, ...]] = {
+    0: ("సున్న", "సున్నా", "సొన్న"), 1: ("ఒకటి", "ఒక్కటి", "వకటి"), 2: ("రెండు",), 3: ("మూడు",),
+    4: ("నాలుగు", "నాల్గు"), 5: ("ఐదు", "అయిదు", "అయ్దు"), 6: ("ఆరు",), 7: ("ఏడు",),
+    8: ("ఎనిమిది", "ఎన్మిది", "ఎనమిది"), 9: ("తొమ్మిది",), 10: ("పది",),
+    11: ("పదకొండు", "పదకొండ", "పదకండు"), 12: ("పన్నెండు", "పన్నెండ", "పండ్రెండు"), 13: ("పదమూడు",),
+    14: ("పద్నాలుగు", "పదునాలుగు", "పధ్నాలుగు", "పద్నాల్గు"), 15: ("పదిహేను", "పదైదు", "పదిహేన"),
+    16: ("పదహారు", "పదారు"), 17: ("పదిహేడు", "పదేడు"), 18: ("పద్దెనిమిది", "పదెనిమిది", "పద్ధెనిమిది", "పద్నెనిమిది"),
+    19: ("పంతొమ్మిది", "పందొమ్మిది", "పంతొంది"),
+    20: ("ఇరవై", "ఇరవయి", "ఇరవయ్", "ఇరువై"), 30: ("ముప్పై", "ముప్పయి", "ముప్పయ్", "ముప్ఫై", "ముఫ్ఫై"),
+    40: ("నలభై", "నలభయి", "నలబై", "నలభయ్", "నాలభై"), 50: ("యాభై", "ఏభై", "యాబై", "యాభయి", "యాభయ్", "యాపై"),
+    60: ("అరవై", "అరవయి", "అరవయ్"), 70: ("డెబ్బై", "డెబ్భై", "డెభ్భై", "డెబ్బయి", "డెబ్బయ్"),
+    80: ("ఎనభై", "ఎనబై", "ఎనభయి", "ఎనభయ్"), 90: ("తొంభై", "తొంబై", "తొంభయి", "తొంభయ్", "తొంబయి"),
+}  # fmt: skip
+_TE_ROMAN: dict[int, tuple[str, ...]] = {
+    0: ("sunna",), 1: ("okati", "okkati"), 2: ("rendu",), 3: ("moodu",), 4: ("naalugu", "nalgu"),
+    5: ("aidu", "ayidu"), 6: ("aaru",), 7: ("edu",), 8: ("enimidi",), 9: ("tommidi", "thommidi"),
+    10: ("padi",), 11: ("padakondu",), 12: ("pannendu",), 13: ("padamoodu",), 14: ("padnaalugu",),
+    15: ("padihenu",), 16: ("padahaaru",), 17: ("padihedu",), 18: ("paddenimidi",),
+    19: ("pantommidi", "panthommidi"), 20: ("iravai", "iravay"), 30: ("muppai", "muppay"),
+    40: ("nalabhai", "nalabai"), 50: ("yaabhai", "yabai", "ebhai"), 60: ("aravai",),
+    70: ("debbai", "debbhai"), 80: ("enabhai", "enabai"), 90: ("tombhai", "thombhai", "tombai"),
+}  # fmt: skip
+# English number words as Telugu recognisers spell them.
+_EN_TE: dict[int, tuple[str, ...]] = {
+    0: ("జీరో", "జిరో", "జీడో"), 1: ("వన్", "వన్ను", "వను"), 2: ("టూ", "టు", "ట్యూ", "ట్రూ", "త్రూ", "తూ"), 3: ("త్రీ", "థ్రీ", "త్రి"),
+    4: ("ఫోర్", "ఫోరు", "ఫోర"), 5: ("ఫైవ్", "ఫైవు", "ఫైవ"), 6: ("సిక్స్", "సిక్సు", "సిక్స"),
+    7: ("సెవెన్", "సెవన్", "సెవను", "సెవెను", "సెవెన"), 8: ("ఎయిట్", "ఎయిటు", "ఏట్", "ఎయ్ట్", "ఎయిత్", "ఐట్"),
+    9: ("నైన్", "నైను", "నయిన్"), 10: ("టెన్", "టెను"), 11: ("ఎలెవెన్", "ఎలెవన్", "ఇలెవెన్", "లెవెన్"),
+    12: ("ట్వెల్వ్", "ట్వెల్వు", "ట్వల్వ్", "ట్వెల్"), 13: ("థర్టీన్", "తర్టీన్"),
+    14: ("ఫోర్టీన్", "ఫార్టీన్"), 15: ("ఫిఫ్టీన్", "ఫిఫ్టిను"), 16: ("సిక్స్టీన్", "సిక్స్‌టీన్"),
+    17: ("సెవెంటీన్", "సెవెన్టీన్", "సెవన్టీన్", "సెవంటీన్"), 18: ("ఎయిటీన్", "ఎయిట్టీన్", "ఏటీన్"),
+    19: ("నైన్టీన్", "నైంటీన్", "నైన్‌టీన్"), 20: ("ట్వంటీ", "ట్వెంటీ", "ట్వెన్టీ", "ట్వన్టీ", "టోంటీ"),
+    30: ("థర్టీ", "తర్టీ"), 40: ("ఫార్టీ", "ఫోర్టీ"), 50: ("ఫిఫ్టీ",), 60: ("సిక్స్టీ", "సిక్స్‌టీ"),
+    70: ("సెవెంటీ", "సెవెన్టీ", "సెవంటీ", "సెవన్టీ"), 80: ("ఎయిటీ", "ఏటీ"),
+    90: ("నైంటీ", "నైన్టీ", "నైన్‌టీ"),
+}  # fmt: skip
+_TE_WEEKDAY_ALT: dict[str, tuple[str, ...]] = {
+    "monday": ("somavaram", "somavaaram", "మన్డే", "మండె"),
+    "tuesday": ("mangalavaram", "mangalavaaram", "ట్యూస్‌డే", "ట్యూజ్డే", "ట్యూజ్‌డే", "టూస్డే", "ట్యూస్ డే"),
+    "wednesday": ("budhavaram", "budhavaaram", "వెడ్నెస్‌డే", "వెన్స్డే", "వెన్స్‌డే", "వెడ్నస్డే", "బుద్ధవారం"),
+    "thursday": ("guruvaram", "guruvaaram", "థర్స్‌డే", "తర్స్డే", "థర్స్ డే", "గురవారం", "లక్ష్మీవారం"),
+    "friday": ("shukravaram", "sukravaram", "shukravaaram", "ఫ్రైడే", "ఫ్రై డే", "శుక్కురవారం"),
+    "saturday": ("shanivaram", "sanivaram", "shanivaaram", "సాటర్‌డే", "శాటర్డే", "సాటర్ డే", "సెటర్డే", "శనివారము"),
+    "sunday": ("aadivaram", "adivaram", "aadivaaram", "సన్డే", "సండె"),
+}  # fmt: skip
+# Stems that keep their meaning under any case ending: రూపాయలకు, తేదీన, సోమవారానికి, వేలకు.
+_TE_STEMS: list[tuple[str, _Lex]] = []
+
+
+def _build_te() -> None:
+    for n, words in _TE_ALT.items():
+        _add(_Lex("num", n, te=True), TE_0_99[n] if n < 20 else TE_TENS[n], *words, *_TE_ROMAN[n])
+    for n, words in _EN_TE.items():
+        _add(_Lex("num", n, en=True), *words)
+    for n, w in enumerate(EN_DIGITS_TE):
+        _add(_Lex("num", n, en=True), w)
+    # "One" before a scale drops its ending: ఒక లక్ష.
+    _add(_Lex("num", 1, te=True, weak=True), "ఒక", "oka")
+    for n, stem in ((20, "ఇరవయ్య"), (30, "ముప్పయ్య")):  # the day ordinals of the round tens
+        _add(_Lex("num", n, te=True), stem + "ో", stem + "వ")
+
+    for unit, w in TE_SCALE_ONE.items():
+        _add(_Lex("scale", unit, bare=True), w)
+    _add(_Lex("scale", 100, bare=True), TE_HUNDRED_AND, "నూరు", "వందా", "vanda", "nooru", "noota")
+    _add(_Lex("scale", 1000, bare=True), "వేయి", "వెయి", "వయ్యి", "veyyi", "veyi")
+    _add(_Lex("scale", 100_000, bare=True), "లక్షా", "laksha")
+    _add(_Lex("scale", 10_000_000, bare=True), "koti")
+    # Plural and oblique shapes need a multiplier: వేల రూపాయలు alone is "thousands of rupees", and a
+    # garbled multiplier before it (ఏనీమడిన్నర వేల) must not collapse to one thousand.
+    for table in (TE_SCALE_PLURAL, TE_SCALE_OBLIQUE):
+        for unit, w in table.items():
+            _add(_Lex("scale", unit, te=True), w)
+    _add(_Lex("scale", 100, te=True), "vandalu", "vandala")
+    _add(_Lex("scale", 1000, te=True), "velu", "vela")
+    _add(_Lex("scale", 100_000, te=True), "lakshalu", "lakshala")
+    _add(_Lex("scale", 10_000_000, te=True), "kotlu", "kotla")
+    _add(_Lex("scale", 100), "హండ్రెడ్", "హండ్రడ్", "హండ్రెడ్స్", "హన్డ్రెడ్")
+    _add(_Lex("scale", 1000), "థౌజండ్", "థౌసండ్", "తౌజండ్", "థౌజెండ్", "థౌజండ్స్", "థౌజన్డ్",
+         "థౌసెండ్")  # fmt: skip
+    _add(_Lex("scale", 100_000), "లాక్", "లాక్స్", "ల్యాక్", "లాఖ్")
+    _add(_Lex("scale", 10_000_000), "క్రోర్", "క్రోర్స్", "కరోడ్")
+
+    # A quarter, half or three quarters of the scale that follows; never a number on its own.
+    for name, q in (
+        ("quarter", Fraction(1, 4)),
+        ("half", Fraction(1, 2)),
+        ("three_quarters", Fraction(3, 4)),
+    ):
+        _add(_Lex("num", q, te=True, weak=True), TE_FRACTIONS[name])
+    _add(_Lex("num", Fraction(1, 2), te=True, weak=True), "నర", "న్నర")  # the half suffix written apart
+    _add(_Lex("rep", 2), "డబుల్", "డబ్బుల్", "డబల్", "డబో", "డబ్ల్")
+    _add(_Lex("rep", 3), "ట్రిపుల్", "ట్రిపల్", "త్రిపుల్")
+
+    for day in WEEKDAYS:
+        _add(_Lex("wd", word=day), *TE_WEEKDAYS[day], *EN_WEEKDAYS_TE[day], *_TE_WEEKDAY_ALT[day])
+        for w in TE_WEEKDAYS[day]:
+            _TE_STEMS.append((_tel_key(w[:-1]), _Lex("wd", word=day)))  # drop the final ం
+    _add(_Lex("cur"), "రూ", "rupayalu", "rupayi", "rupayala", "roopayalu", "రూపీస్", "రుపీస్", "రూపీ")
+    _add(_Lex("date"), "తేదీ", "తారీఖు", "తారీకు", "tedi", "tedhi", "tareeku", "డేట్", "డేటు")
+    _add(_Lex("money"), "పేమెంట్", "రీఛార్జ్", "రీచార్జ్", "బిల్లు", "బిల్", "ఈఎంఐ", "ఛార్జ్", "ఫీజు", "బ్యాలెన్స్",
+         "లోన్", "చెక్", "చెక్కు", "ఆర్డర్", "క్యాష్", "అడ్వాన్స్", "అమౌంట్", "అద్దె", "కిస్తీ", "డిపాజిట్",
+         "ట్రాన్స్ఫర్", "ట్రాన్స్‌ఫర్", "బాకీ", "addhe", "kisti")  # fmt: skip
+    _add(_Lex("and"), "అండ్")
+    _TE_STEMS.extend(
+        (_tel_key(stem), lex)
+        for stem, lex in (
+            ("రూపాయ", _Lex("cur")), ("రుపాయ", _Lex("cur")), ("రూపాయి", _Lex("cur")), ("రూపాయిల", _Lex("cur")),
+            ("తేదీ", _Lex("date")), ("తారీఖ", _Lex("date")), ("తారీక", _Lex("date")),
+        )
+    )  # fmt: skip
+
+
+_build_te()
+# Case endings a scale may carry: వేలకు, లక్షల్లో, వందలే.
+_TE_CASE = re.compile("(?:ు|ా)?(?:కు|కి|లొ|ల్లొ|ని|ను|న|తొ|ె|కె|వరకు|దాకా)?")
+# Postpositions a recogniser fuses onto the last word of a number: జీరోకి, ఎయిట్కి, యాభైకి.
+_TE_FUSED = tuple(_tel_key(x) for x in ("కి", "కు", "ని", "ను", "లో", "నే", "కే", "తో"))
+_TE_SCALE_STEMS = tuple((_tel_key(w), _Lex("scale", unit, te=True)) for unit, w in TE_SCALE_OBLIQUE.items())
+_TE_HALF = _tel_key(TE_HALF_SUFFIX)
+_TE_QUARTER = tuple(_tel_key(x) for x in ("ంపావు", "ంబావు", "పావు"))
+_TE_HUNDREDS = tuple(_tel_key(x) for x in ("ొందలు", "ొందల", "ొంద", "వందలు", "వందల"))
+_TE_ORDINAL = tuple(_tel_key(x) for x in ("ో", "వ", "వది", "వ తేదీ"))[:3]
+_TE_VOWEL_ENDS = ("", "ు", "ి")
+# ఇరవై -> ఇరవయ: the stem a ten takes when the unit's first vowel fuses onto it.
+_TE_TENS_STEMS = tuple((n, _tel_key(w[:-1] + "య")) for n, w in TE_TENS.items())
+_TE_VOWEL_OF = {"ొ": "ఒ", "ై": "ఐ", "ా": "ఆ", "ె": "ఎ"}
+
+
+def _te_base(stem: str) -> _Lex | None:
+    """The cardinal a sandhi stem came from: ఐద -> ఐదు, ఎనిమిద -> ఎనిమిది."""
+    for end in _TE_VOWEL_ENDS:
+        lex = _LEX.get(stem + end)
+        if lex is not None and lex.kind == "num" and lex.te and not lex.weak and lex.unit == 1:
+            if isinstance(lex.n, int):
+                return lex
+    return None
+
+
+def _te_lookup(k: str) -> _Lex | None:
+    """Telugu words the lexicon cannot list: inflected stems and numbers with a fused suffix."""
+    for stem, lex in _TE_STEMS:
+        if k.startswith(stem):
+            return lex
+    for stem, lex in _TE_SCALE_STEMS:
+        if k.startswith(stem) and _TE_CASE.fullmatch(k, len(stem)):
+            return lex
+    if k.endswith(_TE_HALF):
+        stem = k[: -len(_TE_HALF)]
+        whole = _LEX.get(stem)
+        if whole is not None and whole.kind == "scale" and whole.bare:  # లక్షన్నర
+            return _Lex("num", Fraction(3, 2) * whole.n, te=True, unit=int(whole.n))
+        if (base := _te_base(stem)) is not None:  # రెండున్నర
+            return _Lex("num", base.n + Fraction(1, 2), te=True)
+    for suffix in _TE_QUARTER:
+        if k.endswith(suffix) and (base := _te_base(k[: -len(suffix)])) is not None:  # రెండుంపావు
+            return _Lex("num", base.n + Fraction(1, 4), te=True)
+    for suffix in _TE_HUNDREDS:
+        if k.endswith(suffix) and (base := _te_base(k[: -len(suffix)])) is not None and 2 <= base.n <= 9:
+            return _Lex("num", base.n * 100, te=True, unit=100)  # రెండొందలు
+    for suffix in _TE_ORDINAL:
+        if k.endswith(suffix) and (base := _te_base(k[: -len(suffix)])) is not None and 1 <= base.n <= 31:
+            return _Lex("num", base.n, te=True)  # పదిహేనో, పదిహేనవ
+    for tens, stem in _TE_TENS_STEMS:  # sandhi of ten and unit: డెబ్బయైదు, ఇరవయ్యొకటి, ముప్పయ్యారు
+        if k.startswith(stem) and len(k) > len(stem) and k[len(stem)] in _TE_VOWEL_OF:
+            unit_word = _TE_VOWEL_OF[k[len(stem)]] + k[len(stem) + 1 :]
+            unit = _LEX.get(unit_word) or _te_lookup(unit_word)
+            if unit is not None and unit.kind == "num" and unit.te and unit.unit == 1 and 1 <= unit.n <= 9:
+                return _Lex("num", tens + unit.n, te=True)
+    for suffix in _TE_FUSED:
+        if k.endswith(suffix) and len(k) > len(suffix):
+            base = _LEX.get(k[: -len(suffix)])
+            if base is not None and base.kind == "num" and not base.weak:
+                return base
+    return None
+
+
+_TE_JOINABLE: frozenset[_Kind] = frozenset({"num", "scale", "cur", "date"})
+
+
+def _te_split(word: str, depth: int = 3) -> list[tuple[int, _Lex]] | None:
+    """(end offset, entry) per part of a number written as one word: రెండువేల, ఇరవైఐదు, పదివేలరూపాయలు."""
+    if depth == 0:
+        return None
+    for k in range(len(word) - 1, 0, -1):
+        if unicodedata.category(word[k]) in ("Mn", "Mc"):
+            continue  # never cut inside a syllable
+        left = _lookup(word[:k])
+        if left is None or left.kind not in ("num", "scale"):
+            continue
+        right = _lookup(word[k:])
+        if right is not None and right.kind in _TE_JOINABLE:
+            return [(k, left), (len(word), right)]
+        rest = _te_split(word[k:], depth - 1)
+        if rest is not None:
+            return [(k, left), *((k + end, lex) for end, lex in rest)]
+    return None
+
+
 # ---------------------------------------------------------------- tokens
 
 _TOKEN = re.compile(
     r"(?P<num>\d{1,3}(?:,\d{3})+(?!,?\d)|\d{1,3}(?:,\d{2})*,\d{3}(?!,?\d)|\d+(?:\.\d+)?)"
-    r"(?P<suf>(?:k|K|st|nd|rd|th)(?![A-Za-z])|थ(?![ऀ-ॿ]))?"
-    r"|(?P<word>[A-Za-z̀-ͯऀ-ॣॱ-ॿ‌‍']+)"
+    r"(?P<suf>(?:k|K|st|nd|rd|th)(?![A-Za-z])|थ(?![ऀ-ॿ])|వ(?![ఀ-౿]))?"
+    r"|(?P<word>[A-Za-z̀-ͯऀ-ॣॱ-ॿఀ-౥౰-౿‌‍']+)"
     r"|(?P<sym>₹)"
 )
 _GLUE = re.compile(r"[\s,\-–—/+]*")  # may sit inside one spoken number or digit run
 _PREV_CUE_GAP = re.compile(r"[\s.:\-]*")
-_ORD_SUFFIX = ("st", "nd", "rd", "th", "थ")  # "15थ": a recogniser writing "15th" in Devanagari
+# "15थ": a recogniser writing "15th" in Devanagari. "17వ": the Telugu ordinal ending on a written number.
+_ORD_SUFFIX = ("st", "nd", "rd", "th", "थ", "వ")
+_CUE_TAIL = r"[\s:.,\-]*(?:(?:है|hai|is|इज़?|इस|का|ka|की|ki)[\s:.,\-]*)*$"
+# Only a spoken label makes a digit run a PIN or an account: bare, it stays what it always was.
+_PIN_CUE = re.compile(
+    r"(?:pin\s*code|pincode|postal\s*code|पिन\s*कोड|पिनकोड|పిన్\s*కోడ్|పిన్‌కోడ్)" + _CUE_TAIL, re.IGNORECASE
+)
+_ACCOUNT_CUE = re.compile(
+    r"(?:account|acct|a/c|khata|khaata|खाता|खाते|अकाउंट|अकाउन्ट|एकाउंट|ఖాతా|అకౌంట్)"
+    r"(?:\s*(?:number|num|no\.?|nambar|नंबर|नम्बर|నంబర్|నెంబర్))?" + _CUE_TAIL,
+    re.IGNORECASE,
+)
+_CUE_WINDOW = 48
+_MIN_CUED_DIGITS: dict[Slot, int] = {"pincode": 4, "account_number": 6}
 
 
 @dataclass(frozen=True, slots=True)
@@ -447,6 +706,9 @@ class _Tok:
     weak: bool = False
     digits: str | None = None  # plain digit string, eligible for a phone run
     lit: bool = False  # written with digits rather than words
+    te: bool = False
+    bare: bool = False
+    unit: int = 1
 
 
 _DEV_PREFIX = tuple((_dev_key(p), _Lex("scale", n)) for p, n in (("थाउ", 1000), ("हंड्र", 100)))
@@ -455,8 +717,12 @@ _ORD_TAIL = re.compile("(?:ि?[एय]|इ)?्?थ्?$")
 
 def _lookup(word: str) -> _Lex | None:
     k = _key(word)
-    if (lex := _LEX.get(k)) is not None or not _DEV_RE.search(word):
+    if (lex := _LEX.get(k)) is not None:
         return lex
+    if _TEL_RE.search(word):
+        return _te_lookup(k)
+    if not _DEV_RE.search(word):
+        return None
     # Garbled ASR endings: थाउजेंऑ, हंड्रे are still unambiguous from their first syllables.
     for prefix, lex in _DEV_PREFIX:
         if k.startswith(prefix):
@@ -486,11 +752,21 @@ def _tokenise(text: str) -> list[_Tok]:
         if m.group("sym"):
             out.append(_Tok("cur", s, e, word="pre"))
         elif m.group("word"):
-            lex = _lookup(m.group("word"))
-            if lex is None:
+            word = m.group("word")
+            lex = _lookup(word)
+            parts = [(len(word), lex)] if lex is not None else None
+            if parts is None and _TEL_RE.search(word):
+                parts = _te_split(word)
+            if parts is None:
                 out.append(_Tok(None, s, e))
-            else:
-                out.append(_Tok(lex.kind, s, e, Fraction(lex.n), lex.word, lex.en, lex.weak))
+                continue
+            at = s
+            for end, lx in parts:
+                out.append(
+                    _Tok(lx.kind, at, s + end, Fraction(lx.n), lx.word, lx.en, lx.weak,
+                         te=lx.te, bare=lx.bare, unit=lx.unit)
+                )  # fmt: skip
+                at = s + end
         else:
             raw = _ascii_digits(m.group("num"))
             suf = (m.group("suf") or "").lower()
@@ -540,6 +816,8 @@ class _Parser:
                 u = self.toks[j]
                 if u.kind == "num" and u.en and not u.lit and 1 <= u.num <= 9:
                     return t.num + u.num, j + 1
+            if t.te:
+                return self.small_te(i)
             return t.num, i + 1
         if t.kind == "un" and j is not None:
             u = self.toks[j]
@@ -549,9 +827,30 @@ class _Parser:
             return Fraction(1), i + 1
         return None
 
+    def small_te(self, i: int) -> _Span | None:
+        """ఇరవై ఐదు, ఇరవై రెండున్నర, రెండు ముప్పావు: ten, unit and quarter are separate words."""
+        t = self.toks[i]
+        n, end = t.num, i + 1
+        if n in _TENS and (j := self.nx(i)) is not None:
+            u = self.toks[j]
+            if u.kind == "num" and u.te and not u.weak and u.unit == 1 and 1 <= u.num < 10:
+                n, end = n + u.num, j + 1
+        if n.denominator == 1 and n >= 1 and (j := self.nx(end - 1)) is not None:
+            u = self.toks[j]
+            if u.kind == "num" and u.te and u.weak and 0 < u.num < 1:
+                n, end = n + u.num, j + 1
+        # Part of a scale is an amount only with the scale after it; alone it is an ordinary word.
+        if n.denominator != 1 and not self.scale(self.nx(end - 1)):
+            return None
+        return n, end
+
     def term(self, i: int, cont: bool) -> tuple[Fraction, int, int, bool] | None:
         """(value, unit, next index, used a fraction idiom)."""
         t = self.toks[i]
+        if t.kind == "num" and t.unit > 1:
+            return t.num, t.unit, i + 1, False
+        if t.kind == "scale" and t.bare:
+            return t.num, int(t.num), i + 1, False
         if t.kind == "frac":
             j = self.nx(i)
             if j is None:
@@ -572,7 +871,7 @@ class _Parser:
             unit = int(sc.num)
             q = {"sava": Fraction(1, 4), "saadhe": Fraction(1, 2), "paune": Fraction(-1, 4)}[t.word]
             return (n + q) * unit, unit, k + 1, True
-        if t.kind == "scale" and not t.weak and not cont and self.kind(self.nx(i)) == "cur":
+        if t.kind == "scale" and not (t.weak or t.te or cont) and self.kind(self.nx(i)) == "cur":
             return t.num, int(t.num), i + 1, False  # "सौ रुपये": a bare scale is one of it
         r = self.small(i, cont)
         if r is None:
@@ -617,10 +916,11 @@ class _Parser:
             return None
         return total, end, frac
 
-    def phone(self, i: int) -> tuple[str, int] | None:
+    def digit_run(self, i: int) -> list[tuple[str, int]]:
+        """(digits, end index) for each piece of the digit run starting at token i."""
         if i > 0 and self.kind(i - 1) == "cur" and self.toks[i].lit:
-            return None
-        parts: list[tuple[str, int]] = []  # (digits, end index)
+            return []
+        parts: list[tuple[str, int]] = []
         j: int | None = i
         while j is not None:
             t = self.toks[j]
@@ -647,12 +947,36 @@ class _Parser:
                 break
             else:
                 r = self.small(j, cont=False)
-                assert r is not None
+                if r is None:  # a Telugu number that needs a scale after it (ఆరు అర) ends the run
+                    break
                 parts.append((str(int(r[0])), r[1]))
                 k = self.nx(r[1] - 1)
             j = k
         while parts and self.kind(self.nx(parts[-1][1] - 1)) in ("scale", "date", "cur", "frac"):
             parts.pop()
+        return parts
+
+    def cued_digits(self, i: int) -> tuple[Slot, str, int] | None:
+        """A digit run right after a spoken "PIN code" or "account number" label."""
+        if self.toks[i].kind not in ("num", "rep"):
+            return None
+        start = self.toks[i].start
+        before = self.text[max(0, start - _CUE_WINDOW) : start]
+        slot: Slot | None = (
+            "pincode"
+            if _PIN_CUE.search(before)
+            else "account_number"
+            if _ACCOUNT_CUE.search(before)
+            else None
+        )
+        if slot is None:
+            return None
+        parts = self.digit_run(i)
+        digits = "".join(p for p, _ in parts)
+        return (slot, digits, parts[-1][1]) if len(digits) >= _MIN_CUED_DIGITS[slot] else None
+
+    def phone(self, i: int) -> tuple[str, int] | None:
+        parts = self.digit_run(i)
         digits = "".join(p for p, _ in parts)
         if len(digits) < 8:
             return None
@@ -713,6 +1037,10 @@ class _Parser:
                 out.append(self.entity("weekday", t.word, i, i + 1))
                 i += 1
                 continue
+            if (c := self.cued_digits(i)) is not None:
+                out.append(self.entity(c[0], c[1], i, c[2]))
+                i = c[2]
+                continue
             if (o := self.ordinal(i)) is not None:
                 out.append(self.entity("day_of_month", o[0], i, o[1]))
                 i = o[1]
@@ -753,6 +1081,15 @@ def values(text: str) -> dict[str, Value]:
     for e in extract(text):
         out.setdefault(e.slot, e.value)
     return out
+
+
+def small_numbers(text: str) -> list[int]:
+    """Every standalone number below 100 in the text, for short answers like "saat" to a forced choice."""
+    return [
+        int(t.num)
+        for t in _Parser(text).toks
+        if t.kind == "num" and t.num.denominator == 1 and t.num < 100 and (t.en or not t.weak)
+    ]
 
 
 def parse_number(text: str) -> int | None:

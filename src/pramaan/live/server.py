@@ -26,6 +26,7 @@ from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from .. import lang
 from ..cache import offline
 from ..pipeline import Guard
 from ..types import Values
@@ -202,6 +203,7 @@ async def results(set: str = "synthetic") -> JSONResponse:
             "human": "human.json",
             "fresh": "fresh.json",
             "fresh2": "fresh2.json",
+            "te": "te.json",
             "strong": "strong_baseline.json",
         }.get(set, "headline.json")
     )
@@ -211,7 +213,8 @@ async def results(set: str = "synthetic") -> JSONResponse:
 
 @app.get("/api/scenarios")
 async def scenarios() -> JSONResponse:
-    path = ROOT / "demo" / "scenarios.json"
+    code = lang.get().code
+    path = ROOT / "demo" / ("scenarios.json" if code == "hi" else f"scenarios.{code}.json")
     return JSONResponse(json.loads(path.read_text()) if path.exists() else [])
 
 
@@ -367,7 +370,11 @@ async def ws(browser: WebSocket) -> None:
         await browser.send_text(json.dumps({"type": "error", "turn_id": "", "message": f"unknown clip: {e}"}))
         await browser.close()
         return
-    with_left = params.get("left", "1") != "0"
+    # left: "0" hides the unguarded pane; "independent" runs a second bare agent; otherwise the pane shows
+    # the guarded agent's own first tool call.
+    left_mode = params.get("left", "same")
+    with_left = left_mode != "0"
+    independent = left_mode == "independent"
     guard = make_guard()
 
     right_ws = left_ws = None
@@ -384,10 +391,11 @@ async def ws(browser: WebSocket) -> None:
         else:
             right_ws, left_ws = await asyncio.gather(
                 _connect(RIGHT_INSTRUCTIONS, speak=True),
-                _connect(LEFT_INSTRUCTIONS, speak=False) if with_left else asyncio.sleep(0),
+                _connect(LEFT_INSTRUCTIONS, speak=False) if independent else asyncio.sleep(0),
             )
             session = CallSession(session_id, guard, make_ledger(_log_commitment), RealtimeLink(right_ws),
-                                  RealtimeLink(left_ws) if left_ws else None, emit)  # fmt: skip
+                                  RealtimeLink(left_ws) if left_ws else None, emit,
+                                  mirror_left=with_left and not independent)  # fmt: skip
         _sessions[session_id] = session
         while len(_sessions) > 20:
             _sessions.pop(next(iter(_sessions)))

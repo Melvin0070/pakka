@@ -1,6 +1,7 @@
 {
  "dataset": {
   "kind": "synthetic-tts",
+  "language": "hi",
   "n_actions": 550,
   "n_speakers": 8,
   "batch": "first",
@@ -2958,5 +2959,5 @@
  "assumptions": {
   "seconds_per_question": 4.0
  },
- "generated_at": "2026-11-21T19:09:01+00:00"
+ "generated_at": "2026-11-22T04:04:29+00:00"
 }

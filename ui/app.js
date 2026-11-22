@@ -45,7 +45,11 @@ const secs = ms => (ms / 1000).toFixed(1) + ' s';
 // ---------- the slip
 
 function amountCells(el, value, alt) {
-  if (value == null) { el.innerHTML = '<span class="rs">₹</span>' + '<span class="cell empty">0</span>'.repeat(4); return; }
+  if (value == null) {
+    // An alt with no value means the model dropped an amount the caller did say.
+    el.innerHTML = '<span class="rs">₹</span>' + (alt != null ? '<span class="missing">Not logged</span>' : '<span class="cell empty">0</span>'.repeat(4));
+    return;
+  }
   const a = String(value), b = alt == null ? null : String(alt);
   const grouped = Number(value).toLocaleString('en-IN');
   let i = 0;
@@ -73,11 +77,18 @@ function slip(side, values, doubts = {}) {
   const v = values || {}, root = $('slip' + side);
   root.classList.toggle('live', values != null);
   const hasPhone = v.phone != null, hasAmount = v.amount_rupees != null, hasDue = v.weekday != null || v.day_of_month != null;
+  const hasCode = v.pincode != null || v.account_number != null, codeOnly = hasPhone || hasCode;
   root.querySelectorAll('.row').forEach(r => {
     const s = r.dataset.slot;
-    const on = values == null ? s !== 'phone' : (s === 'phone' ? hasPhone : s === 'due' ? hasDue || !hasPhone : hasAmount || !hasPhone);
+    const on = s === 'pincode' || s === 'account_number' ? v[s] != null
+      : values == null ? s !== 'phone' : (s === 'phone' ? hasPhone : s === 'due' ? hasDue || !codeOnly : hasAmount || !codeOnly);
     r.classList.toggle('off', !on);
   });
+  for (const s of ['pincode', 'account_number']) {
+    const el = $(s + side), doubt = doubts[s];
+    el.classList.toggle('bad', !!doubt);
+    el.textContent = v[s] == null ? ' ' : String(v[s]) + (doubt && doubt.alt != null ? `, or ${doubt.alt}` : '');
+  }
   const da = doubts.amount_rupees;
   amountCells($('fig' + side), v.amount_rupees, da && da.alt);
   const w = $('words' + side);
@@ -97,8 +108,43 @@ function slip(side, values, doubts = {}) {
   const dp = doubts.phone;
   phoneCells($('phone' + side), v.phone, dp && dp.alt, dp && dp.positions);
 }
-function status(side, html, held) { const el = $('st' + side); el.className = 'status' + (held ? ' held' : ''); el.innerHTML = html; }
+function status(side, html) { $('st' + side).innerHTML = html || ''; }
 function note(side, html) { const el = $('note' + side); el.innerHTML = html || ''; el.classList.toggle('on', !!html); }
+// kind: idle | wait | wrong | right | asked | same. Pressing only animates when the verdict changes.
+function stamp(side, kind, title, sub = '') {
+  const el = $('stamp' + side), was = el.dataset.k;
+  el.className = 'stamp ' + kind;
+  el.dataset.k = kind + title;
+  $('stamp' + side + 't').textContent = title; $('stamp' + side + 's').textContent = sub;
+  if (was !== el.dataset.k && !['idle', 'wait'].includes(kind)) { void el.offsetWidth; el.classList.add('press'); }
+  $('agent' + side).classList.toggle('is-wrong', kind === 'wrong');
+  $('agent' + side).classList.toggle('is-right', kind === 'right');
+}
+const same = (a, b) => String(a ?? '') === String(b ?? '');
+
+// Each recogniser's vote on the value the guarded agent ended up with.
+function renderChecks() {
+  const ev = S && S.evidence, ref = S && (S.committed || (S.right && S.right.values));
+  $('checks').hidden = !ev || !ref;
+  if (!ev || !ref) return;
+  const keys = Object.keys(ref).filter(k => ref[k] != null);
+  const chips = ev.timings.map(t => {
+    if (!t.in_time) return `<li class="late">${esc(t.source)} <b>too late</b></li>`;
+    const heard = keys.filter(k => t.values && t.values[k] != null);
+    const differ = heard.some(k => !same(t.values[k], ref[k]));
+    // Until something is logged there is no settled value to agree with, so stay neutral.
+    const cls = !S.committed || !heard.length ? '' : differ ? 'differ' : 'agree';
+    const val = heard.length ? heard.map(k => show(k, t.values[k])).join(', ') : 'no value';
+    return `<li class="${cls}">${esc(t.source)} <b>${esc(val)}</b></li>`;
+  });
+  const llrs = ((S.decision && S.decision.slots) || []).filter(s => s.witness_llr != null);
+  $('checksTitle').textContent = S.committed ? 'Checked against' : 'What the independent recognisers heard';
+  if (llrs.length && S.committed) {
+    const ok = llrs.every(s => s.witness_llr >= 0 || (s.final != null && !same(s.final, s.proposed)));
+    chips.push(`<li class="${ok ? 'agree' : 'differ'}">Acoustic model <b>${ok ? 'matches the sound' : 'prefers another value'}</b></li>`);
+  }
+  $('checkList').innerHTML = chips.join('');
+}
 
 // ---------- state for one call
 
@@ -129,10 +175,10 @@ function fresh() {
 }
 function resetCall() {
   S = fresh();
-  for (const s of ['L', 'R']) { slip(s, null); status(s, 'Waiting for the call'); note(s, ''); }
+  for (const s of ['L', 'R']) { slip(s, null); status(s, ''); note(s, ''); stamp(s, 'idle', 'Waiting'); }
   $('askR').classList.remove('on'); $('ansBox').hidden = true;
   $('err').classList.remove('on');
-  renderEvidence();
+  renderChecks(); renderEvidence();
 }
 
 function doubtsFrom(decision) {
@@ -144,18 +190,25 @@ function doubtsFrom(decision) {
   }
   return out;
 }
+const SLOT_NAME = {amount_rupees: 'amount', phone: 'number', weekday: 'day', day_of_month: 'date', pincode: 'PIN code', account_number: 'account number'};
 function leftNote() {
   if (!S.left) return;
-  const ref = S.truth || S.committed, label = S.truth ? 'The caller said' : 'After checking, the value was';
-  if (!ref) return;
-  const wrong = Object.keys(ref).filter(k => String(S.left.values[k] ?? '') !== String(ref[k] ?? ''));
-  if (!wrong.length) return note('L', '');
-  const k = wrong[0];
-  const omitted = S.left.values[k] == null;
-  const slotName = {amount_rupees: 'amount', phone: 'phone number', weekday: 'day', day_of_month: 'date'}[k] || 'value';
-  const acted = omitted ? `Left out the ${slotName}` : `Logged ${esc(show(k, S.left.values[k]))}`;
-  note('L', `<strong>${acted}. ${label} ${esc(show(k, ref[k]))}.</strong> Nothing in the model's output marked the value as uncertain, so nobody finds out until later.`);
+  const ref = S.truth || S.committed, label = S.truth ? 'The caller said' : 'Pramaan checked it as';
+  if (!ref) { stamp('L', 'same', 'Acted', 'nothing checked'); return; }
+  const wrong = Object.keys(ref).filter(k => !same(S.left.values[k], ref[k]));
+  if (!wrong.length) { note('L', ''); stamp('L', 'same', 'Right this time', 'nothing was checked'); return; }
+  const k = wrong[0], omitted = S.left.values[k] == null, name = SLOT_NAME[k] || 'value';
+  stamp('L', 'wrong', omitted ? `${cap(name)} missing` : `Wrong ${name}`, 'and already acted on');
+  note('L', `<strong>${omitted ? `Left out the ${name}` : `Logged ${esc(show(k, S.left.values[k]))}`}. ${label} ${esc(show(k, ref[k]))}.</strong> No warning was raised, so nobody finds out until the money or the callback goes wrong.`);
   slip('L', S.left.values, Object.fromEntries(wrong.map(w => [w, {alt: ref[w], positions: []}])));
+}
+function rightVerdict(e) {
+  const q = e.questions, wait = secs(S.evidence ? S.evidence.waited_ms : 0);
+  const wrong = S.truth ? Object.keys(S.truth).filter(k => !same(e.values[k], S.truth[k])) : [];
+  if (wrong.length) return stamp('R', 'wrong', `Wrong ${SLOT_NAME[wrong[0]] || 'value'}`, 'got through the check');
+  if (q) return stamp('R', 'right', 'Confirmed', `after ${q} short question${q > 1 ? 's' : ''}`);
+  if (e.repaired_from) return stamp('R', 'right', 'Corrected', `before acting, held ${wait}`);
+  return stamp('R', 'right', 'Verified', `before acting, held ${wait}`);
 }
 
 let offlineMode = false;
@@ -163,76 +216,86 @@ const handlers = {
   'session.ready'(e) {
     S.deadline = e.deadline_ms; S.policy = e.policy_hash;
     $('fake').classList.toggle('on', e.guard === 'fake');
-    $('offline').classList.toggle('on', e.mode === 'offline-replay');
-    status('L', 'Listening'); status('R', 'Listening');
+    stamp('L', 'wait', 'Listening'); stamp('R', 'wait', 'Listening');
   },
   'replay.clip'() { $('said').classList.add('playing'); },
-  'turn.started'() { $('said').classList.add('playing'); if (!S.right) { status('L', 'Listening'); status('R', 'Listening'); } },
+  'turn.started'() { $('said').classList.add('playing'); },
   'turn.ended'(e) {
     $('said').classList.remove('playing');
     if (S.awaiting) {
       $('ansBox').hidden = false; $('ansMeta').textContent = `Caller, ${secs(e.duration_ms)}`; $('ansText').textContent = '…';
-      status('R', '<b>Held</b>, checking the answer', true);
+      stamp('R', 'wait', 'Checking answer');
     }
   },
   'left.committed'(e) {
     if (S.left) return;  // the bare agent's first action is the one being compared
-    S.left = e; slip('L', e.values); status('L', `<b>Committed</b> in ${secs(e.latency_ms)}`); leftNote();
+    S.left = e; slip('L', e.values); status('L', `Acted ${secs(e.latency_ms)} after the caller stopped`); leftNote();
   },
   'right.proposed'(e) {
     S.right = e; if (!S.awaiting) S.proposedLatency = e.latency_ms;
-    slip('R', e.values); status('R', '<b>Held</b>, checking', true);
+    slip('R', e.values); stamp('R', 'wait', 'Checking');
   },
   'evidence'(e) {
     S.evidence = e;
     if (S.awaiting) { const h = (e.timings.find(t => t.heard && t.in_time) || {}).heard; if (h) $('ansText').textContent = h; }
-    renderEvidence();
+    renderChecks(); renderEvidence();
   },
   'decision'(e) {
     S.decision = e;
     if (e.verdict !== 'pass') {
       slip('R', e.proposed, doubtsFrom(e));
-      const bad = e.slots.filter(s => s.verdict !== 'pass');
-      note('R', bad.map(s => {
-        const fam = (s.supporting_families || []).length;
-        const alt = (s.candidates || []).find(c => String(c) !== String(s.proposed));
-        return `<strong>${esc(show(s.slot, s.proposed))} is held:</strong> ${esc(reason(s.reason))}` +
-          (alt != null ? `. The evidence points to ${esc(show(s.slot, alt))}` : '') +
-          (fam ? `, with ${fam} independent ${fam === 1 ? 'family' : 'families'} behind the proposed value.` : '.');
-      }).join('<br>'));
+      const bad = e.slots.filter(s => s.verdict !== 'pass').map(s => SLOT_NAME[s.slot] || 'value');
+      note('R', `<strong>Held before acting.</strong> The recognisers do not agree on the ${[...new Set(bad)].join(' and ')}, so the agent asks rather than guessing.`);
     }
-    renderEvidence();
+    renderChecks(); renderEvidence();
   },
   'question.asked'(e) {
     S.asked = e.n; S.awaiting = true;
     $('askR').classList.add('on'); $('askText').textContent = e.text; $('ansBox').hidden = true;
-    status('R', '<b>Held</b>, asking the caller', true);
+    stamp('R', 'asked', 'Asking', 'about the part in doubt');
   },
   'right.committed'(e) {
     S.committed = e.values; S.awaiting = false;
     slip('R', e.values);
     const q = e.questions;
-    status('R', q ? `<b>Committed</b> after ${q} question${q > 1 ? 's' : ''}, ${secs(e.total_ms)}`
-      : `<b>Committed</b>, checked in ${secs(S.evidence ? S.evidence.waited_ms : 0)} after the tool call`);
-    if (e.repaired_from && !q) status('R', `<b>Corrected and committed</b>, checked in ${secs(S.evidence ? S.evidence.waited_ms : 0)} after the tool call`);
-    if (!q) note('R', S.decision ? S.decision.slots.map(s => `${esc(show(s.slot, s.final ?? s.proposed))}${s.final != null && s.proposed != null && s.final !== s.proposed ? ` (model proposed ${esc(show(s.slot, s.proposed))})` : ''}: ${esc(reason(s.reason))}`).join('<br>') : '');
-    if (q) note('R', `<strong>${esc(showAll(e.values))}</strong>: confirmed by the caller's answer and the recognisers.`);
-    leftNote(); renderEvidence();
+    status('R', q ? `Acted ${secs(e.total_ms)} after the first turn, including the question` : `Acted ${secs(S.proposedLatency + (S.evidence ? S.evidence.waited_ms : 0))} after the caller stopped`);
+    const fixed = S.decision ? S.decision.slots.filter(s => s.final != null && s.proposed !== undefined && !same(s.final, s.proposed)) : [];
+    if (q) note('R', `<strong>${esc(showAll(e.values))}</strong>, confirmed by the caller's answer and the recognisers.`);
+    else if (fixed.length) note('R', fixed.map(s => s.proposed == null
+      ? `<strong>The model left out ${esc(show(s.slot, s.final))}.</strong> The recognisers agree the caller said it, so it was added back.`
+      : `<strong>The model heard ${esc(show(s.slot, s.proposed))}.</strong> The recognisers and the acoustic model agree on ${esc(show(s.slot, s.final))}, so that was logged.`).join('<br>'));
+    else note('R', 'Independent recognisers agree with the model, so it went through without a question.');
+    rightVerdict(e); leftNote(); renderChecks(); renderEvidence();
   },
-  'right.duplicate'() { status('R', '<b>Committed</b> already; a repeated tool call was not executed again'); },
+  'right.duplicate'() { status('R', 'A repeated tool call was not executed again'); },
   'right.voided'(e) {
     if (S.committed) return;
-    status('R', `<b>Voided</b>, ${esc(reason(e.reason))}`, true); S.awaiting = false; renderEvidence();
+    stamp('R', 'asked', 'Not logged', reason(e.reason)); S.awaiting = false; renderEvidence();
   },
   'right.escalated'(e) {
-    S.awaiting = false; status('R', `<b>Not committed</b>, passed to a person after ${e.questions} questions`, true); renderEvidence();
+    S.awaiting = false; stamp('R', 'asked', 'Passed to a person', `after ${e.questions} questions`); renderEvidence();
   },
   'ledger'(e) { S.ledger = e.transitions; renderEvidence(); },
   'agent.audio'(e) { play(e.audio, agentQ); },
   'agent.flush'() { flush(agentQ); },
   'caller.audio'(e) { level(play(e.audio, callerQ)); },
-  'replay.done'() { endCall(); },
-  'error'(e) { $('err').textContent = e.message; $('err').classList.add('on'); },
+  'replay.done'() {
+    if (S && !S.left && !S.right) {
+      for (const side of ['L', 'R']) stamp(side, 'idle', 'No action');
+      $('quoteSub').innerHTML = 'The voice model did not call its tool on this run. Click the call again.';
+    }
+    endCall();
+  },
+  'error'(e) {
+    $('err').textContent = e.message; $('err').classList.add('on');
+    // During a call the banner is off screen, so say it where the presenter is looking.
+    if (S && !S.left && !S.committed) {
+      const net = /timed out|handshake|connect|network|dropped/i.test(e.message);
+      for (const side of ['L', 'R']) stamp(side, 'idle', 'Not run');
+      $('quoteSub').innerHTML = net ? 'The voice model did not answer in time. Click the call again; if it keeps failing, restart with <code>make demo-offline</code>.'
+        : `The call stopped: ${esc(e.message)}`;
+    }
+  },
 };
 
 // ---------- evidence view
@@ -290,7 +353,7 @@ function renderResults(r) {
   if (!r) return;
   const ds = r.dataset || {}, arms = r.arms || [];
   $('resTitle').textContent = `The same ${ds.n_actions ?? ''} recorded calls, ${arms.length} ways`.replace('  ', ' ');
-  const kind = ds.kind === 'synthetic-tts' ? 'These are synthetic voices, not people; treat the numbers as a system check, not a field result. '
+  const kind = ds.kind === 'synthetic-tts' ? (ds.language === 'te' ? 'Telugu callers, on the policy frozen on Hindi: only the number lexicon and the open acoustic model were swapped. ' : '') + 'These are synthetic voices, not people; treat the numbers as a system check, not a field result. '
     : ds.kind === 'human-recorded' ? `Recorded from ${ds.n_speakers === 1 ? 'one person' : (ds.n_speakers ?? 'several') + ' people'}, scored on the policy frozen beforehand.${ds.n_actions < 100 ? ' Too few calls to rank the approaches.' : ''} ` : '';
   $('resLede').textContent = kind + 'Each row scales its calls to 100 dots. A red dot is a wrong value that was acted on without anyone being asked.' +
     (ds.condition ? ` Audio: ${ds.condition}.` : '');
@@ -335,9 +398,9 @@ function renderResults(r) {
     ids.forEach((id, i) => {
       const mine = ours.has(id), pts = [...rc[id]].sort((a, b) => a[0] - b[0]).map(p => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ');
       const dash = mine ? '' : DASH[1 + (i % (DASH.length - 1))];
-      svg += `<polyline points="${pts}" fill="none" stroke="${mine ? 'var(--ink)' : 'var(--ink-3)'}" stroke-width="${mine ? 2.5 : 1.5}" stroke-dasharray="${dash}" stroke-linejoin="round"/>`;
+      svg += `<polyline points="${pts}" fill="none" stroke="${mine ? 'var(--brand)' : 'var(--ink-3)'}" stroke-width="${mine ? 3 : 1.5}" stroke-dasharray="${dash}" stroke-linejoin="round"/>`;
       const name = (arms.find(a => a.id === id) || {}).name || id;
-      legend.push(`<span><svg width="28" height="10"><line x1="0" x2="28" y1="5" y2="5" stroke="${mine ? 'var(--ink)' : 'var(--ink-3)'}" stroke-width="${mine ? 2.5 : 1.5}" stroke-dasharray="${dash}"/></svg>${esc(name)}</span>`);
+      legend.push(`<span><svg width="28" height="10"><line x1="0" x2="28" y1="5" y2="5" stroke="${mine ? 'var(--brand)' : 'var(--ink-3)'}" stroke-width="${mine ? 3 : 1.5}" stroke-dasharray="${dash}"/></svg>${esc(name)}</span>`);
     });
     $('curve').innerHTML = svg + '</svg>';
     $('curveLegend').innerHTML = legend.join('');
@@ -423,18 +486,26 @@ function connect(query) {
   ws.onerror = () => handlers.error({message: 'The connection to the server dropped.'});
   return ws;
 }
+function setBusy(busy) {
+  for (const b of document.querySelectorAll('.call')) b.disabled = busy;
+  $('replay').disabled = busy || !$('clip').value;
+  $('mic').disabled = offlineMode || (busy && !micStream);
+}
+function setQuote(text, sub, idle = false) {
+  $('quote').textContent = text; $('quote').classList.toggle('idle', idle); $('quoteSub').innerHTML = sub || '';
+}
 function endCall() {
   if (micNode) { micNode.disconnect(); micNode = null; }
   if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
   if (ws) { const w = ws; ws = null; try { w.close(); } catch (e) { /* closing twice is fine */ } }
-  $('mic').classList.remove('live'); $('micLabel').textContent = offlineMode ? 'Microphone needs the network' : 'Start a call';
-  $('replay').disabled = !$('clip').value; $('mic').disabled = offlineMode;
+  $('mic').classList.remove('live'); $('micLabel').textContent = offlineMode ? 'Your voice needs the network' : 'Use your voice';
   $('said').classList.remove('playing');
+  setBusy(false);
 }
 async function startMic() {
   current = null;
-  $('quote').firstChild.textContent = 'Listening to you';
-  $('quoteSub').textContent = 'Say an amount, a date or a phone number. Use a headset so the agent does not hear itself.';
+  for (const b of document.querySelectorAll('.call')) b.setAttribute('aria-pressed', 'false');
+  setQuote('Listening. Say an amount, a date or a phone number.', 'Hindi, English or a mix. Use a headset so the agent does not hear itself.', true);
   try {
     micStream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true, noiseSuppression: true, channelCount: 1}});
     const c = audio();
@@ -448,7 +519,9 @@ async function startMic() {
       level(f);
     };
     c.createMediaStreamSource(micStream).connect(micNode);
-    $('mic').classList.add('live'); $('micLabel').textContent = 'End the call'; $('replay').disabled = true;
+    $('mic').classList.add('live'); $('micLabel').textContent = 'End the call';
+    setBusy(true);
+    showCall();
   } catch (e) {
     endCall(); handlers.error({message: `Could not open the microphone: ${e.message}`});
   }
@@ -458,12 +531,17 @@ function playClip(id, answer, meta) {
   if (ws) endCall();
   audio();
   current = meta || clips.find(c => c.clip_id === id) || null;
-  $('quote').firstChild.textContent = current && current.say ? `“${current.say}”` : id;
-  $('quoteSub').textContent = current && current.truth ? `Recorded call. The caller's actual words mean ${showAll(current.truth)}` : 'Recorded call';
+  setQuote(current && current.say ? `“${current.say}”` : id,
+    current && current.truth ? `What the caller meant: <b>${esc(showAll(current.truth))}</b>` : 'Recorded call');
   connect(`?replay=${encodeURIComponent(id)}${answer === '-' ? '' : ',' + encodeURIComponent(answer || id)}`);
-  $('replay').disabled = true; $('mic').disabled = true;
+  setBusy(true);
+  showCall();
 }
-$('replay').addEventListener('click', () => { if ($('clip').value) playClip($('clip').value, $('answer').value); });
+$('replay').addEventListener('click', () => {
+  if (!$('clip').value) return;
+  for (const b of document.querySelectorAll('.call')) b.setAttribute('aria-pressed', 'false');
+  playClip($('clip').value, $('answer').value);
+});
 $('clip').addEventListener('change', () => { $('replay').disabled = !$('clip').value || !!ws; });
 
 document.querySelectorAll('[role=tab]').forEach(t => t.addEventListener('click', () => {
@@ -472,7 +550,23 @@ document.querySelectorAll('[role=tab]').forEach(t => t.addEventListener('click',
   if (t.dataset.view === 'results') loadResults();
 }));
 
-function showView(name) { document.querySelector(`[role=tab][data-view=${name}]`).click(); }
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const COUNT_MS = 900;
+function countUp(el, to) {
+  const run = el.countRun = (el.countRun || 0) + 1, t0 = performance.now();
+  const step = now => {
+    if (el.countRun !== run) return;
+    const p = still ? 1 : Math.min(1, (now - t0) / COUNT_MS), eased = 1 - (1 - p) ** 3;
+    el.innerHTML = `${(to * eased).toFixed(1)}%<small>wrong</small>`;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  step(t0);
+}
+// The call plays below the headline numbers, so bring it into view when it starts.
+function showCall() {
+  const box = $('console').getBoundingClientRect();
+  if (box.top > innerHeight * 0.3 || box.top < 0) $('console').scrollIntoView({behavior: still ? 'auto' : 'smooth', block: 'start'});
+}
 function dotGrid(wrong, asked, n) {
   const w = Math.round(100 * wrong / n), q = Math.min(Math.round(100 * asked / n), 100 - w);
   const kinds = Array.from({length: 100}, (_, i) => i < w ? 'w' : i < w + q ? 'q' : '');
@@ -480,47 +574,65 @@ function dotGrid(wrong, asked, n) {
 }
 async function loadOverview() {
   const get = u => fetch('/api/' + u).then(x => x.ok ? x.json() : null).catch(() => null);
-  const [strong, fresh, first, human, a, sc] = await Promise.all([get('results?set=strong'), get('results?set=fresh2').then(x => x || get('results?set=fresh')), get('results?set=synthetic'), get('results?set=human'), get('analysis'), get('scenarios')]);
-  const r = strong || fresh || first;
-  if (r) {
-    const arm = id => r.arms.find(x => x.id === id), A = arm('A'), P = arm('P'), pc = (k, n) => (100 * k / n).toFixed(1) + '%';
-    $('ba').hidden = false;
-    $('baBefore').innerHTML = `${pc(A.wrong_silent, A.n)}<small>wrong</small>`;
-    $('baBeforeText').textContent = `Acted on a wrong amount, date or phone number in ${A.wrong_silent} of ${A.n} calls. Nobody was asked; nothing flagged it.`;
-    $('baAfter').innerHTML = `${pc(P.wrong_silent, P.n)}<small>wrong</small>`;
-    $('baAfterText').textContent = `${P.wrong_silent} of ${P.n} calls. The caller was asked one short question on ${P.asked} (${pc(P.asked, P.n)}); the rest went through or were corrected silently.`;
-    $('baBeforeDots').innerHTML = dotGrid(A.wrong_silent, 0, A.n);
+  const [strong, fresh, first, human, sc] = await Promise.all([get('results?set=strong'), get('results?set=fresh2').then(x => x || get('results?set=fresh')), get('results?set=synthetic'), get('results?set=human'), get('scenarios')]);
+  const base = fresh || first;
+  // Transcript baselines are paired with Pramaan on the short-prompt agent, its weaker result on these calls.
+  const picks = [
+    {label: 'Realtime, tuned prompt', lab: 'Realtime model, tuned prompt', r: strong, id: 'A', note: 'an agent prompted specifically for Indian numbers, and a policy frozen before scoring'},
+    {label: 'Realtime, basic prompt', lab: 'Realtime model, basic prompt', r: base, id: 'A', note: 'a short generic agent prompt, and a policy frozen before scoring'},
+    {label: 'Sarvam', lab: 'Sarvam, then fill the form', r: base, id: 'S', note: 'Sarvam saaras:v3 read through our number normaliser'},
+    {label: 'OpenAI transcribe', lab: 'gpt-transcribe, then fill the form', r: base, id: 'B', note: 'gpt-transcribe read through our number normaliser'},
+    {label: 'OpenAI + Sarvam check', lab: 'Ask when OpenAI and Sarvam disagree', r: base, id: 'B-2S', note: 'the strongest simple baseline. Its error gap to Pramaan is within noise; Pramaan’s edge is fewer questions and keeping the speech-to-speech agent'},
+  ].filter(p => p.r && p.r.arms.some(x => x.id === p.id));
+  const pc = (k, n) => (100 * k / n).toFixed(1) + '%';
+  const renderScore = p => {
+    const arm = id => p.r.arms.find(x => x.id === id), A = arm(p.id), P = arm('P'), ds = p.r.dataset;
+    $('scoreN').textContent = A.n;
+    $('baLab').textContent = p.lab;
+    // Green goes to whichever side made fewer errors, including when that is the baseline.
+    $('baBefore').className = 'big ' + (A.wrong_silent < P.wrong_silent ? 'good' : 'bad');
+    $('baAfter').className = 'big ' + (P.wrong_silent <= A.wrong_silent ? 'good' : 'bad');
+    countUp($('baBefore'), 100 * A.wrong_silent / A.n);
+    $('baBeforeText').textContent = `Acted on a wrong amount, date or number in ${A.wrong_silent} of ${A.n} calls` +
+      (A.asked ? `. One short question on ${A.asked} calls (${pc(A.asked, A.n)}).` : ', with no warning.');
+    countUp($('baAfter'), 100 * P.wrong_silent / P.n);
+    $('baAfterText').textContent = `${P.wrong_silent} of ${P.n} calls. One short question on ${P.asked} calls (${pc(P.asked, P.n)}); the rest went through or were corrected without asking.`;
+    $('baBeforeDots').innerHTML = dotGrid(A.wrong_silent, A.asked, A.n);
     $('baAfterDots').innerHTML = dotGrid(P.wrong_silent, P.asked, P.n);
-    const c = r.certificate, ds = r.dataset;
-    $('baNote').textContent = `The same ${ds.n_actions} recorded calls on both sides, from ${ds.n_speakers} held-out synthetic voices over a phone channel` +
-      (strong ? ', with an agent prompted specifically for Indian numbers, on the frozen policy' : fresh ? ', scored once after the policy was frozen' : '') + `. With 95% confidence, at most ${(100 * c.upper_bound).toFixed(1)}% of actions let through are wrong.` +
-      (human ? ` Recorded people so far: ${human.dataset.n_speakers}, ${human.dataset.n_actions} calls (see Results).` : ' No recordings of people yet.');
+    $('baBeforeDots').setAttribute('aria-label', `${A.wrong_silent} of ${A.n} wrong, ${A.asked} asked`);
+    $('baAfterDots').setAttribute('aria-label', `${P.wrong_silent} of ${P.n} wrong, ${P.asked} asked`);
+    $('baNote').textContent = `Same ${ds.n_actions} calls on both sides: ${ds.n_speakers} held-out synthetic voices over a phone channel, ${p.note}.` +
+      ` With 95% confidence at most ${(100 * p.r.certificate.upper_bound).toFixed(1)}% of the actions Pramaan let through are wrong.` +
+      (human ? ` Recorded people so far: ${human.dataset.n_speakers}, ${human.dataset.n_actions} calls, on the Results tab.` : '');
+    for (const b of $('baPick').children) b.setAttribute('aria-pressed', String(b.textContent === p.label));
+  };
+  if (picks.length) {
+    $('ba').hidden = false;
+    $('baPick').replaceChildren(...picks.map(p => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = p.label;
+      b.addEventListener('click', () => renderScore(p));
+      return b;
+    }));
+    renderScore(picks[0]);
   }
-  if (a) {
-    const tile = (n, label, bad) => `<div><b${bad ? ' class="bad"' : ''}>${n}</b><span>${esc(label)}</span></div>`;
-    const f = a.agent_errors.fate, q = a.questions;
-    $('flow').hidden = false;
-    $('flowTiles').innerHTML = tile(a.agent_errors.n, `wrong values proposed in ${a.n} calls`) + tile(f['repaired to the true value'] ?? 0, 'corrected without asking') +
-      tile(f['caller asked'] ?? 0, 'held for a question') + tile(f['acted on, wrong'] ?? 0, 'got through', true) +
-      (q ? tile(`${q.outcomes.committed_right ?? 0} of ${q.n}`, 'asked calls ended with the right value') : '');
-  }
-  $('cards').innerHTML = (sc || []).map((s, i) => `<article class="card"><h3>${esc(s.title)}</h3><p class="said" lang="hi">“${esc(s.say)}”</p>
-    <dl><dt>Model alone</dt><dd class="bad">${esc(s.alone)}</dd><dt>With Pramaan</dt><dd>${esc(s.guarded)} · ${esc(s.outcome)}</dd></dl>
-    <p class="why">${esc(s.note)}</p><button class="ghost" data-scenario="${i}">Play this call</button></article>`).join('');
-  document.querySelectorAll('[data-scenario]').forEach(b => b.addEventListener('click', () => {
+  const playIcon = '<i class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.2v9.6L10.5 6z" fill="currentColor"/></svg></i>';
+  $('cards').innerHTML = (sc || []).map((s, i) => `<button class="call" data-scenario="${i}" aria-pressed="false">${playIcon}<b>${esc(s.title)}</b><span>${esc(s.hint || s.outcome)}</span></button>`).join('');
+  for (const b of document.querySelectorAll('[data-scenario]')) b.addEventListener('click', () => {
     const s = sc[+b.dataset.scenario];
-    showView('call');
+    for (const x of document.querySelectorAll('.call')) x.setAttribute('aria-pressed', String(x === b));
     playClip(s.id, s.answer || '-', {clip_id: s.id, say: s.say, truth: s.truth});
-  }));
+  });
+  if (ws) setBusy(true);
 }
-$('goLive').addEventListener('click', () => showView('call'));
 
 let resultSet = 'synthetic';
 async function loadResults() {
   try {
-    const [r, f, f2, h, a] = await Promise.all(['results?set=synthetic', 'results?set=fresh', 'results?set=fresh2', 'results?set=human', 'analysis'].map(s => fetch('/api/' + s).then(x => x.ok ? x.json() : null)));
-    const sets = {synthetic: r, fresh: f, fresh2: f2, human: h};
-    $('sets').hidden = !f && !f2 && !h;
+    const [r, f, f2, h, te, a] = await Promise.all(['results?set=synthetic', 'results?set=fresh', 'results?set=fresh2', 'results?set=human', 'results?set=te', 'analysis'].map(s => fetch('/api/' + s).then(x => x.ok ? x.json() : null)));
+    const sets = {synthetic: r, fresh: f, fresh2: f2, human: h, te};
+    $('sets').hidden = !f && !f2 && !h && !te;
     document.querySelectorAll('#sets button').forEach(b => { if (b.dataset.set !== 'synthetic') b.hidden = !sets[b.dataset.set]; });
     renderResults(sets[resultSet] || r);
     renderAnalysis(resultSet === 'synthetic' ? a : null);
@@ -533,14 +645,15 @@ document.querySelectorAll('#sets button').forEach(b => b.addEventListener('click
 }));
 async function boot() {
   resetCall();
+  setQuote('Pick a call. Both sides get the same tool call from the model; watch what each one logs.', '', true);
   loadOverview();
   try {
     health = await (await fetch('/api/health')).json();
     const ok = health.offline || (health.key_present && health.model_reachable);
     offlineMode = !!health.offline;
-    if (offlineMode) { $('mic').disabled = true; $('micLabel').textContent = 'Microphone needs the network'; }
+    if (offlineMode) { $('mic').disabled = true; $('micLabel').textContent = 'Your voice needs the network'; }
     $('chip').className = 'chip ' + (ok ? 'ok' : 'bad');
-    $('chipText').textContent = health.offline ? 'Offline replay: recorded answers' : !health.key_present ? 'No OpenAI key on the server' : !health.model_reachable ? `${health.model} is not reachable` : `${health.model} ready`;
+    $('chipText').textContent = health.offline ? 'Offline replay of recorded model answers' : !health.key_present ? 'No OpenAI key on the server' : !health.model_reachable ? `${health.model} is not reachable` : `${health.model} ready`;
     $('fake').classList.toggle('on', health.guard === 'fake');
   } catch (e) { $('chip').className = 'chip bad'; $('chipText').textContent = 'Server not reachable'; }
   try {
@@ -555,10 +668,23 @@ async function boot() {
       `<optgroup label="${esc(speaker)}">` + list.map(c =>
         `<option value="${esc(c.clip_id)}">${esc(c.truth ? showAll(c.truth) : c.clip_id)}${c.condition && c.condition !== 'phone' ? ' (' + esc(c.condition) + ')' : ''}</option>`).join('') + '</optgroup>').join(''));
     const want = new URLSearchParams(location.search).get('clip');
-    if (want && clips.some(c => c.clip_id === want)) { $('clip').value = want; $('replay').disabled = false; showView('call'); }
+    if (want && clips.some(c => c.clip_id === want)) { $('clip').value = want; $('replay').disabled = false; document.querySelector('.more').open = true; }
   } catch (e) { /* the page still works with the microphone */ }
-  if (location.hash === '#call') showView('call');
   if (location.hash === '#results') document.querySelector('[data-view=results]').click();
   if (location.hash === '#evidence') document.querySelector('[data-view=evidence]').click();
 }
+
+// ---------- theme
+
+function themeLabel() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  $('theme').setAttribute('aria-label', dark ? 'Switch to the light theme' : 'Switch to the dark theme');
+}
+$('theme').addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('pramaan-theme', next); } catch (e) { /* private mode: the choice lasts for this page only */ }
+  themeLabel();
+});
+themeLabel();
 boot();

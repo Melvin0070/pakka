@@ -41,3 +41,49 @@ EN_WEEKDAYS_DEV = {
     "saturday": ("सैटरडे",),
     "sunday": ("संडे",),
 }
+
+# ---------------------------------------------------------------- Telugu
+
+_TE_ONES = ("సున్నా", "ఒకటి", "రెండు", "మూడు", "నాలుగు", "ఐదు", "ఆరు", "ఏడు", "ఎనిమిది", "తొమ్మిది")
+_TE_TEENS = ("పది", "పదకొండు", "పన్నెండు", "పదమూడు", "పద్నాలుగు", "పదిహేను", "పదహారు", "పదిహేడు",
+             "పద్దెనిమిది", "పంతొమ్మిది")  # fmt: skip
+TE_TENS = {20: "ఇరవై", 30: "ముప్పై", 40: "నలభై", 50: "యాభై", 60: "అరవై", 70: "డెబ్బై", 80: "ఎనభై", 90: "తొంభై"}
+# Above twenty Telugu says the ten and the unit as two words, so only 0-19 and the tens are lexical.
+TE_0_99: tuple[str, ...] = (
+    *_TE_ONES,
+    *_TE_TEENS,
+    *(TE_TENS[n - n % 10] + (f" {_TE_ONES[n % 10]}" if n % 10 else "") for n in range(20, 100)),
+)
+assert len(TE_0_99) == 100
+
+# A scale has three shapes: alone it already means one of it (వంద = 100, never "ఒకటి వంద"); after a
+# multiplier it is plural when it ends the number (ఐదు వందలు) and oblique when more follows or a noun
+# does (ఐదు వందల యాభై, ఐదు వందల రూపాయలు). One hundred with a remainder is నూట (నూట యాభై = 150).
+TE_SCALE_ONE = {100: "వంద", 1000: "వెయ్యి", 100000: "లక్ష", 10000000: "కోటి"}
+TE_SCALE_PLURAL = {100: "వందలు", 1000: "వేలు", 100000: "లక్షలు", 10000000: "కోట్లు"}
+TE_SCALE_OBLIQUE = {100: "వందల", 1000: "వేల", 100000: "లక్షల", 10000000: "కోట్ల"}
+TE_HUNDRED_AND = "నూట"
+# Halves are a suffix on the multiplier (రెండున్నర వేలు = 2,500); quarters stand before the scale.
+TE_HALF_SUFFIX = "న్నర"
+TE_FRACTIONS = {"quarter": "పావు", "half": "అర", "three_quarters": "ముప్పావు"}
+
+# English digits as Telugu recognisers spell them; most callers read a phone number this way.
+EN_DIGITS_TE = ("జీరో", "వన్", "టూ", "త్రీ", "ఫోర్", "ఫైవ్", "సిక్స్", "సెవెన్", "ఎయిట్", "నైన్")
+TE_WEEKDAYS = {
+    "monday": ("సోమవారం",),
+    "tuesday": ("మంగళవారం",),
+    "wednesday": ("బుధవారం",),
+    "thursday": ("గురువారం", "లక్ష్మివారం", "బేస్తవారం"),
+    "friday": ("శుక్రవారం",),
+    "saturday": ("శనివారం",),
+    "sunday": ("ఆదివారం",),
+}
+EN_WEEKDAYS_TE = {
+    "monday": ("మండే",),
+    "tuesday": ("ట్యూస్డే",),
+    "wednesday": ("వెడ్నెస్డే",),
+    "thursday": ("థర్స్డే",),
+    "friday": ("ఫ్రైడే",),
+    "saturday": ("సాటర్డే",),
+    "sunday": ("సండే",),
+}

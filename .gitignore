@@ -16,3 +16,4 @@ data/clips/
 data/human/clips/
 
 data/cache.live.sqlite
+data/te/cache.live.sqlite

@@ -1,4 +1,7 @@
-"""One call: caller audio teed to two Realtime agents, the right one's tool calls held until judged.
+"""One call: a Realtime agent's tool calls held until judged, beside the same call left unguarded.
+
+By default the left pane is the guarded agent's own first tool call, executed as it stood. A second,
+independent agent can be attached instead (`left`), which the offline replay and one script still use.
 
 No network here. The server feeds Realtime events in and passes a `Link` for sending; tests do the same with fakes.
 """
@@ -15,8 +18,10 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
+from .. import lang
+from .. import question as questions
 from ..pipeline import Guard, Judgement
-from ..types import Values, Verdict
+from ..types import Asked, Values, Verdict
 from .ledger import Entry, Ledger
 from .ring import RATE, RingBuffer, audio_sha
 from .tooling import TOOL_NAME, clean_args
@@ -26,7 +31,14 @@ log = logging.getLogger("pramaan.live")
 LEAD_IN_MS = 300
 MAX_QUESTIONS = 2
 MAX_SPAN_MS = 30_000
-SLOT_LABEL = {"amount_rupees": "amount", "day_of_month": "tareekh", "weekday": "din", "phone": "phone number"}
+SLOT_LABEL = {
+    "amount_rupees": "amount",
+    "day_of_month": "tareekh",
+    "weekday": "din",
+    "phone": "phone number",
+    "pincode": "PIN code",
+    "account_number": "account number",
+}
 
 Emit = Callable[[dict[str, Any]], Awaitable[None]]
 
@@ -56,6 +68,7 @@ class Action:
     )  # the value to execute for each slot that passed, repairs applied
     doubted: set[str] = field(default_factory=set)  # slots the guard questioned and has not passed since
     questions: int = 0
+    asked: Asked | None = None  # the forced choice awaiting an answer
     first_proposed_at: float | None = None
     committed: Values | None = None
     closed: bool = False
@@ -71,6 +84,7 @@ class CallSession:
         left: Link | None,
         emit: Emit,
         clock: Callable[[], float] = time.monotonic,
+        mirror_left: bool = False,
     ) -> None:
         self.id = session_id
         self.guard, self.ledger, self.right, self.left, self._emit = guard, ledger, right, left, emit
@@ -97,6 +111,8 @@ class CallSession:
         self._audio_bytes = 0
         self._left_stopped_at: float | None = None
         self._left_turn: str = ""
+        self.mirror_left = mirror_left
+        self._left_mirrored = False
 
     # ---- plumbing
 
@@ -308,6 +324,15 @@ class CallSession:
             entity_version=action.version,
             call_id=call_id,
         )
+        if self.mirror_left and not self._left_mirrored:
+            # Two sessions sample two different mishearings; the fair "without" is this same call, unguarded.
+            self._left_mirrored = True
+            await self.emit(
+                "left.committed",
+                turn.id,
+                values=values,
+                latency_ms=round((now - (turn.stopped_at or now)) * 1000),
+            )
         self.ledger.hold(entry)
         await self._ledger_event(entry, turn.id)
         await self.emit("right.held", turn.id, entry_id=entry.id)
@@ -322,7 +347,9 @@ class CallSession:
                 await turn.started
             judged_at = self.clock()
             try:
-                j = await self.guard.judge(turn.id, to_judge, confirming=action.questions > 0)
+                j = await self.guard.judge(
+                    turn.id, to_judge, confirming=action.questions > 0, asked=action.asked
+                )
             except Exception as e:  # noqa: BLE001 - a guard failure must never become an execution
                 await self.emit(
                     "error", turn.id, side="guard", message=f"evidence check failed: {type(e).__name__}: {e}"
@@ -407,11 +434,19 @@ class CallSession:
         doubt = next((s for s in (decision.slots if decision else ()) if s.verdict != Verdict.PASS), None)
         if decision is not None and decision.question_slot:
             doubt = next((s for s in decision.slots if s.slot == decision.question_slot), doubt)
-        if decision is not None and decision.question:
+        code = lang.get().code
+        if code != "hi" and doubt is not None:
+            # decide() phrases in Hinglish and stays pure; another language rephrases the same decision.
+            question = questions.phrase(doubt, code)
+        elif decision is not None and decision.question:
             question = decision.question
         else:
             label = SLOT_LABEL.get(dropped[0] if dropped else doubt.slot if doubt else "", "woh")
             question = f"Maaf kijiye, {label} ek baar dheere se dobara bataiye?"
+        action.asked = None
+        if decision is not None and doubt is not None and doubt.verdict == Verdict.ASK:
+            options = doubt.candidates[: questions.MAX_SPOKEN_OPTIONS]
+            action.asked = Asked(slot=doubt.slot, options=tuple(questions.option_order(options)))
         self.ledger.ask(entry, question)
         self.awaiting_answer, self.question_spoken = True, False
         await self._ledger_event(entry, turn.id)

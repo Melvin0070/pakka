@@ -11,6 +11,7 @@ from typing import Any
 
 import httpx
 
+from .. import lang
 from ..audio import RATE, resample, wav_bytes
 from ..types import Hypothesis
 from .base import Source
@@ -46,5 +47,5 @@ def parse(resp: dict[str, Any], latency_ms: float) -> Hypothesis:
 
 
 def source() -> Source:
-    params = {"model": os.environ.get("SARVAM_MODEL", "saaras:v3"), "language_code": "hi-IN"}
+    params = {"model": os.environ.get("SARVAM_MODEL", "saaras:v3"), "language_code": lang.get().sarvam_code}
     return Source(NAME, "sarvam", params, _call, parse)

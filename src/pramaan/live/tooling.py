@@ -5,7 +5,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from ..types import SLOTS, Values
+from .. import lang
+from ..types import DIGIT_SLOTS, SLOTS, Values
 
 TOOL_NAME = "log_commitment"
 TOOL: dict[str, Any] = {
@@ -31,18 +32,30 @@ TOOL: dict[str, Any] = {
                 "type": ["string", "null"],
                 "description": "10-digit Indian mobile number, digits only.",
             },
+            "pincode": {
+                "type": ["string", "null"],
+                "description": "6-digit Indian PIN code, digits only, if the caller gave one.",
+            },
+            "account_number": {
+                "type": ["string", "null"],
+                "description": "Bank account number, digits only, exactly as spoken including leading zeros.",
+            },
         },
         "required": list(SLOTS),
     },
 }
 
+_LANG = lang.get()
 BASE = (
-    "You are an assistant answering a phone call in India. Callers speak Hindi, English or a mix. "
-    "When the caller states an amount, a date or a phone number, call log_commitment with those values."
+    f"You are an assistant answering a phone call in India. Callers speak {_LANG.name}, English or a mix. "
+    "When the caller states an amount, a date, a phone number, a PIN code or an account number, call "
+    "log_commitment with those values."
 )
 LEFT_INSTRUCTIONS = BASE
 RIGHT_INSTRUCTIONS = (
-    BASE + " Speak short, natural Hinglish; one sentence at a time. Call log_commitment immediately, before "
+    BASE
+    + f" Speak short, natural {'Hinglish' if _LANG.code == 'hi' else _LANG.name + ' mixed with English'}; "
+    "one sentence at a time. Call log_commitment immediately, before "
     "saying anything, and never tell the caller a value is noted until the tool returns status committed. "
     "If the tool returns status held, say exactly the text in ask_exactly, word for word, and nothing else; "
     "when the caller answers, call log_commitment again with all the values as you now understand them. "
@@ -65,6 +78,8 @@ def clean_args(raw: str | dict[str, Any]) -> Values:
         if slot == "phone":
             digits = "".join(c for c in str(v) if c.isdigit())
             out[slot] = digits[-10:] if len(digits) > 10 and digits[:-10] in ("91", "0") else digits
+        elif slot in DIGIT_SLOTS:
+            out[slot] = "".join(c for c in str(v) if c.isdigit())
         elif slot == "weekday":
             out[slot] = str(v).strip().lower()
         else:

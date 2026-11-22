@@ -24,6 +24,7 @@ from .common import (
     HUMAN_EVIDENCE,
     LOCAL,
     RESULTS,
+    TE_EVIDENCE,
     Outcome,
     Row,
     guard,
@@ -116,15 +117,20 @@ def main() -> None:
     # Human recordings are test only: thresholds and the policy still come from the synthetic tuning speakers.
     human, fresh2 = "--human" in sys.argv, "--fresh2" in sys.argv
     fresh = "--fresh" in sys.argv or fresh2
+    telugu = "--te" in sys.argv
     tune = tuning_rows()
-    if human:
+    if telugu:
+        # Telugu test speakers. The policy and every threshold still come from the Hindi tuning speakers.
+        rows, agent_failed = load(TE_EVIDENCE)
+        test = split(rows)[1]
+    elif human:
         test, agent_failed = load(HUMAN_EVIDENCE)
     elif fresh:
         # The locked batch: test speakers, new values, scored after the policy was frozen.
         rows, agent_failed = load(FRESH2_EVIDENCE if fresh2 else FRESH_EVIDENCE)
         test = split(rows)[1]
     kind = "human" if human else "synthetic"
-    stem = "human" if human else "fresh2" if fresh2 else "fresh" if fresh else None
+    stem = "te" if telugu else "human" if human else "fresh2" if fresh2 else "fresh" if fresh else None
     policy = load_policy()
     has_second = any(hyp(r, SECOND) is not None for r in test)
     second = SECOND if has_second else LOCAL
@@ -209,9 +215,14 @@ def main() -> None:
     headline = {
         "dataset": {
             "kind": "human-recorded" if human else "synthetic-tts",
+            "language": "te" if telugu else "hi",
             "n_actions": len(test),
             "n_speakers": len({r.speaker for r in test}),
-            "batch": "locked: new values, scored once after the policy was frozen" if fresh else "first",
+            "batch": "Telugu: policy frozen on Hindi, no Telugu tuning"
+            if telugu
+            else "locked: new values, scored once after the policy was frozen"
+            if fresh
+            else "first",
             "condition": "laptop microphone, then 8 kHz AMR-NB + A-law phone channel"
             if human
             else "8 kHz AMR-NB + A-law phone channel, part with babble noise",
@@ -237,7 +248,7 @@ def main() -> None:
     )
 
     lines = [
-        f"{len(test)} actions, {headline['dataset']['n_speakers']} held-out {kind} speakers, phone-grade audio. Policy `{policy.hash}`.",
+        f"{len(test)} {'Telugu ' if telugu else ''}actions, {headline['dataset']['n_speakers']} held-out {kind} speakers, phone-grade audio. Policy `{policy.hash}`.",
         "",
         "| Arm | Wrong and acted on | Caller asked | of which the value was wrong | Acted without asking |",
         "|---|---|---|---|---|",
@@ -258,6 +269,21 @@ def main() -> None:
         "|---|---|---|---|",
         *(f"| {a['name']} | {a['wrong_silent']} | {a['asked']} | {a['asked_needed']} |" for a in ablations),
     ]
+    if telugu:
+        # The swapped-in acoustic model on its own: does the true value outscore every rival it was given?
+        scored = [
+            (max(w.loglik, key=lambda k: (w.loglik[k], k)) == str(r.truth[w.slot]))
+            for r in test
+            for w in r.evidence.witness
+            if w.slot in r.truth and str(r.truth[w.slot]) in w.loglik and len(w.loglik) > 1
+        ]
+        headline["witness_truth_top"] = {"top": sum(scored), "scored": len(scored)}
+        lines += [
+            "",
+            f"Telugu acoustic model alone: the true value outscored every transcribed and confusable rival in "
+            f"{sum(scored)} of {len(scored)} values it scored.",
+        ]
+        (RESULTS / "te.json").write_text(json.dumps(headline, indent=1, ensure_ascii=False) + "\n")
     (RESULTS / (f"{stem}.md" if stem else "table.md")).write_text("\n".join(lines) + "\n")
     readme = RESULTS.parent / "README.md"
     mark = "results" if stem is None else stem

@@ -19,7 +19,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from .types import Slot, WitnessScore
+from . import lang as languages
+from .types import DIGIT_SLOTS, Slot, WitnessScore
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 MODEL_DIR = ROOT / "models" / "hi"
@@ -226,19 +227,14 @@ _SPACE = "▁"
 Edge = tuple[int, int, str, int]
 LEFT, CANDIDATE, RIGHT = 0, 1, 2
 
+
 # Spellings the model uses interchangeably for one spoken word. Summed over, so that a candidate is
 # not penalised for our choice of orthography.
-_SPELLINGS = {"छह": ("छः", "छे"), "रुपये": ("रुपए", "रुपय"), "तारीख": ("तारीख़",)}
-_DIGIT_WORDS = (
-    ("शून्य", "ज़ीरो"), ("एक", "वन"), ("दो", "टू"), ("तीन", "थ्री"), ("चार", "फ़ोर"),
-    ("पाँच", "फ़ाइव"), ("छह", "सिक्स"), ("सात", "सेवन"), ("आठ", "एट"), ("नौ", "नाइन"),
-)  # fmt: skip
-
-
-def spellings(word: str) -> list[str]:
-    forms = [word, *_SPELLINGS.get(word, ())]
-    forms += [f.replace("ँ", "ं") for f in forms]  # chandrabindu is often written as anusvara
-    forms += [f.replace("़", "") for f in forms]  # nukta is often dropped
+def spellings(word: str, lang: languages.Lang = languages.HI) -> list[str]:
+    forms = [word, *lang.spellings.get(word, ())]
+    if lang.code == "hi":
+        forms += [f.replace("ँ", "ं") for f in forms]  # chandrabindu is often written as anusvara
+        forms += [f.replace("़", "") for f in forms]  # nukta is often dropped
     return list(dict.fromkeys(forms))
 
 
@@ -248,14 +244,16 @@ def text_edges(text: str, start: int = 0, group: int = 0) -> tuple[list[Edge], i
     return [(start + i, start + i + 1, w, group) for i, w in enumerate(words)], start + len(words)
 
 
-def phone_edges(digits: str, start: int = 0, group: int = CANDIDATE) -> tuple[list[Edge], int]:
-    """Digit grammar: each digit in Hindi or English, plus "double x" and "triple x" over repeats.
-    Callers mix all of these inside one number, so whole-string renderings cannot cover them."""
+def phone_edges(
+    digits: str, start: int = 0, group: int = CANDIDATE, lang: languages.Lang = languages.HI
+) -> tuple[list[Edge], int]:
+    """Digit grammar: each digit in the native language or English, plus "double x" and "triple x" over
+    repeats. Callers mix all of these inside one number, so whole-string renderings cannot cover them."""
     edges: list[Edge] = []
     for i, d in enumerate(digits):
-        words = _DIGIT_WORDS[int(d)]
+        words = lang.digit_words[int(d)]
         edges += [(start + i, start + i + 1, w, group) for w in words]
-        for run, prefix in ((2, "डबल"), (3, "ट्रिपल")):
+        for run, prefix in zip((2, 3), lang.repeat_words, strict=True):
             if digits[i : i + run] == d * run:
                 edges += [(start + i, start + i + run, f"{prefix} {w}", group) for w in words]
     return edges, start + len(digits)
@@ -266,20 +264,22 @@ class Pieces:
     training-time segmentation cannot be reproduced; instead every segmentation becomes a path in the
     graph and the CTC forward sums over them, which is the exact string likelihood under the model."""
 
-    def __init__(self, vocab: list[str]):
+    def __init__(self, vocab: list[str], lang: languages.Lang = languages.HI):
         self.vocab = vocab
+        self.lang = lang
         self.blank = len(vocab) - 1
         self.index = {p: i for i, p in enumerate(vocab) if 0 < i < self.blank}
         self.chars = {c for p in self.index for c in p}
         self.max_len = max(len(p) for p in self.index)
 
     @classmethod
-    def load(cls, path: pathlib.Path) -> Pieces:
-        return cls([line.rsplit(" ", 1)[0] for line in path.read_text(encoding="utf8").splitlines() if line])
+    def load(cls, path: pathlib.Path, lang: languages.Lang = languages.HI) -> Pieces:
+        vocab = [line.rsplit(" ", 1)[0] for line in path.read_text(encoding="utf8").splitlines() if line]
+        return cls(vocab, lang)
 
     def clean_word(self, word: str) -> str:
-        # NFD splits precomposed nukta letters (ज़ -> ज + ़), which is how the vocabulary spells them.
-        return "".join(c for c in unicodedata.normalize("NFD", word) if c in self.chars and c != _SPACE)
+        form = unicodedata.normalize(self.lang.unicode_form, word)
+        return "".join(c for c in form if c in self.chars and c != _SPACE)
 
     def prepare(self, text: str) -> str:
         return "".join(_SPACE + w for w in map(self.clean_word, text.split()) if w)
@@ -300,7 +300,7 @@ class Pieces:
                 raise ValueError(f"no scorable characters in {phrase!r}; filter with scorable() first")
             bounds = [u, *(fresh() for _ in words[1:]), v]
             for k, word in enumerate(words):
-                for form in spellings(word) if variants else [word]:
+                for form in spellings(word, self.lang) if variants else [word]:
                     s = _SPACE + self.clean_word(form)
                     local = [bounds[k], *(fresh() for _ in s[1:]), bounds[k + 1]]
                     for i in range(len(s)):
@@ -344,19 +344,23 @@ class Pieces:
 class Witness:
     def __init__(
         self,
-        model_dir: pathlib.Path = MODEL_DIR,
+        model_dir: pathlib.Path | None = None,
         cache_dir: pathlib.Path | None = CACHE_DIR,
         int8: bool = False,
         threads: int = 0,
+        lang: str | None = None,
     ):
-        self.model_dir, self.cache_dir, self.int8, self.threads = model_dir, cache_dir, int8, threads
+        self.language = languages.get(lang)
+        self.lang = self.language.code
+        self.model_dir = model_dir or self.language.model_dir
+        self.cache_dir, self.int8, self.threads = cache_dir, int8, threads
         self._session = None
         self._pieces: Pieces | None = None
 
     @property
     def pieces(self) -> Pieces:
         if self._pieces is None:
-            self._pieces = Pieces.load(self.model_dir / "vocab.txt")
+            self._pieces = Pieces.load(self.model_dir / "vocab.txt", self.language)
         return self._pieces
 
     @property
@@ -381,7 +385,9 @@ class Witness:
     def log_probs(self, pcm16: np.ndarray, sample_rate: int) -> np.ndarray:
         """[T, V] per-frame log-probabilities, blank last. Cached on disk by audio hash."""
         pcm16 = np.ascontiguousarray(pcm16, dtype=np.int16)
-        key = hashlib.sha256(pcm16.tobytes() + f"|{sample_rate}|{self.variant}".encode()).hexdigest()[:32]
+        # Hindi keeps the key it had before other languages existed, so its cached posteriors stay valid.
+        tag = self.variant if self.lang == "hi" else f"{self.variant}|{self.lang}"
+        key = hashlib.sha256(pcm16.tobytes() + f"|{sample_rate}|{tag}".encode()).hexdigest()[:32]
         path = self.cache_dir / f"{key}.npy" if self.cache_dir else None
         if path and path.exists():
             return np.load(path)
@@ -407,8 +413,8 @@ class Witness:
     def _graph(self, slot: str, value: str, rendering: str, context: tuple[str, str] | None) -> Graph:
         p = self.pieces
         edges, node = text_edges(p.scorable(context[0]), 0, LEFT) if context else ([], 0)
-        if slot == "phone" and value.isdigit():
-            cand, node = phone_edges(value, node)
+        if slot in DIGIT_SLOTS and value.isdigit():
+            cand, node = phone_edges(value, node, lang=self.language)
         else:
             cand, node = text_edges(p.scorable(rendering), node, CANDIDATE)
         tail, node = text_edges(p.scorable(context[1]), node, RIGHT) if context else ([], node)
@@ -443,7 +449,7 @@ class Witness:
         loglik: dict[str, float] = {}
         best: dict[str, str] = {}
         for value, forms in candidates.items():
-            if slot == "phone" and value.isdigit():
+            if slot in DIGIT_SLOTS and value.isdigit():
                 forms = forms[:1] or [value]
             scores = [
                 graph_loglik(log_probs, self._graph(slot, value, form, context), filler) for form in forms
@@ -455,7 +461,7 @@ class Witness:
             loglik=loglik,
             best_rendering=best,
             latency_ms=(time.perf_counter() - t0) * 1000,
-            model=f"{MODEL_NAME} {self.variant}",
+            model=f"{self.language.model_name} {self.variant}",
         )
 
     def align_span(

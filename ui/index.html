@@ -5,121 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pramaan</title>
 <link rel="icon" href="data:,">
+<script>
+  // Dark is the default, as in the Equal app. Set before first paint so a saved choice does not flash.
+  let saved = null;
+  try { saved = localStorage.getItem('pramaan-theme'); } catch (e) { /* private mode */ }
+  document.documentElement.dataset.theme = saved || 'dark';
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,300..600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400..700&family=DM+Sans:opsz,wght@9..40,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css?v=22">
 </head>
 <body>
-<div class="shell">
-  <div class="bar">
-    <div class="mark">प्रमाण <span>Pramaan</span></div>
-    <div class="tabs" role="tablist" aria-label="Views">
-      <button role="tab" aria-selected="true" data-view="overview">Before and after</button>
-      <button role="tab" aria-selected="false" data-view="call">Live call</button>
+<header class="bar">
+  <div class="wrap bar-in">
+    <div class="mark">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="var(--lime)"/><path d="M7 14.5l4.6 4.6L21 9.5" fill="none" stroke="var(--lime-ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>Pramaan</b><span lang="hi">प्रमाण</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Views">
+      <button role="tab" aria-selected="true" data-view="demo">Demo</button>
       <button role="tab" aria-selected="false" data-view="evidence">Evidence</button>
       <button role="tab" aria-selected="false" data-view="results">Results</button>
+    </nav>
+    <div class="bar-end">
+      <div class="chip" id="chip"><i></i><span id="chipText">Checking the server</span></div>
+      <button class="icon-btn" id="theme" aria-label="Switch theme">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M5.3 18.7l1.5-1.5M17.2 6.8l1.5-1.5"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+      </button>
     </div>
-    <div class="chip" id="chip"><i></i><span id="chipText">Checking the server</span></div>
   </div>
-  <div class="banner" id="fake" role="status">FAKE EVIDENCE. The evidence pipeline is not loaded, so the checks shown on the right are scripted. The two agents and their tool calls are real.</div>
-  <div class="banner" id="offline" role="status">OFFLINE REPLAY. No network is used. Both agents repeat the tool call the realtime model made for this recording; the recognisers answer from the recorded cache, and the acoustic check, the decision and the ledger run for real.</div>
+</header>
+
+<main>
+  <div class="banner" id="fake" role="status">Scripted checks: the evidence pipeline is not loaded. The agents and their tool calls are real.</div>
   <div class="banner" id="err" role="alert"></div>
 
-  <section class="view on" id="overview">
-    <h1>A voice agent acts on what it heard. Pramaan checks it first.</h1>
-    <p class="lede">A speech-to-speech model goes from sound straight to action. When it logs an amount, a date or a phone number, nothing in between checks the value. Pramaan holds that action for up to 1.2 seconds, compares it with independent recognisers, and then lets it through, corrects it, or asks one question.</p>
+  <section class="view on" id="demo">
+    <div class="band"><div class="wrap hero">
+      <div class="pitch">
+        <h1>Voice agents act on what they hear <em>Pramaan checks the number first</em></h1>
+        <p class="lede">When the agent is about to log an amount, a date or a phone number, the action is held while independent recognisers listen to the same audio</p>
+        <ul class="outcomes">
+          <li><b>They agree</b><span>The action goes through</span></li>
+          <li class="o-fix"><b>They agree on another value</b><span>The value is corrected</span></li>
+          <li class="o-ask"><b>They are split</b><span>The caller gets one short question</span></li>
+        </ul>
+      </div>
 
-    <div class="ba" id="ba" hidden>
-      <article class="panel before">
-        <span class="tag">Before</span>
-        <h2>The realtime model alone</h2>
-        <div class="big bad" id="baBefore"></div>
-        <p id="baBeforeText"></p>
-        <div class="dots" id="baBeforeDots" role="img"></div>
-      </article>
-      <article class="panel after">
-        <span class="tag">After</span>
-        <h2>The same model, with Pramaan</h2>
-        <div class="big" id="baAfter"></div>
-        <p id="baAfterText"></p>
-        <div class="dots" id="baAfterDots" role="img"></div>
-      </article>
-    </div>
-    <div class="legend"><span><i></i>Right value</span><span><i class="q"></i>Caller was asked</span><span><i class="w"></i>Wrong value, acted on</span></div>
-    <p class="lede" id="baNote"></p>
-
-    <div class="panel flow" id="flow" hidden>
-      <h2>What happened to the model's wrong values</h2>
-      <div class="tiles" id="flowTiles"></div>
-    </div>
-
-    <h2 class="sec">Watch it happen</h2>
-    <p class="lede">Four recorded calls, played through the real models. The left side acts at once; the right side is checked. The model alone does not make the identical mistake every time, so its value on screen can differ from the one shown here.</p>
-    <div class="cards" id="cards"></div>
-    <p class="lede"><button class="ghost" id="goLive">Or try your own voice</button></p>
-  </section>
-
-  <section class="view" id="call">
-    <h1>One call, two agents</h1>
-    <p class="lede">Both hear the same audio and try to log what the caller promised. One acts straight away. The other has to back each value with evidence first.</p>
-
-    <div class="said" id="said">
-      <div class="controls">
-        <div class="line">
-          <button class="play" id="mic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-            <span id="micLabel">Start a call</span>
-          </button>
+      <section class="score" id="ba" hidden aria-labelledby="scoreTitle">
+        <div class="score-head">
+          <h2 id="scoreTitle">Across <span id="scoreN"></span> recorded calls</h2>
+          <div class="seg" id="baPick" role="group" aria-label="Compare Pramaan against"></div>
         </div>
-        <div class="line">
-          <label class="sr" for="clip">Recorded call</label>
-          <select id="clip"><option value="">Recorded call…</option></select>
-          <label class="sr" for="answer">Caller's answer if asked</label>
-          <select id="answer"><option value="">Answer if asked: same clip</option><option value="-">Answer if asked: none</option></select>
-          <button class="ghost" id="replay" disabled>Play it</button>
+        <div class="score-grid">
+          <div class="side">
+            <p class="lab" id="baLab">Without Pramaan</p>
+            <p class="big bad" id="baBefore"></p>
+            <p class="sm" id="baBeforeText"></p>
+            <div class="dots" id="baBeforeDots" role="img"></div>
+          </div>
+          <div class="side ours">
+            <p class="lab">With Pramaan</p>
+            <p class="big good" id="baAfter"></p>
+            <p class="sm" id="baAfterText"></p>
+            <div class="dots" id="baAfterDots" role="img"></div>
+          </div>
+        </div>
+        <div class="legend"><span><i></i>Right value</span><span><i class="q"></i>Caller asked once</span><span><i class="w"></i>Wrong value acted on</span></div>
+        <p class="fine" id="baNote"></p>
+      </section>
+    </div></div>
+
+    <div class="wrap console" id="console">
+      <aside class="rail" id="picker" role="group" aria-label="Pick a call">
+        <h2>Recorded calls</h2>
+        <div class="calls" id="cards"></div>
+        <button class="mic" id="mic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          <span id="micLabel">Use your voice</span>
+        </button>
+        <details class="more">
+          <summary>Play any other recorded call</summary>
+          <div class="line">
+            <label class="sr" for="clip">Recorded call</label>
+            <select id="clip"><option value="">Recorded call…</option></select>
+            <label class="sr" for="answer">Caller's answer if asked</label>
+            <select id="answer"><option value="">Answer if asked: same clip</option><option value="-">Answer if asked: none</option></select>
+            <button class="ghost" id="replay" disabled>Play it</button>
+          </div>
+        </details>
+      </aside>
+
+      <div class="stage">
+        <div class="caller" id="said">
+          <div class="who">Caller</div>
+          <div class="quote" id="quote" lang="hi">Pick a call, or press “Use your voice” and say an amount, a date or a phone number.</div>
+          <div class="wave" aria-hidden="true" id="wave"></div>
+          <div class="truth" id="quoteSub"></div>
+        </div>
+
+        <div class="pair">
+          <article class="agent" id="agentL">
+            <header>
+              <h2>Without Pramaan</h2>
+              <p>The model's tool call runs as it stands</p>
+            </header>
+            <div class="stamp" id="stampL"><b id="stampLt">Waiting</b><span id="stampLs"></span></div>
+            <div class="flow" aria-hidden="true"><span>Sound</span><i></i><span class="act">Action</span></div>
+            <dl class="slip" id="slipL">
+              <div class="row" data-slot="amount_rupees"><dt>Amount</dt><dd><div class="cells" id="figL"></div></dd></div>
+              <div class="row" data-slot="amount_rupees"><dt>In words</dt><dd class="words" id="wordsL">&nbsp;</dd></div>
+              <div class="row" data-slot="due"><dt>Due</dt><dd class="day" id="dayL">&nbsp;</dd></div>
+              <div class="row off" data-slot="phone"><dt>Phone</dt><dd><div class="cells phone" id="phoneL"></div></dd></div>
+              <div class="row off" data-slot="pincode"><dt>PIN code</dt><dd class="day" id="pincodeL">&nbsp;</dd></div>
+              <div class="row off" data-slot="account_number"><dt>Account</dt><dd class="day" id="account_numberL">&nbsp;</dd></div>
+            </dl>
+            <p class="note" id="noteL"></p>
+            <p class="status" id="stL"></p>
+          </article>
+
+          <article class="agent guarded" id="agentR">
+            <header>
+              <h2>With Pramaan</h2>
+              <p>The same tool call, held until the number is checked</p>
+            </header>
+            <div class="stamp" id="stampR"><b id="stampRt">Waiting</b><span id="stampRs"></span></div>
+            <div class="flow" aria-hidden="true"><span>Sound</span><i></i><span class="gate">Evidence check</span><i></i><span class="act">Action</span></div>
+            <dl class="slip" id="slipR">
+              <div class="row" data-slot="amount_rupees"><dt>Amount</dt><dd><div class="cells" id="figR"></div></dd></div>
+              <div class="row" data-slot="amount_rupees"><dt>In words</dt><dd class="words" id="wordsR">&nbsp;</dd></div>
+              <div class="row" data-slot="due"><dt>Due</dt><dd class="day" id="dayR">&nbsp;</dd></div>
+              <div class="row off" data-slot="phone"><dt>Phone</dt><dd><div class="cells phone" id="phoneR"></div></dd></div>
+              <div class="row off" data-slot="pincode"><dt>PIN code</dt><dd class="day" id="pincodeR">&nbsp;</dd></div>
+              <div class="row off" data-slot="account_number"><dt>Account</dt><dd class="day" id="account_numberR">&nbsp;</dd></div>
+            </dl>
+            <div class="ask" id="askR">
+              <p class="a"><span>Agent asks</span><b id="askText"></b></p>
+              <p class="c" id="ansBox" hidden><span id="ansMeta">Caller</span><b id="ansText"></b></p>
+            </div>
+            <div class="checks" id="checks" hidden>
+              <h3 id="checksTitle">Checked against</h3>
+              <ul id="checkList"></ul>
+            </div>
+            <p class="note" id="noteR"></p>
+            <p class="status" id="stR"></p>
+          </article>
         </div>
       </div>
-      <div class="quote" id="quote">Speak, or play a recorded call
-        <small id="quoteSub">Say an amount, a date or a phone number, in Hindi, English or a mix</small></div>
-      <div class="wave" aria-hidden="true" id="wave"></div>
-    </div>
-
-    <div class="pair">
-      <article class="agent">
-        <header><div><h2>Realtime model alone</h2><p>Hears the audio and calls the tool</p></div>
-          <div class="status" id="stL">Waiting for the call</div></header>
-        <dl class="slip" id="slipL">
-          <div class="row" data-slot="amount_rupees"><dt>Amount</dt><dd><div class="cells" id="figL"></div></dd></div>
-          <div class="row" data-slot="amount_rupees"><dt>In words</dt><dd class="words" id="wordsL">&nbsp;</dd></div>
-          <div class="row" data-slot="due"><dt>Due</dt><dd class="day" id="dayL">&nbsp;</dd></div>
-          <div class="row off" data-slot="phone"><dt>Phone</dt><dd><div class="cells phone" id="phoneL"></div></dd></div>
-        </dl>
-        <p class="note red" id="noteL"></p>
-      </article>
-
-      <article class="agent">
-        <header><div><h2>With Pramaan</h2><p>The same model, with its action held until checked</p></div>
-          <div class="status" id="stR">Waiting for the call</div></header>
-        <dl class="slip" id="slipR">
-          <div class="row" data-slot="amount_rupees"><dt>Amount</dt><dd><div class="cells" id="figR"></div></dd></div>
-          <div class="row" data-slot="amount_rupees"><dt>In words</dt><dd class="words" id="wordsR">&nbsp;</dd></div>
-          <div class="row" data-slot="due"><dt>Due</dt><dd class="day" id="dayR">&nbsp;</dd></div>
-          <div class="row off" data-slot="phone"><dt>Phone</dt><dd><div class="cells phone" id="phoneR"></div></dd></div>
-        </dl>
-        <p class="note" id="noteR"></p>
-        <div class="ask" id="askR">
-          <p class="a"><span>Agent asks</span><b id="askText" style="font-weight:400"></b></p>
-          <p class="c" id="ansBox" hidden><span id="ansMeta">Caller</span><b id="ansText" style="font-weight:400"></b></p>
-        </div>
-      </article>
     </div>
   </section>
 
   <section class="view" id="evidence">
-    <h1 id="evTitle">Why the action was held</h1>
-    <p class="lede" id="evLede">Each recogniser listens to the same audio separately, and none of them is told what the model proposed.</p>
-    <div class="empty-state" id="evEmpty">No decision yet. Start a call or play a recorded one, and the evidence for the latest action appears here.</div>
+    <div class="band slim"><div class="wrap view-head">
+      <h1 id="evTitle">Why the action was held</h1>
+      <p class="lede" id="evLede">Each recogniser listens to the same audio separately, and none of them is told what the model proposed.</p>
+    </div></div>
+    <div class="wrap body">
+    <div class="empty-state" id="evEmpty">No call yet. Play one on the Demo tab and the evidence behind its decision appears here.</div>
     <div class="cols" id="evCols" hidden>
       <div class="panel">
         <h2>What each one heard</h2>
@@ -133,24 +177,28 @@
         <div class="fall" id="fall"></div>
         <div class="axis"><span></span><div id="axis"></div></div>
         <dl class="kv" id="kv"></dl>
-        <h2 style="margin-top:20px">Ledger</h2>
+        <h2 class="gap-top">Ledger</h2>
         <ol class="steps" id="steps"></ol>
       </div>
+    </div>
     </div>
   </section>
 
   <section class="view" id="results">
-    <div class="tabs sets" id="sets" hidden><button data-set="synthetic" aria-pressed="true">Synthetic voices</button><button data-set="fresh2" aria-pressed="false" hidden>Locked set 2</button><button data-set="fresh" aria-pressed="false" hidden>Locked set 1</button><button data-set="human" aria-pressed="false" hidden>Recorded people</button></div>
-    <h1 id="resTitle">The same recorded calls, several ways</h1>
-    <p class="lede" id="resLede">Each dot is one call where a caller stated an amount, a date or a number. A red dot is a wrong value that was acted on without anyone being asked.</p>
+    <div class="band slim"><div class="wrap view-head">
+      <div class="seg" id="sets" hidden><button data-set="synthetic" aria-pressed="true">Synthetic voices</button><button data-set="fresh2" aria-pressed="false" hidden>Locked set 2</button><button data-set="fresh" aria-pressed="false" hidden>Locked set 1</button><button data-set="te" aria-pressed="false" hidden>Telugu</button><button data-set="human" aria-pressed="false" hidden>Recorded people</button></div>
+      <h1 id="resTitle">The same recorded calls, several ways</h1>
+      <p class="lede" id="resLede">Each dot is one call where a caller stated an amount, a date or a number. A red dot is a wrong value that was acted on without anyone being asked.</p>
+    </div></div>
+    <div class="wrap body">
     <div class="empty-state" id="resEmpty" hidden>No results yet. Run <code>make eval</code>; it writes <code>results/headline.json</code>, and this page shows whatever it contains.</div>
     <div id="resBody" hidden>
       <div class="arms" id="arms"></div>
       <div class="legend"><span><i></i>Right value</span><span><i class="q"></i>Caller was asked</span><span><i class="w"></i>Wrong value, acted on</span></div>
       <div class="cert" id="cert" hidden><div class="big" id="certBig"></div><p id="certText"></p></div>
-      <div class="curve" id="curveBox" hidden>
+      <div class="curve panel" id="curveBox" hidden>
         <h2>Errors against how often it acts without asking</h2>
-        <p class="lede" style="margin-top:4px">Moving right, the gate lets more actions through unasked. Lower is better.</p>
+        <p class="lede">Moving right, the gate lets more actions through unasked. Lower is better.</p>
         <div id="curve"></div>
         <div class="legend" id="curveLegend"></div>
       </div>
@@ -169,8 +217,9 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
-</div>
-<script src="app.js"></script>
+</main>
+<script src="app.js?v=23"></script>
 </body>
 </html>

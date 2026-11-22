@@ -26,11 +26,21 @@ from __future__ import annotations
 import re
 
 from . import question
-from .lattice import SlotLattice, build, differing_positions, is_valid, key, sorted_hypotheses
+from .lattice import (
+    AGENT_FAMILY,
+    SlotLattice,
+    build,
+    canon,
+    differing_positions,
+    is_valid,
+    key,
+    sorted_hypotheses,
+)
 from .score import features, posterior, score, witness_for, witness_llr, witness_posterior
-from .types import SLOTS, Decision, Evidence, Policy, Slot, SlotDecision, Value, Verdict
+from .types import SLOTS, Asked, Decision, Evidence, Policy, Slot, SlotDecision, Value, Verdict
 
-_DEVANAGARI = re.compile("[ऀ-ॿ]")
+# Scripts an acoustic model covers (Devanagari, Telugu). A turn written in none of them was spoken in English.
+_NATIVE = re.compile("[ऀ-ॿఀ-౿]")
 # A value is offered in a question if some family mostly heard it, or the witness clearly backs it.
 PLAUSIBLE_MIN_POSTERIOR = 0.05
 PLAUSIBLE_MIN_SUPPORT = 0.5
@@ -178,9 +188,40 @@ def _omitted(evidence: Evidence, slot: Slot, policy: Policy) -> SlotDecision | N
 
 
 def spoken_in_english(evidence: Evidence) -> bool:
-    """True when OpenAI's transcribers answered and none of them wrote any Devanagari."""
+    """True when OpenAI's transcribers answered and none of them wrote any Indic script."""
     texts = [h.text for h in evidence.hypotheses if h.family == "openai-transcribe" and h.text.strip()]
-    return bool(texts) and not any(_DEVANAGARI.search(t) for t in texts)
+    return bool(texts) and not any(_NATIVE.search(t) for t in texts)
+
+
+def resolve_answer(evidence: Evidence, policy: Policy, asked: Asked) -> Evidence:
+    """Evidence for the caller's answer to a forced choice, with a short answer read as the option it names.
+
+    A real caller says "saat", not the whole number again. The option is taken only when enough independent
+    families name it and none names or hears another; otherwise the evidence comes back unchanged.
+    """
+    picks: dict[str, set[Value | None]] = {}
+    for h in evidence.hypotheses:
+        if h.family == AGENT_FAMILY:
+            continue
+        heard = canon(asked.slot, h.values.get(asked.slot))
+        if heard is not None and heard not in asked.options:
+            return evidence
+        picks.setdefault(h.family, set()).add(question.pick(asked.slot, asked.options, h.text, heard))
+    named = {fam: {v for v in vals if v is not None} for fam, vals in picks.items()}
+    chosen = {v for vals in named.values() for v in vals}
+    backers = [fam for fam, vals in named.items() if vals]
+    if len(chosen) != 1 or len(backers) < max(policy.min_families, 2):
+        return evidence
+    winner = next(iter(chosen))
+    hyps = tuple(
+        h.model_copy(update={"values": {**h.values, asked.slot: winner}})
+        if h.family in backers and question.pick(asked.slot, asked.options, h.text, h.values.get(asked.slot)) == winner
+        else h
+        for h in evidence.hypotheses
+    )  # fmt: skip
+    return evidence.model_copy(
+        update={"hypotheses": hyps, "proposed": {**evidence.proposed, asked.slot: winner}}
+    )
 
 
 def decide(evidence: Evidence, policy: Policy) -> Decision:
