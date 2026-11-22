@@ -2,7 +2,7 @@
 -include .env
 export
 
-.PHONY: setup check test eval human human-extras strong-baseline serve demo demo-offline te-data te-collect te-evidence te serve-te deploy
+.PHONY: setup check test eval human human-extras strong-baseline digits-data digits serve demo demo-offline te-data te-collect te-evidence te serve-te deploy
 
 setup:
 	uv sync
@@ -38,6 +38,17 @@ human-extras:
 strong-baseline:
 	uv run python -m scripts.strong_baseline collect
 	PRAMAAN_OFFLINE=1 uv run python -m scripts.strong_baseline score
+
+# PIN codes and account numbers on the test speakers. Its own cache, so the evidence behind `make eval` cannot move.
+DIGITS = PRAMAAN_CACHE=data/digits/cache.sqlite PRAMAAN_EXTRAS_CACHE=data/digits/cache.sqlite
+
+# Spends API credits: synthesises the clips.
+digits-data:
+	uv run python scripts/gen_digits.py
+
+# Spends API credits on the first run; later runs replay data/digits/cache.sqlite (the clips are still needed).
+digits:
+	$(DIGITS) uv run python -m scripts.measure_extras --manifest data/digits/manifest.jsonl --out results/digits.json --concurrency 6
 
 # Telugu. PRAMAAN_LANG picks the recogniser settings and the acoustic model; responses go to their own cache.
 TE = PRAMAAN_LANG=te PRAMAAN_CACHE=data/te/cache.sqlite

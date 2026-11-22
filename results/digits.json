@@ -1,0 +1,3111 @@
+{
+ "policy": "50d83054eef1",
+ "speakers": 8,
+ "digits": {
+  "n": 220,
+  "alone_wrong": 78,
+  "guard_wrong": 3,
+  "guard_asked": 53,
+  "guard_asked_wrong": 28
+ },
+ "digits_by_slot": {
+  "account_number": {
+   "n": 101,
+   "alone_wrong": 48,
+   "guard_wrong": 3,
+   "guard_asked": 23,
+   "guard_asked_wrong": 17
+  },
+  "pincode": {
+   "n": 119,
+   "alone_wrong": 30,
+   "guard_wrong": 0,
+   "guard_asked": 30,
+   "guard_asked_wrong": 11
+  }
+ },
+ "digits_upper_bound": 0.0458,
+ "answers": {},
+ "clips": [
+  {
+   "clip_id": "ballad_d05_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "167008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d07_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d08_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "69988166394"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "ballad_d10_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "91231226161383"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d13_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "300174"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d15_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "367190"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "ballad_d16_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "066168617"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d17_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500013"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "ballad_d18_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93174194335804"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d19_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377768"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d20_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "93223681409"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d23_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d26_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "71867876008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d27_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d29_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d31_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d33_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d35_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "101168"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d38_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "6860786861686770"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_d39_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d05_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "560008"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d07_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d08_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "6998816394"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "echo_d10_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "91231226161383"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d13_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "400074"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d15_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "867190"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d16_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "066186187"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d17_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500013"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "echo_d18_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93178194335804"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d19_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377668"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d20_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "93223681409"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d23_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d26_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "71867876008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d27_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d29_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d31_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d33_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d35_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "801861"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d38_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "68607868681686770"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_d39_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d01_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "918662"
+   },
+   "agent": {
+    "pincode": "918662"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d02_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "670188017"
+   },
+   "agent": {
+    "account_number": "670188017"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d03_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "188844"
+   },
+   "agent": {
+    "pincode": "188884"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d04_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "1688001807867018"
+   },
+   "agent": {
+    "account_number": "1688001807867018"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d06_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "553579285699"
+   },
+   "agent": {
+    "account_number": "553579285699"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d09_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "345937"
+   },
+   "agent": {
+    "pincode": "345678"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d11_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193720"
+   },
+   "agent": {
+    "pincode": "193720"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d12_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "071761708"
+   },
+   "agent": {
+    "account_number": "071761708"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d14_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "61666106867"
+   },
+   "agent": {
+    "account_number": "61666806867"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "fable_d21_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "760607"
+   },
+   "agent": {
+    "pincode": "760607"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d22_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "60739563970048"
+   },
+   "agent": {
+    "account_number": "60739563970048"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d24_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "076068767008"
+   },
+   "agent": {
+    "account_number": "076068767008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d25_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "616167"
+   },
+   "agent": {
+    "pincode": "616167"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d28_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8860087688110701"
+   },
+   "agent": {
+    "account_number": "8860087688110701"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d30_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "87616861780"
+   },
+   "agent": {
+    "account_number": "87616861780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d32_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8011016787011806"
+   },
+   "agent": {
+    "account_number": "8011016787011806"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d34_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "476904735503"
+   },
+   "agent": {
+    "account_number": "476904735503"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_d36_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "80176086110676"
+   },
+   "agent": {
+    "account_number": "80176086880676"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "fable_d37_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "761776"
+   },
+   "agent": {
+    "pincode": "761076"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "fable_d40_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "77760181880"
+   },
+   "agent": {
+    "account_number": "77760181880"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d05_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "167008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d05_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "167008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d07_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d07_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d08_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "69981166394"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d08_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "69988163194"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "nova_d10_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "91231226161383"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d10_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "591231226161383"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d13_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "300174"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d13_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "560074"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d15_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "867190"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d15_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "867890"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "nova_d16_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "0661868617"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d16_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "06681867"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d17_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500013"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "nova_d17_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500316"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "nova_d18_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93178194335804"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d18_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93178194335804"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d19_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377668"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d19_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377668"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d20_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "932203681409"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d20_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "93223681409"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d23_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d23_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d26_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "71867876008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d26_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "71867876008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d27_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d27_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d29_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d29_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d31_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d31_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d33_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d33_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d35_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "801168"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d35_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "608168"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d38_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "6860786861686770"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d38_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "6860786861686770"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d39_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_d39_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d05_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "841678"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d07_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d08_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "699988866394"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "sage_d10_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "9123122616138"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "sage_d13_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "300147"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d15_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "867190"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d16_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "06618617"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d17_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500031"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "sage_d18_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93178194336804"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d19_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377668"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d20_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "93223681409"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d23_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d26_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "71867876008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d27_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d29_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d31_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d33_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d35_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "808161"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d38_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "68607868681686770"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_d39_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d01_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "918662"
+   },
+   "agent": {
+    "pincode": "918662"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d02_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "670188017"
+   },
+   "agent": {
+    "account_number": "670188017"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d03_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "188844"
+   },
+   "agent": {
+    "pincode": "188884"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d04_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "1688001807867018"
+   },
+   "agent": {
+    "account_number": "168800180786708"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d06_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "553579285699"
+   },
+   "agent": {
+    "account_number": "55357928569"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d09_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "345937"
+   },
+   "agent": {
+    "pincode": "345937"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d11_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193720"
+   },
+   "agent": {
+    "pincode": "193720"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d12_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "071761708"
+   },
+   "agent": {
+    "account_number": "071768708"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d14_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "61666106867"
+   },
+   "agent": {
+    "account_number": "61666106867"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d21_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "760607"
+   },
+   "agent": {
+    "pincode": "760607"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d22_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "60739563970048"
+   },
+   "agent": {
+    "account_number": "60739563970048"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d24_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "076068767008"
+   },
+   "agent": {
+    "account_number": "07606876808"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "shimmer_d25_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "616167"
+   },
+   "agent": {
+    "pincode": "616167"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d28_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8860087688110701"
+   },
+   "agent": {
+    "account_number": "8860087688110701"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d30_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "87616861780"
+   },
+   "agent": {
+    "account_number": "87616861780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d32_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8011016787011806"
+   },
+   "agent": {
+    "account_number": "8011016787011806"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d34_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "476904735503"
+   },
+   "agent": {
+    "account_number": "476904735503"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d36_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "80176086110676"
+   },
+   "agent": {
+    "account_number": "8017608610676"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d37_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "761776"
+   },
+   "agent": {
+    "pincode": "761076"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_d40_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "77760181880"
+   },
+   "agent": {
+    "account_number": "77760181880"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d05_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "167008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d05_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167008"
+   },
+   "agent": {
+    "pincode": "167008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d07_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d07_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "910678"
+   },
+   "agent": {
+    "pincode": "910678"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d08_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "69981166394"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d08_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "69981166394"
+   },
+   "agent": {
+    "account_number": "69988166394"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "verse_d10_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "9123122616138"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d10_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "91231226161383"
+   },
+   "agent": {
+    "account_number": "91223122616138"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d13_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "300174"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d13_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "300174"
+   },
+   "agent": {
+    "pincode": "300174"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d15_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "867190"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d15_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "867190"
+   },
+   "agent": {
+    "pincode": "867190"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d16_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "0668168617"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d16_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "066168617"
+   },
+   "agent": {
+    "account_number": "0668168617"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d17_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500013"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "verse_d17_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "500313"
+   },
+   "agent": {
+    "pincode": "500013"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "verse_d18_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93171943365804"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d18_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93171943365804"
+   },
+   "agent": {
+    "account_number": "93871943365804"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d19_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377668"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d19_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "377668"
+   },
+   "agent": {
+    "pincode": "377668"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d20_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "93223681409"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d20_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "93223681409"
+   },
+   "agent": {
+    "account_number": "93223681409"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d23_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d23_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "714163"
+   },
+   "agent": {
+    "pincode": "714163"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d26_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "60867876008"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d26_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "71867876008"
+   },
+   "agent": {
+    "account_number": "71867876008"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d27_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d27_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "187887"
+   },
+   "agent": {
+    "pincode": "187887"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d29_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d29_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193269"
+   },
+   "agent": {
+    "pincode": "193269"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d31_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d31_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "257472"
+   },
+   "agent": {
+    "pincode": "257472"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d33_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d33_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "387780"
+   },
+   "agent": {
+    "pincode": "387780"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d35_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "110001"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d35_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "101161"
+   },
+   "agent": {
+    "pincode": "801168"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d38_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "6860786861686770"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d38_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "6860786861686770"
+   },
+   "agent": {
+    "account_number": "68060786616186770"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d39_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_d39_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "167082"
+   },
+   "agent": {
+    "pincode": "167082"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d01_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "918662"
+   },
+   "agent": {
+    "pincode": "918662"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d01_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "918662"
+   },
+   "agent": {
+    "pincode": "918662"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d02_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "670188017"
+   },
+   "agent": {
+    "account_number": "670188017"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d02_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "670188017"
+   },
+   "agent": {
+    "account_number": "670188017"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d03_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "188844"
+   },
+   "agent": {
+    "pincode": "188844"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d03_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "188844"
+   },
+   "agent": {
+    "pincode": "188844"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d04_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "1688001807867018"
+   },
+   "agent": {
+    "account_number": "1688001807867088"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d04_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "1688001807867018"
+   },
+   "agent": {
+    "account_number": "1688001807867018"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d06_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "553579285699"
+   },
+   "agent": {
+    "account_number": "55357928699"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d06_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "553579285699"
+   },
+   "agent": {
+    "account_number": "553579285699"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d09_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "345937"
+   },
+   "agent": {
+    "pincode": "345937"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d09_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "345937"
+   },
+   "agent": {
+    "pincode": "345678"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d11_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193720"
+   },
+   "agent": {
+    "pincode": "193720"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d11_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "193720"
+   },
+   "agent": {
+    "pincode": "193720"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d12_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "071761708"
+   },
+   "agent": {
+    "account_number": "071761708"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d12_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "071761708"
+   },
+   "agent": {
+    "account_number": "071761708"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d14_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "61666106867"
+   },
+   "agent": {
+    "account_number": "61666106867"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d14_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "61666106867"
+   },
+   "agent": {
+    "account_number": "68666806867"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d21_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "760607"
+   },
+   "agent": {
+    "pincode": "760607"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d21_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "760607"
+   },
+   "agent": {
+    "pincode": "560607"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d22_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "60739563970048"
+   },
+   "agent": {
+    "account_number": "60739563970048"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d22_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "60739563970048"
+   },
+   "agent": {
+    "account_number": "607395397004"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d24_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "076068767008"
+   },
+   "agent": {
+    "account_number": "076068767708"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d24_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "076068767008"
+   },
+   "agent": {
+    "account_number": "076068767708"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d25_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "616167"
+   },
+   "agent": {
+    "pincode": "616167"
+   },
+   "agent_wrong": false,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d25_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "616167"
+   },
+   "agent": {
+    "account_number": "616167"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d28_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8860087688110701"
+   },
+   "agent": {
+    "account_number": "8860087688110708"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d28_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8860087688110701"
+   },
+   "agent": {
+    "account_number": "886008768810708"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d30_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "87616861780"
+   },
+   "agent": {
+    "account_number": "8768161780"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d30_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "87616861780"
+   },
+   "agent": {
+    "account_number": "876861780"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d32_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8011016787011806"
+   },
+   "agent": {
+    "account_number": "8011016787011806"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d32_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "8011016787011806"
+   },
+   "agent": {
+    "account_number": "8011016787011806"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d34_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "476904735503"
+   },
+   "agent": {
+    "account_number": "476904735503"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d34_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "476904735503"
+   },
+   "agent": {
+    "account_number": "4769047335503"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d36_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "80176086110676"
+   },
+   "agent": {
+    "account_number": "80176086081067"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d36_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "80176086110676"
+   },
+   "agent": {
+    "account_number": "80176088676"
+   },
+   "agent_wrong": true,
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_d37_phone",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "761776"
+   },
+   "agent": {
+    "pincode": "761776"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d37_noisy",
+   "kind": "digits",
+   "slot": "pincode",
+   "truth": {
+    "pincode": "761776"
+   },
+   "agent": {
+    "pincode": "761776"
+   },
+   "agent_wrong": false,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d40_phone",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "77760181880"
+   },
+   "agent": {
+    "account_number": "7776018180"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_d40_noisy",
+   "kind": "digits",
+   "slot": "account_number",
+   "truth": {
+    "account_number": "77760181880"
+   },
+   "agent": {
+    "account_number": "47776018880"
+   },
+   "agent_wrong": true,
+   "guard_executed": true,
+   "guard_wrong": false
+  }
+ ]
+}

@@ -138,7 +138,8 @@ questions in their own words. These stay out of the locked set; `make human-extr
 `results/human_extras.json`. Answers are judged worst-case, with the agent still holding the wrong option, and
 without the agent's own next turn. A short answer ("saat", "doosra wala") counts only when at least two
 independent recogniser families name the same option and none hears another. PIN and account values are
-recognised only after a spoken label, and this path has no recorded results from people yet.
+recognised only after a spoken label. They are measured on synthetic speakers below; no recorded results from
+people yet.
 
 ### Telugu, on the policy frozen on Hindi
 
@@ -201,6 +202,37 @@ alone is wrong on 40 of 220 calls (18.2%, against 29.5%). Pramaan on that agent 
 10 (4.5%). The prompt was written once, after this set's earlier results had been seen; its worked examples
 avoid every amount in the set. Results are in `results/strong_baseline.json`; `make strong-baseline` rescoring
 needs the clips regenerated under `data/clips`, which are not in the repository.
+
+### PIN codes and account numbers
+
+The sets above hold amounts, dates and phone numbers. PIN codes and account numbers were added later, so they
+have their own set: 40 lines (half built from a small pool of repeated and often-swapped digits; Hindi,
+English and mixed digit words; "double" and "triple"), spoken by the eight test speakers over the same phone
+channel, 60 of the 220 clips with noise. The tuning speakers do not speak these lines and nothing was tuned on
+them; the policy is the one frozen before either type existed. Scored once.
+
+| 220 actions | Wrong and acted on | Caller asked | of which the value was wrong |
+|---|---|---|---|
+| Realtime model alone | 78 (35.5%) | 0 | 0 |
+| **Pramaan** | 3 (1.4%) | 53 (24.1%) | 28 |
+| PIN codes only (119): model alone, Pramaan | 30, 0 | 0, 30 | 0, 11 |
+| Account numbers only (101): model alone, Pramaan | 48, 3 | 0, 23 | 0, 17 |
+
+Of the 167 actions let through, 3 were wrong: one-sided 95% Clopper-Pearson upper bound 4.6%. Reading it
+plainly:
+
+- Forty of the 53 questions are one cause. A PIN or account number is recognised only when the digits follow
+  the spoken label directly ("मेरा पिन कोड है ..."). Seven of the 40 lines put words in between ("पिन कोड नोट
+  कीजिए, ..."), on purpose, and every one of their 40 clips was held for a question: safe, and a cost a wider
+  label rule would remove. On the other 180 clips Pramaan asked 13 times and was wrong 3 times, against 62 wrong
+  for the model alone.
+- All 3 wrong actions are account numbers, and 2 of them (one 16-digit line, clean and noisy) are a value the
+  model had right and the guard repaired to a wrong one. Long digit strings are where the recognisers agree on
+  the same mistake.
+- No single-recogniser or two-model baseline was scored on this set, and no people have recorded these lines.
+
+`results/digits.json` holds every clip; `make digits` rescoring replays `data/digits/cache.sqlite` and needs
+the clips regenerated under `data/clips` (`make digits-data`).
 
 ## Where it wins, ties and loses
 
@@ -416,7 +448,7 @@ src/pramaan/   types, lang (per-language settings), normalise, render, confusabl
                evidence, score, decide, gate, question, executor, bundle, cache, pipeline, sources/, live/
 eval/          tune.py (policy, tuning speakers only), run_eval.py (all arms, test speakers), analysis.py
                (baselines at matched budgets, slices, cost), g2.py (witness gate)
-scripts/       gen_prompts, gen_clips, gen_fresh (locked set), gen_te (Telugu), gen_human_prompts,
+scripts/       gen_prompts, gen_clips, gen_fresh (locked set), gen_te (Telugu), gen_digits (PIN, account), gen_human_prompts,
                gen_human_extras, collect, build_evidence, measure_questions, measure_extras, strong_baseline,
                fresh_mic, fetch_model, selfcheck
 data/          prompts, manifest, splits, cache.sqlite (raw responses), evidence.jsonl, policy.json

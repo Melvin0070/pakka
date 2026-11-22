@@ -17,6 +17,7 @@
 - The fresh-input run in `results/fresh_input.md` uses the macOS Lekha voice streamed over the microphone WebSocket.
 - The CRM that receives actions is an in-memory list. No real payment, ledger or customer system is connected.
 - Answers in the measured question loop are synthetic and cooperative.
+- PIN code and account number results come from the same synthetic voices; no person has recorded those lines.
 
 ## Not shown
 - Real callers and real phone lines. One person (15 clips) has been recorded, which is too few to rank methods.
