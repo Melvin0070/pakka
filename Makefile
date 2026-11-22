@@ -75,8 +75,8 @@ serve-te:
 	cp data/te/cache.sqlite data/te/cache.live.sqlite
 	PRAMAAN_LANG=te PRAMAAN_CACHE=data/te/cache.live.sqlite uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port 8766
 
-# Publishes both hosted demos (Vercel projects pramaan-voice and pramaan-voice-te). main.py keeps them in
-# replay mode even if the project holds keys.
+# Publishes both hosted demos (Vercel projects pramaan-voice and pramaan-voice-te). They are live only while
+# the project sets PRAMAAN_HOSTED_LIVE=1; without it main.py serves replay mode whatever keys are present.
 deploy:
 	vercel link --yes --project pramaan-voice && vercel deploy --prod --yes
 	vercel link --yes --project pramaan-voice-te && vercel deploy --prod --yes -e PRAMAAN_LANG=te

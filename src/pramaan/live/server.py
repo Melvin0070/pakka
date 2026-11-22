@@ -451,7 +451,7 @@ async def ws(browser: WebSocket) -> None:
             await browser.close()
 
 
-# The recorder writes the human test set to disk: local, keyed runs only, never the replay-only host.
-if not offline():
+# The recorder writes the human test set to disk: local, keyed runs only, never a public host.
+if not offline() and not os.environ.get("VERCEL"):
     app.include_router(record_router)
 app.mount("/", StaticFiles(directory=UI, html=True), name="ui")

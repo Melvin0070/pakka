@@ -14,10 +14,11 @@ model and on this system.
 - Hindi: https://pramaan-voice.vercel.app
 - Telugu: https://pramaan-voice-te.vercel.app
 
-Both run in replay mode and call no paid API: the recorded calls play, every recogniser answers from the
-committed cache, and the acoustic check, the decision and the ledger are computed on the server for each play.
-The microphone is off there; for live speech run `make serve` or `make serve-te` with your own keys. `main.py`
-is the hosted entrypoint and forces replay mode, and `make deploy` republishes both.
+Both are live: the microphone works, and the recorded calls play through the real models. The sites run on
+the author's API keys with no login, so they may be switched back to replay mode (recorded calls only, every
+recogniser answering from the committed cache, the checks still computed for each play) at any time. `main.py`
+is the hosted entrypoint: it serves replay mode unless the project sets `PRAMAAN_HOSTED_LIVE=1`. `make deploy`
+republishes both; `make serve` and `make serve-te` run the same thing locally with your own keys.
 
 ## Results
 
