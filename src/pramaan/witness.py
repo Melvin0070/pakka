@@ -10,8 +10,8 @@ what it verifies: another model's tool-call argument.
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
-import json
 import os
 import pathlib
 import time
@@ -26,7 +26,7 @@ from .types import DIGIT_SLOTS, Slot, WitnessScore
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 MODEL_DIR = ROOT / "models" / "hi"
 CACHE_DIR = ROOT / "data" / "witness_cache"
-MODEL_NAME = "ai4bharat/indicconformer-hi-ctc (OpenVoiceOS ONNX)"
+RECENT = 16
 
 SAMPLE_RATE = 16000
 N_FFT, WIN, HOP, N_MELS = 512, 400, 160, 80
@@ -171,6 +171,8 @@ def _with_filler(log_probs: np.ndarray, filler: str) -> np.ndarray:
 def graph_loglik(log_probs: np.ndarray, g: Graph, filler: str = "free") -> float:
     """log of the total probability of all paths through the graph (CTC forward, log space)."""
     em = _with_filler(log_probs, filler)[:, g.emit]  # [T, S]
+    if not len(em):
+        return NEG
     alpha = np.where(g.initial, em[0], NEG)
     for t in range(1, em.shape[0]):
         prev = np.append(alpha, NEG)[g.preds]
@@ -361,6 +363,7 @@ class Witness:
         self.cache_dir, self.int8, self.threads = cache_dir, int8, threads
         self._session = None
         self._pieces: Pieces | None = None
+        self._recent: dict[str, np.ndarray] = {}
 
     @property
     def pieces(self) -> Pieces:
@@ -394,18 +397,35 @@ class Witness:
         tag = self.variant if self.lang == "hi" else f"{self.variant}|{self.lang}"
         key = hashlib.sha256(pcm16.tobytes() + f"|{sample_rate}|{tag}".encode()).hexdigest()[:32]
         path = self.cache_dir / f"{key}.npy" if self.cache_dir else None
+        if key in self._recent:
+            return self._recent[key]
+        lp = None
         if path and path.exists():
-            return np.load(path)
+            with contextlib.suppress(ValueError, OSError, EOFError):  # a torn write: recompute
+                lp = np.load(path)
+        if lp is None:
+            lp = self._infer(pcm16, sample_rate)
+            if path:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                tmp = path.with_suffix(".tmp.npy")
+                np.save(tmp, lp)
+                tmp.replace(path)
+        # A replayed demo clip is judged again on every play; hosts without the disk cache keep the last few.
+        self._recent[key] = lp
+        while len(self._recent) > RECENT:
+            self._recent.pop(next(iter(self._recent)))
+        return lp
+
+    def _infer(self, pcm16: np.ndarray, sample_rate: int) -> np.ndarray:
+        if len(pcm16) * SAMPLE_RATE < N_FFT * sample_rate:
+            # Under one analysis window the feature normalisation divides by a zero variance.
+            raise ValueError("audio too short for the acoustic model")
         audio = pcm16.astype(np.float32) / 32768.0
         if sample_rate != SAMPLE_RATE:
             import soxr
 
             audio = soxr.resample(audio, sample_rate, SAMPLE_RATE)
-        lp = self._run(log_mel(audio)).astype(np.float32)
-        if path:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            np.save(path, lp)
-        return lp
+        return self._run(log_mel(audio)).astype(np.float32)
 
     def greedy(self, log_probs: np.ndarray) -> str:
         ids = log_probs.argmax(axis=1)
@@ -425,15 +445,6 @@ class Witness:
         tail, node = text_edges(p.scorable(context[1]), node, RIGHT) if context else ([], node)
         arcs, n_nodes, final = p.compile(edges + cand + tail, node)
         return build_graph(arcs, n_nodes, p.blank, star=context is None, final_node=final)
-
-    def text_loglik(self, log_probs: np.ndarray, text: str, star: bool = False, filler: str = "max") -> float:
-        """log p(text | audio), summed over alignments, segmentations and spelling variants."""
-        p = self.pieces
-        edges, end = text_edges(p.scorable(text))
-        arcs, n_nodes, final = p.compile(edges, end)
-        return graph_loglik(
-            log_probs, build_graph(arcs, n_nodes, p.blank, star=star, final_node=final), filler
-        )
 
     def score_slot(
         self,
@@ -468,23 +479,3 @@ class Witness:
             latency_ms=(time.perf_counter() - t0) * 1000,
             model=f"{self.language.model_name} {self.variant}",
         )
-
-    def align_span(
-        self,
-        log_probs: np.ndarray,
-        slot: Slot,
-        value: str,
-        rendering: str,
-        context: tuple[str, str] | None = None,
-        filler: str = "max",
-    ) -> tuple[float, float] | None:
-        """(start_s, end_s) of the candidate on the best path, for highlighting in the UI."""
-        g = self._graph(slot, value, rendering, context)
-        frames = [t for t, s in enumerate(graph_viterbi(log_probs, g, filler)) if g.group[s] == CANDIDATE]
-        if not frames:
-            return None
-        return frames[0] * FRAME_S, (frames[-1] + 1) * FRAME_S
-
-
-def describe() -> str:
-    return json.dumps({"model": MODEL_NAME, "frame_s": FRAME_S, "mels": N_MELS})

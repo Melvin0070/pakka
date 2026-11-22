@@ -26,6 +26,11 @@ SubCosts = Sequence[Sequence[float]]
 # ---------------------------------------------------------------- typed values
 
 
+def _digits(s: str) -> bool:
+    # str.isdigit alone also accepts "²" and "५", which int() and the digit tables do not.
+    return s.isascii() and s.isdigit()
+
+
 def canon(slot: str, value: object) -> Value | None:
     """Coerce a typed value to its canonical form; None when it cannot be one."""
     if value is None or isinstance(value, bool):
@@ -33,7 +38,7 @@ def canon(slot: str, value: object) -> Value | None:
     if slot in ("amount_rupees", "day_of_month"):
         if isinstance(value, int):
             return value
-        if isinstance(value, str) and value.strip().isdigit():
+        if isinstance(value, str) and _digits(value.strip()):
             return int(value.strip())
         if isinstance(value, float) and value.is_integer():
             return int(value)
@@ -42,7 +47,7 @@ def canon(slot: str, value: object) -> Value | None:
         return value.strip().lower() if isinstance(value, str) and value.strip() else None
     if slot in DIGIT_SLOTS:
         s = str(value).strip()
-        return s if s.isdigit() else None
+        return s if _digits(s) else None
     return None
 
 

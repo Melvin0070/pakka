@@ -51,7 +51,7 @@ def iter_bundles(path: str | Path) -> Iterator[tuple[str, Bundle]]:
             try:
                 rec = json.loads(raw)
                 yield rec["id"], Bundle.model_validate(rec["bundle"])
-            except (ValueError, KeyError) as e:
+            except (ValueError, KeyError, TypeError) as e:
                 raise ChainError(f"line {n}: unreadable: {e}") from e
 
 
@@ -59,8 +59,17 @@ class BundleStore:
     def __init__(self, path: str | Path) -> None:
         self.path = Path(path)
         self._last = ""
+        self._drop_torn_tail()
         for bid, _ in iter_bundles(self.path):
             self._last = bid
+
+    def _drop_torn_tail(self) -> None:
+        """A process killed mid-append leaves a last line with no newline; it was never acknowledged."""
+        if not self.path.exists():
+            return
+        data = self.path.read_bytes()
+        if data and not data.endswith(b"\n"):
+            self.path.write_bytes(data[: data.rfind(b"\n") + 1])
 
     @property
     def last_id(self) -> str:

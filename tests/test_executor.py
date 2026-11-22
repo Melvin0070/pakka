@@ -208,3 +208,23 @@ class LedgerMachine(RuleBasedStateMachine):
 
 LedgerMachine.TestCase.settings = settings(max_examples=60, stateful_step_count=40, deadline=None)
 TestLedgerMachine = LedgerMachine.TestCase
+
+
+def test_an_outcome_json_cannot_hold_still_runs_the_tool_once():
+    led, calls = Ledger(), []
+
+    def tool(args):
+        calls.append(args)
+        return {"at": object(), 1: "mixed", "k": "keys"}
+
+    e = led.propose("s", OP, {"amount_rupees": 2750}, bundle_id="b1")
+    led.commit("s", OP, e.token, tool)
+    led.commit("s", OP, e.token, tool)
+    assert len(calls) == 1
+
+
+def test_void_response_without_an_id_voids_nothing():
+    led = Ledger()
+    led.propose("s", "op-a", {"amount_rupees": 1})
+    led.propose("s", "op-b", {"amount_rupees": 2})
+    assert led.void_response("s", "") == 0

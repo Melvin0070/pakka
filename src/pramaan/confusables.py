@@ -71,7 +71,7 @@ def weekday(w: str) -> list[str]:
 
 
 def phone(p: str) -> list[str]:
-    if not p.isdigit():
+    if not (p.isascii() and p.isdigit()):
         return []
     out = [p[:i] + _DIGIT_SWAPS[p[i]] + p[i + 1 :] for i in range(len(p))]
     for i in range(len(p) - 1):  # "double four" heard once or twice

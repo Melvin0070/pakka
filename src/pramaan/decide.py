@@ -1,7 +1,7 @@
 """decide(evidence, policy) -> Decision. Pure: no network, clock, randomness or environment.
 
-Only the arguments the agent proposed are guarded; a value the caller said but the agent did not use is
-not ours to act on.
+The arguments the agent proposed are guarded. With policy.guard_omissions, a value two families heard
+and the agent left out is also restored or asked about (reason codes omitted and repaired_omission).
 
 Reason codes:
   families_agree         PASS: hard predicates hold and score >= accept_threshold

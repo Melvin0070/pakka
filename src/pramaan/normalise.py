@@ -21,8 +21,9 @@ Choices worth knowing:
   सो/so (100 vs "sleep"/"so") only right after a multiplier; "a" only before a scale;
   उन/un only before a tens word, where it means tens-1 (ASR splits उनचालीस as "उन चालीस").
 - Amounts: a phrase is an amount if it is >= 100, uses a fraction idiom (sava/saadhe/paune/
-  dedh/dhai), or has a currency cue (₹/Rs/rupaye before or after, or "ka/ke/ki <payment noun>").
-  Small bare numbers without a cue are dropped, so "ek call" and "do din" yield nothing.
+  dedh/dhai), or has a currency cue (₹/Rs/rupaye before or after, or a payment noun after it, with
+  or without ka/ke/ki). Small bare numbers without a cue are dropped, so "ek call" and "do din"
+  yield nothing; "ek loan" does read as 1, which the evaluation was frozen with.
 - A number directly followed by तारीख/tareekh/date is a day_of_month (1-31 only, never an
   amount); a trailing "<n> tareekh" is not absorbed into a preceding amount ("ek lakh bees
   hazaar unattees tareekh" = 120000 and 29). English ordinals ("fifteenth", "30th",
@@ -592,7 +593,7 @@ _TE_SCALE_STEMS = tuple((_tel_key(w), _Lex("scale", unit, te=True)) for unit, w 
 _TE_HALF = _tel_key(TE_HALF_SUFFIX)
 _TE_QUARTER = tuple(_tel_key(x) for x in ("ంపావు", "ంబావు", "పావు"))
 _TE_HUNDREDS = tuple(_tel_key(x) for x in ("ొందలు", "ొందల", "ొంద", "వందలు", "వందల"))
-_TE_ORDINAL = tuple(_tel_key(x) for x in ("ో", "వ", "వది", "వ తేదీ"))[:3]
+_TE_ORDINAL = tuple(_tel_key(x) for x in ("ో", "వ", "వది"))
 _TE_VOWEL_ENDS = ("", "ు", "ి")
 # ఇరవై -> ఇరవయ: the stem a ten takes when the unit's first vowel fuses onto it.
 _TE_TENS_STEMS = tuple((n, _tel_key(w[:-1] + "య")) for n, w in TE_TENS.items())

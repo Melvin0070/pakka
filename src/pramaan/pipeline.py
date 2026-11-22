@@ -18,6 +18,7 @@ from pydantic import BaseModel, Field
 
 from . import audio, lang
 from .bundle import BundleStore, make_bundle
+from .cache import CacheMiss
 from .decide import decide, resolve_answer
 from .evidence import GREEDY_SOURCE, assemble
 from .sources.base import Source
@@ -135,6 +136,9 @@ class Pipeline:
         hyps: list[Hypothesis] = []
         absent: list[str] = []
         for name, task in turn.tasks.items():
+            if task.done() and not task.cancelled() and isinstance(task.exception(), CacheMiss):
+                # Offline, a hole in the cache is a broken replay, not a recogniser that stayed silent.
+                raise task.exception()  # type: ignore[misc]
             h = task.result() if task.done() and not task.cancelled() and task.exception() is None else None
             (hyps.append(h) if h is not None else absent.append(name))
         log_probs, witness_ms = (None, 0.0)
@@ -206,5 +210,5 @@ class Pipeline:
     async def cancel(self, turn_id: str) -> None:
         turn = self._turns.pop(turn_id, None)
         if turn:
-            for t in turn.tasks.values():
+            for t in (*turn.tasks.values(), turn.witness):
                 t.cancel()

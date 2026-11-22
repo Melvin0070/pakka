@@ -122,3 +122,14 @@ def test_replay_detects_mismatch():
     )
     with pytest.raises(ReplayMismatch, match="verdict"):
         replay(forged, POLICY)
+
+
+def test_a_line_torn_by_a_crash_is_dropped_and_the_chain_continues(tmp_path):
+    path = tmp_path / "b.jsonl"
+    first = BundleStore(path).append(bundle(0))
+    with path.open("a") as fh:
+        fh.write('{"id": "abc", "bundle": {"turn_')
+    store = BundleStore(path)
+    assert store.last_id == first.id
+    store.append(bundle(1))
+    assert verify_chain(path) == 2

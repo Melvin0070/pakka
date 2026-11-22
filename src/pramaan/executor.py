@@ -172,7 +172,7 @@ class Ledger:
         )
 
     def commit(self, session_id: str, operation: str, token: str, tool: ToolFn) -> Any:
-        """Run the tool exactly once for this token's row; a repeat returns the stored outcome.
+        """Run the tool at most once for this token's row; a repeat returns the stored outcome.
 
         If the tool raises, the transaction rolls back and the row stays open for a retry.
         """
@@ -187,7 +187,8 @@ class Ledger:
                 "UPDATE ops SET state=?, outcome=? WHERE session_id=? AND operation=? AND entity_version=?",
                 (
                     LedgerState.COMMITTED,
-                    json.dumps(outcome, sort_keys=True),
+                    # Must not raise: the tool has run, and a rollback here would let it run again.
+                    json.dumps(outcome, default=repr),
                     session_id,
                     operation,
                     entry.entity_version,
@@ -208,6 +209,8 @@ class Ledger:
 
     def void_response(self, session_id: str, response_id: str) -> int:
         """A cancelled or incomplete response: void every open row it proposed."""
+        if not response_id:  # rows proposed without a response id are not one response
+            return 0
         with self._txn():
             return self._void_where("session_id=? AND response_id=?", (session_id, response_id))
 
