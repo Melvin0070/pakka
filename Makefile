@@ -29,8 +29,12 @@ human:
 	uv run python scripts/build_evidence.py --manifest data/human/manifest.jsonl --out data/human/evidence.jsonl
 	PRAMAAN_OFFLINE=1 uv run python -m eval.run_eval --human
 
+PORT ?= 8765
+
+# Live calls write to a throwaway copy: the committed cache is the evidence behind `make eval`.
 serve:
-	uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port 8765
+	cp data/cache.sqlite data/cache.live.sqlite
+	PRAMAAN_CACHE=data/cache.live.sqlite uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port $(PORT)
 
 demo:
 	uv run python scripts/selfcheck.py && $(MAKE) serve

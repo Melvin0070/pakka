@@ -14,3 +14,5 @@ data/witness_cache/
 data/bundles.jsonl
 data/clips/
 data/human/clips/
+
+data/cache.live.sqlite
