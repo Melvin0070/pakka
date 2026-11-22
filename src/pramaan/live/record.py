@@ -1,6 +1,6 @@
 """Record human callers reading the evaluation prompts: the locked test set the synthetic voices stand in for.
 
-Each speaker gets a fixed slice of data/prompts.jsonl. The browser uploads 24 kHz PCM16 mono; the clip is
+Each speaker gets a fixed slice of data/human/prompts.jsonl. The browser uploads 24 kHz PCM16 mono; the clip is
 kept raw and also passed through the same phone channel as the synthetic set, and only the phone version
 enters data/human/manifest.jsonl.
 """
@@ -24,6 +24,8 @@ from .. import audio
 ROOT = Path(__file__).resolve().parents[3]
 HUMAN = ROOT / "data" / "human"
 MANIFEST = HUMAN / "manifest.jsonl"
+# Separate from the synthetic batches: the policy and normaliser were developed on those values.
+PROMPTS = HUMAN / "prompts.jsonl"
 PER_SPEAKER = 15
 ORDER_SEED = 20261121
 MAX_BYTES = 3_000_000  # about 60 s at 24 kHz PCM16
@@ -33,7 +35,7 @@ router = APIRouter(prefix="/api/record")
 
 
 def _prompts() -> list[dict[str, Any]]:
-    rows = [json.loads(x) for x in (ROOT / "data" / "prompts.jsonl").read_text().splitlines() if x.strip()]
+    rows = [json.loads(x) for x in PROMPTS.read_text().splitlines() if x.strip()]
     rows.sort(key=lambda p: p["id"])
     random.Random(ORDER_SEED).shuffle(rows)
     return rows
@@ -52,7 +54,7 @@ def _check(speaker: str) -> None:
 
 
 def _assigned(speaker: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    # Slices follow arrival order, so eight speakers cover all 120 prompts once.
+    # Slices follow arrival order, so ten speakers cover all 150 prompts once.
     order = list(dict.fromkeys(r["speaker"] for r in rows))
     i = order.index(speaker) if speaker in order else len(order)
     prompts = _prompts()
