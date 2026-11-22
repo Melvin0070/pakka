@@ -480,8 +480,8 @@ function dotGrid(wrong, asked, n) {
 }
 async function loadOverview() {
   const get = u => fetch('/api/' + u).then(x => x.ok ? x.json() : null).catch(() => null);
-  const [fresh, first, human, a, sc] = await Promise.all([get('results?set=fresh2').then(x => x || get('results?set=fresh')), get('results?set=synthetic'), get('results?set=human'), get('analysis'), get('scenarios')]);
-  const r = fresh || first;
+  const [strong, fresh, first, human, a, sc] = await Promise.all([get('results?set=strong'), get('results?set=fresh2').then(x => x || get('results?set=fresh')), get('results?set=synthetic'), get('results?set=human'), get('analysis'), get('scenarios')]);
+  const r = strong || fresh || first;
   if (r) {
     const arm = id => r.arms.find(x => x.id === id), A = arm('A'), P = arm('P'), pc = (k, n) => (100 * k / n).toFixed(1) + '%';
     $('ba').hidden = false;
@@ -493,7 +493,7 @@ async function loadOverview() {
     $('baAfterDots').innerHTML = dotGrid(P.wrong_silent, P.asked, P.n);
     const c = r.certificate, ds = r.dataset;
     $('baNote').textContent = `The same ${ds.n_actions} recorded calls on both sides, from ${ds.n_speakers} held-out synthetic voices over a phone channel` +
-      (fresh ? ', scored once after the policy was frozen' : '') + `. With 95% confidence, at most ${(100 * c.upper_bound).toFixed(1)}% of actions let through are wrong.` +
+      (strong ? ', with an agent prompted specifically for Indian numbers, on the frozen policy' : fresh ? ', scored once after the policy was frozen' : '') + `. With 95% confidence, at most ${(100 * c.upper_bound).toFixed(1)}% of actions let through are wrong.` +
       (human ? ` Recorded people so far: ${human.dataset.n_speakers}, ${human.dataset.n_actions} calls (see Results).` : ' No recordings of people yet.');
   }
   if (a) {

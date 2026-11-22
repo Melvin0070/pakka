@@ -1,0 +1,2660 @@
+{
+ "set": "locked set 2, test speakers",
+ "policy": "50d83054eef1",
+ "n": 220,
+ "failed": 0,
+ "old_wrong": 65,
+ "new_wrong": 40,
+ "p_wrong": 1,
+ "p_asked": 10,
+ "p_broke_right": 0,
+ "arms": [
+  {
+   "id": "A",
+   "n": 220,
+   "wrong_silent": 40,
+   "asked": 0
+  },
+  {
+   "id": "P",
+   "n": 220,
+   "wrong_silent": 1,
+   "asked": 10
+  }
+ ],
+ "certificate": {
+  "upper_bound": 0.0224
+ },
+ "dataset": {
+  "n_actions": 220,
+  "n_speakers": 8
+ },
+ "instructions": "You are an assistant answering a phone call in India. Callers speak Hindi, English or a mix, often on a poor line. Accuracy of spoken numbers is your most important job, because the values you log are acted on. Listen to the whole utterance, then call log_commitment with every amount, date, weekday and phone number the caller actually said, and leave the others null.\nAmounts: convert to plain integer rupees. सवा means plus a quarter, साढ़े plus a half, पौने minus a quarter, डेढ़ is 1.5 and ढाई is 2.5 of the unit that follows: सवा छह लाख = 625000, साढ़े आठ करोड़ = 85000000, पौने नौ लाख = 875000, डेढ़ करोड़ = 15000000, ढाई करोड़ = 25000000. बहत्तर सौ = 7200. लाख = 100000, करोड़ = 10000000. Hindi numbers one short of a ten begin with उन (उनतालीस is 39, उनचास is 49). Distinguish thirteen from thirty and similar pairs carefully.\nPhone numbers: write exactly the digits spoken, in order, in any mix of Hindi and English. Double seven means 77 and triple five means 555. Never invent, drop or reorder a digit.",
+ "clips": [
+  {
+   "clip_id": "ballad_g02_phone",
+   "truth": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g05_phone",
+   "truth": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g06_phone",
+   "truth": {
+    "phone": "6787788888"
+   },
+   "agent": {
+    "phone": "6787788888"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g07_phone",
+   "truth": {
+    "amount_rupees": 2750
+   },
+   "agent": {
+    "amount_rupees": 2750
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g11_phone",
+   "truth": {
+    "phone": "6007782758"
+   },
+   "agent": {
+    "phone": "6007782758"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g12_phone",
+   "truth": {
+    "phone": "7643660619"
+   },
+   "agent": {
+    "phone": "7643660619"
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g18_phone",
+   "truth": {
+    "phone": "9778807880"
+   },
+   "agent": {
+    "phone": "9778807880"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g25_phone",
+   "truth": {
+    "phone": "9878778818"
+   },
+   "agent": {
+    "phone": "9878778818"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g28_phone",
+   "truth": {
+    "phone": "6778770787"
+   },
+   "agent": {
+    "phone": "6778770787"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g32_phone",
+   "truth": {
+    "phone": "6925020567",
+    "amount_rupees": 14000
+   },
+   "agent": {
+    "phone": "6925020567"
+   },
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "ballad_g35_phone",
+   "truth": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g36_phone",
+   "truth": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g37_phone",
+   "truth": {
+    "phone": "8249126421",
+    "amount_rupees": 1400
+   },
+   "agent": {
+    "amount_rupees": 1400,
+    "phone": "8249126421"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g42_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g49_phone",
+   "truth": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g53_phone",
+   "truth": {
+    "amount_rupees": 275000
+   },
+   "agent": {
+    "amount_rupees": 275000
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g54_phone",
+   "truth": {
+    "amount_rupees": 3000
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g57_phone",
+   "truth": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g58_phone",
+   "truth": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "ballad_g60_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g03_phone",
+   "truth": {
+    "phone": "9708177700"
+   },
+   "agent": {
+    "phone": "970817770"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g04_phone",
+   "truth": {
+    "phone": "9788423778"
+   },
+   "agent": {
+    "phone": "988423778"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g08_phone",
+   "truth": {
+    "phone": "8369981166"
+   },
+   "agent": {
+    "phone": "8369981166"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g16_phone",
+   "truth": {
+    "phone": "6180818771"
+   },
+   "agent": {
+    "phone": "6180818771"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g19_phone",
+   "truth": {
+    "amount_rupees": 40000
+   },
+   "agent": {
+    "amount_rupees": 40000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g21_phone",
+   "truth": {
+    "phone": "8804743629",
+    "amount_rupees": 56000
+   },
+   "agent": {
+    "amount_rupees": 56000,
+    "phone": "8804743629"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g22_phone",
+   "truth": {
+    "phone": "6788188188"
+   },
+   "agent": {
+    "phone": "6788188188"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g26_phone",
+   "truth": {
+    "phone": "9159203030"
+   },
+   "agent": {
+    "phone": "9159203030"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g27_phone",
+   "truth": {
+    "amount_rupees": 47500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 47500,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g30_phone",
+   "truth": {
+    "amount_rupees": 80000
+   },
+   "agent": {
+    "amount_rupees": 80000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g33_phone",
+   "truth": {
+    "amount_rupees": 1500,
+    "day_of_month": 21
+   },
+   "agent": {
+    "amount_rupees": 1500,
+    "day_of_month": 21
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g38_phone",
+   "truth": {
+    "amount_rupees": 13000
+   },
+   "agent": {
+    "amount_rupees": 13000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g39_phone",
+   "truth": {
+    "phone": "9147415926",
+    "amount_rupees": 78000
+   },
+   "agent": {
+    "amount_rupees": 78000,
+    "phone": "9147415926"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g40_phone",
+   "truth": {
+    "phone": "7787087888"
+   },
+   "agent": {
+    "phone": "7787087888"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g41_phone",
+   "truth": {
+    "phone": "7888877878"
+   },
+   "agent": {
+    "phone": "7888877878"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g43_phone",
+   "truth": {
+    "amount_rupees": 34000,
+    "day_of_month": 30
+   },
+   "agent": {
+    "amount_rupees": 34000,
+    "day_of_month": 30
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g45_phone",
+   "truth": {
+    "amount_rupees": 850000,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 850000,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g46_phone",
+   "truth": {
+    "phone": "9668901119"
+   },
+   "agent": {
+    "phone": "9668901119"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g48_phone",
+   "truth": {
+    "amount_rupees": 46000,
+    "weekday": "monday"
+   },
+   "agent": {
+    "amount_rupees": 46000,
+    "weekday": "monday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "echo_g52_phone",
+   "truth": {
+    "amount_rupees": 350000,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g02_phone",
+   "truth": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g05_phone",
+   "truth": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g06_phone",
+   "truth": {
+    "phone": "6787788888"
+   },
+   "agent": {
+    "phone": "6787788888"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g07_phone",
+   "truth": {
+    "amount_rupees": 2750
+   },
+   "agent": {
+    "amount_rupees": 2750
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g11_phone",
+   "truth": {
+    "phone": "6007782758"
+   },
+   "agent": {
+    "phone": "6007782758"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g12_phone",
+   "truth": {
+    "phone": "7643660619"
+   },
+   "agent": {
+    "phone": "7643660619"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g18_phone",
+   "truth": {
+    "phone": "9778807880"
+   },
+   "agent": {
+    "phone": "9778807880"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g25_phone",
+   "truth": {
+    "phone": "9878778818"
+   },
+   "agent": {
+    "phone": "7878778818"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g28_phone",
+   "truth": {
+    "phone": "6778770787"
+   },
+   "agent": {
+    "phone": "7787770787"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g32_phone",
+   "truth": {
+    "phone": "6925020567",
+    "amount_rupees": 14000
+   },
+   "agent": {
+    "amount_rupees": 14000,
+    "phone": "6925020567"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g35_phone",
+   "truth": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g36_phone",
+   "truth": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g37_phone",
+   "truth": {
+    "phone": "8249126421",
+    "amount_rupees": 1400
+   },
+   "agent": {
+    "amount_rupees": 1400,
+    "phone": "8249126421"
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g42_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g49_phone",
+   "truth": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g53_phone",
+   "truth": {
+    "amount_rupees": 275000
+   },
+   "agent": {
+    "amount_rupees": 275000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g54_phone",
+   "truth": {
+    "amount_rupees": 3000
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g57_phone",
+   "truth": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g58_phone",
+   "truth": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "fable_g60_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g01_phone",
+   "truth": {
+    "phone": "9228186620",
+    "amount_rupees": 6500
+   },
+   "agent": {
+    "amount_rupees": 6500,
+    "phone": "9228186620"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g01_noisy",
+   "truth": {
+    "phone": "9228186620",
+    "amount_rupees": 6500
+   },
+   "agent": {
+    "amount_rupees": 6500,
+    "phone": "9228186620"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g09_phone",
+   "truth": {
+    "phone": "8543569964"
+   },
+   "agent": {
+    "phone": "8543569964"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g09_noisy",
+   "truth": {
+    "phone": "8543569964"
+   },
+   "agent": {
+    "phone": "8543569964"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g10_phone",
+   "truth": {
+    "amount_rupees": 67000,
+    "day_of_month": 15
+   },
+   "agent": {
+    "amount_rupees": 66000,
+    "day_of_month": 15
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g10_noisy",
+   "truth": {
+    "amount_rupees": 67000,
+    "day_of_month": 15
+   },
+   "agent": {
+    "amount_rupees": 67000,
+    "day_of_month": 15
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g13_phone",
+   "truth": {
+    "phone": "8810801887"
+   },
+   "agent": {
+    "phone": "8810801887"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g13_noisy",
+   "truth": {
+    "phone": "8810801887"
+   },
+   "agent": {
+    "phone": "8810801887"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g14_phone",
+   "truth": {
+    "phone": "6777177777"
+   },
+   "agent": {
+    "phone": "6777717777"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g14_noisy",
+   "truth": {
+    "phone": "6777177777"
+   },
+   "agent": {
+    "phone": "6777177777"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g15_phone",
+   "truth": {
+    "amount_rupees": 56000
+   },
+   "agent": {
+    "amount_rupees": 56000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g15_noisy",
+   "truth": {
+    "amount_rupees": 56000
+   },
+   "agent": {
+    "amount_rupees": 54000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g17_phone",
+   "truth": {
+    "amount_rupees": 4500,
+    "weekday": "monday"
+   },
+   "agent": {
+    "amount_rupees": 4500,
+    "weekday": "monday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g17_noisy",
+   "truth": {
+    "amount_rupees": 4500,
+    "weekday": "monday"
+   },
+   "agent": {
+    "amount_rupees": 4500,
+    "weekday": "monday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g20_phone",
+   "truth": {
+    "phone": "9952538269"
+   },
+   "agent": {
+    "phone": "9952538269"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g20_noisy",
+   "truth": {
+    "phone": "9952538269"
+   },
+   "agent": {
+    "phone": "9952538269"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g23_phone",
+   "truth": {
+    "amount_rupees": 2900,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 2900,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g23_noisy",
+   "truth": {
+    "amount_rupees": 2900,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 300,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g24_phone",
+   "truth": {
+    "amount_rupees": 17500,
+    "day_of_month": 16
+   },
+   "agent": {
+    "amount_rupees": 17500,
+    "day_of_month": 16
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g24_noisy",
+   "truth": {
+    "amount_rupees": 17500,
+    "day_of_month": 16
+   },
+   "agent": {
+    "amount_rupees": 17300,
+    "day_of_month": 16
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g29_phone",
+   "truth": {
+    "amount_rupees": 85000
+   },
+   "agent": {
+    "amount_rupees": 85000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g29_noisy",
+   "truth": {
+    "amount_rupees": 85000
+   },
+   "agent": {
+    "amount_rupees": 85000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g31_phone",
+   "truth": {
+    "amount_rupees": 24000
+   },
+   "agent": {
+    "amount_rupees": 24000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g31_noisy",
+   "truth": {
+    "amount_rupees": 24000
+   },
+   "agent": {
+    "amount_rupees": 24000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g34_phone",
+   "truth": {
+    "phone": "7822467314",
+    "amount_rupees": 9500
+   },
+   "agent": {
+    "amount_rupees": 9500,
+    "phone": "7822467314"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g34_noisy",
+   "truth": {
+    "phone": "7822467314",
+    "amount_rupees": 9500
+   },
+   "agent": {
+    "amount_rupees": 9500,
+    "phone": "882467314"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g44_phone",
+   "truth": {
+    "phone": "9263279763"
+   },
+   "agent": {
+    "phone": "9263279763"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g44_noisy",
+   "truth": {
+    "phone": "9263279763"
+   },
+   "agent": {
+    "phone": "9262739763"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g47_phone",
+   "truth": {
+    "amount_rupees": 2250,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g47_noisy",
+   "truth": {
+    "amount_rupees": 2250,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g50_phone",
+   "truth": {
+    "phone": "7808780817"
+   },
+   "agent": {
+    "phone": "780878087"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g50_noisy",
+   "truth": {
+    "phone": "7808780817"
+   },
+   "agent": {
+    "phone": "7808780871"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g51_phone",
+   "truth": {
+    "amount_rupees": 35000,
+    "day_of_month": 17
+   },
+   "agent": {
+    "amount_rupees": 35000,
+    "day_of_month": 17
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g51_noisy",
+   "truth": {
+    "amount_rupees": 35000,
+    "day_of_month": 17
+   },
+   "agent": {
+    "amount_rupees": 35000,
+    "day_of_month": 17
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g55_phone",
+   "truth": {
+    "phone": "6888718788"
+   },
+   "agent": {
+    "phone": "6888718788"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g55_noisy",
+   "truth": {
+    "phone": "6888718788"
+   },
+   "agent": {
+    "phone": "8888718788"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g56_phone",
+   "truth": {
+    "phone": "6878788877"
+   },
+   "agent": {
+    "phone": "6878788877"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g56_noisy",
+   "truth": {
+    "phone": "6878788877"
+   },
+   "agent": {
+    "phone": "6878788877"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g59_phone",
+   "truth": {
+    "amount_rupees": 25000
+   },
+   "agent": {
+    "amount_rupees": 25000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "nova_g59_noisy",
+   "truth": {
+    "amount_rupees": 25000
+   },
+   "agent": {
+    "amount_rupees": 25000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g02_phone",
+   "truth": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g05_phone",
+   "truth": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g06_phone",
+   "truth": {
+    "phone": "6787788888"
+   },
+   "agent": {
+    "phone": "6787788888"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g07_phone",
+   "truth": {
+    "amount_rupees": 2750
+   },
+   "agent": {
+    "amount_rupees": 2750
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g11_phone",
+   "truth": {
+    "phone": "6007782758"
+   },
+   "agent": {
+    "phone": "6007782758"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g12_phone",
+   "truth": {
+    "phone": "7643660619"
+   },
+   "agent": {
+    "phone": "7643660619"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g18_phone",
+   "truth": {
+    "phone": "9778807880"
+   },
+   "agent": {
+    "phone": "9778807880"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g25_phone",
+   "truth": {
+    "phone": "9878778818"
+   },
+   "agent": {
+    "phone": "9878778818"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g28_phone",
+   "truth": {
+    "phone": "6778770787"
+   },
+   "agent": {
+    "phone": "6778770787"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g32_phone",
+   "truth": {
+    "phone": "6925020567",
+    "amount_rupees": 14000
+   },
+   "agent": {
+    "amount_rupees": 14000,
+    "phone": "6929020567"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g35_phone",
+   "truth": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g36_phone",
+   "truth": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g37_phone",
+   "truth": {
+    "phone": "8249126421",
+    "amount_rupees": 1400
+   },
+   "agent": {
+    "amount_rupees": 1400,
+    "phone": "8249126421"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g42_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g49_phone",
+   "truth": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g53_phone",
+   "truth": {
+    "amount_rupees": 275000
+   },
+   "agent": {
+    "amount_rupees": 275000
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g54_phone",
+   "truth": {
+    "amount_rupees": 3000
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g57_phone",
+   "truth": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g58_phone",
+   "truth": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "sage_g60_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g01_phone",
+   "truth": {
+    "phone": "9228186620",
+    "amount_rupees": 6500
+   },
+   "agent": {
+    "amount_rupees": 6500,
+    "phone": "9228186620"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g09_phone",
+   "truth": {
+    "phone": "8543569964"
+   },
+   "agent": {
+    "phone": "8543569964"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g10_phone",
+   "truth": {
+    "amount_rupees": 67000,
+    "day_of_month": 15
+   },
+   "agent": {
+    "amount_rupees": 67000,
+    "day_of_month": 15
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g13_phone",
+   "truth": {
+    "phone": "8810801887"
+   },
+   "agent": {
+    "phone": "8810801887"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g14_phone",
+   "truth": {
+    "phone": "6777177777"
+   },
+   "agent": {
+    "phone": "7777177777"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g15_phone",
+   "truth": {
+    "amount_rupees": 56000
+   },
+   "agent": {
+    "amount_rupees": 56000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g17_phone",
+   "truth": {
+    "amount_rupees": 4500,
+    "weekday": "monday"
+   },
+   "agent": {
+    "amount_rupees": 4500,
+    "weekday": "monday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g20_phone",
+   "truth": {
+    "phone": "9952538269"
+   },
+   "agent": {
+    "phone": "9952538269"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g23_phone",
+   "truth": {
+    "amount_rupees": 2900,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 2900,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g24_phone",
+   "truth": {
+    "amount_rupees": 17500,
+    "day_of_month": 16
+   },
+   "agent": {
+    "amount_rupees": 17500,
+    "day_of_month": 16
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g29_phone",
+   "truth": {
+    "amount_rupees": 85000
+   },
+   "agent": {
+    "amount_rupees": 50000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g31_phone",
+   "truth": {
+    "amount_rupees": 24000
+   },
+   "agent": {
+    "amount_rupees": 24000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g34_phone",
+   "truth": {
+    "phone": "7822467314",
+    "amount_rupees": 9500
+   },
+   "agent": {
+    "amount_rupees": 9500,
+    "phone": "7822467314"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g44_phone",
+   "truth": {
+    "phone": "9263279763"
+   },
+   "agent": {
+    "phone": "9263629763"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g47_phone",
+   "truth": {
+    "amount_rupees": 2250,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g50_phone",
+   "truth": {
+    "phone": "7808780817"
+   },
+   "agent": {
+    "phone": "7808780817"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g51_phone",
+   "truth": {
+    "amount_rupees": 35000,
+    "day_of_month": 17
+   },
+   "agent": {
+    "amount_rupees": 35000,
+    "day_of_month": 17
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g55_phone",
+   "truth": {
+    "phone": "6888718788"
+   },
+   "agent": {
+    "phone": "688718788"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g56_phone",
+   "truth": {
+    "phone": "6878788877"
+   },
+   "agent": {
+    "phone": "6878788877"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "shimmer_g59_phone",
+   "truth": {
+    "amount_rupees": 25000
+   },
+   "agent": {
+    "amount_rupees": 25000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g03_phone",
+   "truth": {
+    "phone": "9708177700"
+   },
+   "agent": {
+    "phone": "9708177700"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g03_noisy",
+   "truth": {
+    "phone": "9708177700"
+   },
+   "agent": {
+    "phone": "97877700"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g04_phone",
+   "truth": {
+    "phone": "9788423778"
+   },
+   "agent": {
+    "phone": "9788423778"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g04_noisy",
+   "truth": {
+    "phone": "9788423778"
+   },
+   "agent": {
+    "phone": "9788423778"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g08_phone",
+   "truth": {
+    "phone": "8369981166"
+   },
+   "agent": {
+    "phone": "8369981166"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g08_noisy",
+   "truth": {
+    "phone": "8369981166"
+   },
+   "agent": {
+    "phone": "836998166"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g16_phone",
+   "truth": {
+    "phone": "6180818771"
+   },
+   "agent": {
+    "phone": "6180818771"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g16_noisy",
+   "truth": {
+    "phone": "6180818771"
+   },
+   "agent": {
+    "phone": "6180818778"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g19_phone",
+   "truth": {
+    "amount_rupees": 40000
+   },
+   "agent": {
+    "amount_rupees": 40000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g19_noisy",
+   "truth": {
+    "amount_rupees": 40000
+   },
+   "agent": {
+    "amount_rupees": 40000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g21_phone",
+   "truth": {
+    "phone": "8804743629",
+    "amount_rupees": 56000
+   },
+   "agent": {
+    "amount_rupees": 56000,
+    "phone": "8804743629"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g21_noisy",
+   "truth": {
+    "phone": "8804743629",
+    "amount_rupees": 56000
+   },
+   "agent": {
+    "amount_rupees": 56000,
+    "phone": "804743629"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g22_phone",
+   "truth": {
+    "phone": "6788188188"
+   },
+   "agent": {
+    "phone": "6788188188"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g22_noisy",
+   "truth": {
+    "phone": "6788188188"
+   },
+   "agent": {
+    "phone": "6788188188"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g26_phone",
+   "truth": {
+    "phone": "9159203030"
+   },
+   "agent": {
+    "phone": "9159203030"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g26_noisy",
+   "truth": {
+    "phone": "9159203030"
+   },
+   "agent": {
+    "phone": "9159203030"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g27_phone",
+   "truth": {
+    "amount_rupees": 47500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 47000,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g27_noisy",
+   "truth": {
+    "amount_rupees": 47500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 47500,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g30_phone",
+   "truth": {
+    "amount_rupees": 80000
+   },
+   "agent": {
+    "amount_rupees": 80000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g30_noisy",
+   "truth": {
+    "amount_rupees": 80000
+   },
+   "agent": {
+    "amount_rupees": 80000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g33_phone",
+   "truth": {
+    "amount_rupees": 1500,
+    "day_of_month": 21
+   },
+   "agent": {
+    "amount_rupees": 1500,
+    "day_of_month": 21
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g33_noisy",
+   "truth": {
+    "amount_rupees": 1500,
+    "day_of_month": 21
+   },
+   "agent": {
+    "amount_rupees": 1500,
+    "day_of_month": 21
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g38_phone",
+   "truth": {
+    "amount_rupees": 13000
+   },
+   "agent": {
+    "amount_rupees": 1000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g38_noisy",
+   "truth": {
+    "amount_rupees": 13000
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g39_phone",
+   "truth": {
+    "phone": "9147415926",
+    "amount_rupees": 78000
+   },
+   "agent": {
+    "amount_rupees": 78000,
+    "phone": "9147415926"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g39_noisy",
+   "truth": {
+    "phone": "9147415926",
+    "amount_rupees": 78000
+   },
+   "agent": {
+    "amount_rupees": 78000,
+    "phone": "9147415926"
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g40_phone",
+   "truth": {
+    "phone": "7787087888"
+   },
+   "agent": {
+    "phone": "7788708777"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g40_noisy",
+   "truth": {
+    "phone": "7787087888"
+   },
+   "agent": {
+    "phone": "7787087555"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g41_phone",
+   "truth": {
+    "phone": "7888877878"
+   },
+   "agent": {
+    "phone": "7888877878"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g41_noisy",
+   "truth": {
+    "phone": "7888877878"
+   },
+   "agent": {
+    "phone": "788877878"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g43_phone",
+   "truth": {
+    "amount_rupees": 34000,
+    "day_of_month": 30
+   },
+   "agent": {
+    "amount_rupees": 30000,
+    "day_of_month": 30
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g43_noisy",
+   "truth": {
+    "amount_rupees": 34000,
+    "day_of_month": 30
+   },
+   "agent": {
+    "amount_rupees": 34000,
+    "day_of_month": 30
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g45_phone",
+   "truth": {
+    "amount_rupees": 850000,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 850000,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g45_noisy",
+   "truth": {
+    "amount_rupees": 850000,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 850000,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g46_phone",
+   "truth": {
+    "phone": "9668901119"
+   },
+   "agent": {
+    "phone": "9668901119"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g46_noisy",
+   "truth": {
+    "phone": "9668901119"
+   },
+   "agent": {
+    "phone": "9668901119"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g48_phone",
+   "truth": {
+    "amount_rupees": 46000,
+    "weekday": "monday"
+   },
+   "agent": {
+    "amount_rupees": 46000,
+    "weekday": "monday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g48_noisy",
+   "truth": {
+    "amount_rupees": 46000,
+    "weekday": "monday"
+   },
+   "agent": {
+    "amount_rupees": 46000,
+    "weekday": "monday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g52_phone",
+   "truth": {
+    "amount_rupees": 350000,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "verse_g52_noisy",
+   "truth": {
+    "amount_rupees": 350000,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g02_phone",
+   "truth": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g02_noisy",
+   "truth": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "agent": {
+    "amount_rupees": 3000,
+    "weekday": "sunday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g05_phone",
+   "truth": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g05_noisy",
+   "truth": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 350000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g06_phone",
+   "truth": {
+    "phone": "6787788888"
+   },
+   "agent": {
+    "phone": "678778888"
+   },
+   "guard_executed": false,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_g06_noisy",
+   "truth": {
+    "phone": "6787788888"
+   },
+   "agent": {
+    "phone": "6787788888"
+   },
+   "guard_executed": false,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g07_phone",
+   "truth": {
+    "amount_rupees": 2750
+   },
+   "agent": {
+    "amount_rupees": 2750
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g07_noisy",
+   "truth": {
+    "amount_rupees": 2750
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": true
+  },
+  {
+   "clip_id": "marin_g11_phone",
+   "truth": {
+    "phone": "6007782758"
+   },
+   "agent": {
+    "phone": "6007782758"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g11_noisy",
+   "truth": {
+    "phone": "6007782758"
+   },
+   "agent": {
+    "phone": "9007782758"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g12_phone",
+   "truth": {
+    "phone": "7643660619"
+   },
+   "agent": {
+    "phone": "7643660619"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g12_noisy",
+   "truth": {
+    "phone": "7643660619"
+   },
+   "agent": {
+    "phone": "7643660619"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g18_phone",
+   "truth": {
+    "phone": "9778807880"
+   },
+   "agent": {
+    "phone": "9778807880"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g18_noisy",
+   "truth": {
+    "phone": "9778807880"
+   },
+   "agent": {
+    "phone": "9778807880"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g25_phone",
+   "truth": {
+    "phone": "9878778818"
+   },
+   "agent": {
+    "phone": "8787778818"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g25_noisy",
+   "truth": {
+    "phone": "9878778818"
+   },
+   "agent": {
+    "phone": "9878778818"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g28_phone",
+   "truth": {
+    "phone": "6778770787"
+   },
+   "agent": {
+    "phone": "6778770787"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g28_noisy",
+   "truth": {
+    "phone": "6778770787"
+   },
+   "agent": {
+    "phone": "6778770787"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g32_phone",
+   "truth": {
+    "phone": "6925020567",
+    "amount_rupees": 14000
+   },
+   "agent": {
+    "amount_rupees": 14000,
+    "phone": "6925020567"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g32_noisy",
+   "truth": {
+    "phone": "6925020567",
+    "amount_rupees": 14000
+   },
+   "agent": {
+    "amount_rupees": 14000,
+    "phone": "9250205678"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g35_phone",
+   "truth": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g35_noisy",
+   "truth": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 250000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g36_phone",
+   "truth": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g36_noisy",
+   "truth": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 29000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g37_phone",
+   "truth": {
+    "phone": "8249126421",
+    "amount_rupees": 1400
+   },
+   "agent": {
+    "amount_rupees": 1400,
+    "phone": "8249126421"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g37_noisy",
+   "truth": {
+    "phone": "8249126421",
+    "amount_rupees": 1400
+   },
+   "agent": {
+    "amount_rupees": 1400,
+    "phone": "8249126421"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g42_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g42_noisy",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "friday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g49_phone",
+   "truth": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g49_noisy",
+   "truth": {
+    "amount_rupees": 2500,
+    "day_of_month": 18
+   },
+   "agent": {
+    "amount_rupees": 60,
+    "day_of_month": 18
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g53_phone",
+   "truth": {
+    "amount_rupees": 275000
+   },
+   "agent": {
+    "amount_rupees": 275000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g53_noisy",
+   "truth": {
+    "amount_rupees": 275000
+   },
+   "agent": {
+    "amount_rupees": 275000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g54_phone",
+   "truth": {
+    "amount_rupees": 3000
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g54_noisy",
+   "truth": {
+    "amount_rupees": 3000
+   },
+   "agent": {
+    "amount_rupees": 3000
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g57_phone",
+   "truth": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g57_noisy",
+   "truth": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "agent": {
+    "amount_rupees": 9000,
+    "weekday": "saturday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g58_phone",
+   "truth": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g58_noisy",
+   "truth": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "agent": {
+    "amount_rupees": 69000,
+    "day_of_month": 31
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g60_phone",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  },
+  {
+   "clip_id": "marin_g60_noisy",
+   "truth": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "agent": {
+    "amount_rupees": 1900,
+    "weekday": "tuesday"
+   },
+   "guard_executed": true,
+   "guard_wrong": false
+  }
+ ]
+}

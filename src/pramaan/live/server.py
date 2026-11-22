@@ -198,7 +198,12 @@ async def results(set: str = "synthetic") -> JSONResponse:
     path = (
         ROOT
         / "results"
-        / {"human": "human.json", "fresh": "fresh.json", "fresh2": "fresh2.json"}.get(set, "headline.json")
+        / {
+            "human": "human.json",
+            "fresh": "fresh.json",
+            "fresh2": "fresh2.json",
+            "strong": "strong_baseline.json",
+        }.get(set, "headline.json")
     )
     # null, not 404: the page shows its own "no results yet" state and the console stays clean.
     return JSONResponse(json.loads(path.read_text()) if path.exists() else None)

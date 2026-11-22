@@ -2,7 +2,7 @@
 -include .env
 export
 
-.PHONY: setup check test eval human serve demo demo-offline model
+.PHONY: setup check test eval human strong-baseline serve demo demo-offline model
 
 setup:
 	uv sync
@@ -28,6 +28,11 @@ human:
 	uv run python scripts/collect.py --manifest data/human/manifest.jsonl --concurrency 3
 	uv run python scripts/build_evidence.py --manifest data/human/manifest.jsonl --out data/human/evidence.jsonl
 	PRAMAAN_OFFLINE=1 uv run python -m eval.run_eval --human
+
+# Spends API credits on the first run; later runs replay data/cache.strong.sqlite.
+strong-baseline:
+	uv run python -m scripts.strong_baseline collect
+	PRAMAAN_OFFLINE=1 uv run python -m scripts.strong_baseline score
 
 PORT ?= 8765
 
