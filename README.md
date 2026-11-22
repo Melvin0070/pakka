@@ -9,6 +9,16 @@ split, the caller is asked one short question.
 Built for the Equal AI Builders hackathon, challenge 2 (Voice AI for India): the same recordings on a base
 model and on this system.
 
+## Live
+
+- Hindi: https://pramaan-voice.vercel.app
+- Telugu: https://pramaan-voice-te.vercel.app
+
+Both run in replay mode with no API keys: the recorded calls play, every recogniser answers from the committed
+cache, and the acoustic check, the decision and the ledger are computed on the server for each play. The
+microphone is off there; for live speech run `make serve` or `make serve-te` with your own keys. `main.py` is
+the hosted entrypoint, and `make deploy` republishes both.
+
 ## Results
 
 <!-- results:start -->

@@ -3,13 +3,16 @@
 Usage: uv run python scripts/fetch_model.py [hi te ...] [--int8]     (default: hi)
 """
 
+import os
 import pathlib
 import sys
 
 import httpx
 
 REPO = "https://huggingface.co/OpenVoiceOS/ai4bharat-indicconformer-{lang}-onnx/resolve/main"
-MODELS = pathlib.Path(__file__).resolve().parent.parent / "models"
+MODELS = pathlib.Path(
+    os.environ.get("PRAMAAN_MODELS") or pathlib.Path(__file__).resolve().parent.parent / "models"
+)
 FP32 = ("config.json", "vocab.txt", "model.onnx", "model.onnx_data")
 INT8 = ("model.int8.onnx",)
 
@@ -35,5 +38,7 @@ if __name__ == "__main__":
     langs = [a for a in sys.argv[1:] if not a.startswith("--")] or ["hi"]
     for lang in langs:
         (MODELS / lang).mkdir(parents=True, exist_ok=True)
-        for n in FP32 + (INT8 if "--int8" in sys.argv else ()):
+        # --int8-only skips the 481 MB full-precision weights.
+        names = ("config.json", "vocab.txt", *INT8) if "--int8-only" in sys.argv else FP32
+        for n in names + (INT8 if "--int8" in sys.argv else ()):
             fetch(lang, n)

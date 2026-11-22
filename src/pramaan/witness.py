@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import pathlib
 import time
 import unicodedata
@@ -346,10 +347,14 @@ class Witness:
         self,
         model_dir: pathlib.Path | None = None,
         cache_dir: pathlib.Path | None = CACHE_DIR,
-        int8: bool = False,
+        int8: bool | None = None,
         threads: int = 0,
         lang: str | None = None,
     ):
+        if int8 is None:  # the quantised model is a third of the size: for hosts with little disk
+            int8 = os.environ.get("PRAMAAN_INT8", "") not in ("", "0")
+        if cache_dir is CACHE_DIR and os.environ.get("PRAMAAN_STATE"):
+            cache_dir = None  # a host that sets a state directory has little disk; posteriors are cheap
         self.language = languages.get(lang)
         self.lang = self.language.code
         self.model_dir = model_dir or self.language.model_dir

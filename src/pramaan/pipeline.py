@@ -91,7 +91,7 @@ class Pipeline:
         self.policy = policy or load_policy()
         self.sources = available_sources() if sources is None else sources
         self.witness = witness or Witness()
-        self.bundles = bundles or BundleStore(ROOT / "data" / "bundles.jsonl")
+        self.bundles = bundles or BundleStore(lang.state_dir() / "bundles.jsonl")
         self._turns: dict[str, _Turn] = {}
 
     def warm(self) -> None:

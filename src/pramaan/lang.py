@@ -37,7 +37,7 @@ class Lang:
 
     @property
     def model_dir(self) -> Path:
-        return ROOT / "models" / self.code
+        return Path(os.environ.get("PRAMAAN_MODELS") or ROOT / "models") / self.code
 
 
 HI = Lang(
@@ -108,6 +108,12 @@ TE = Lang(
     # How the Telugu model itself writes these loanwords, read off its decodes of the tuning speakers.
     spellings={"థౌజండ్": ("థౌసండ్",), "టూ": ("టు",), "డబుల్": ("డబల్",), "లాక్": ("ల్యాక్",)},
 )
+
+
+def state_dir() -> Path:
+    """Where the process may write (bundles, cached posteriors). A read-only host points this at /tmp."""
+    return Path(os.environ.get("PRAMAAN_STATE") or ROOT / "data")
+
 
 LANGS = {lang.code: lang for lang in (HI, TE)}
 

@@ -2,7 +2,7 @@
 -include .env
 export
 
-.PHONY: setup check test eval human human-extras strong-baseline serve demo demo-offline model te-data te-collect te-evidence te serve-te
+.PHONY: setup check test eval human human-extras strong-baseline serve demo demo-offline model te-data te-collect te-evidence te serve-te deploy
 
 setup:
 	uv sync
@@ -63,6 +63,11 @@ te:
 serve-te:
 	cp data/te/cache.sqlite data/te/cache.live.sqlite
 	PRAMAAN_LANG=te PRAMAAN_CACHE=data/te/cache.live.sqlite uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port 8766
+
+# Publishes both hosted demos (Vercel projects pramaan-voice and pramaan-voice-te). No keys are uploaded.
+deploy:
+	vercel link --yes --project pramaan-voice && vercel deploy --prod --yes
+	vercel link --yes --project pramaan-voice-te && vercel deploy --prod --yes -e PRAMAAN_LANG=te
 
 PORT ?= 8765
 
