@@ -38,4 +38,5 @@ Lead with the first and third. The model alone does not make the identical mista
 - **"Is this real callers?"** No. Synthetic voices over a simulated phone channel, plus one recorded person so far. The recorder is at `/record.html`.
 - **"What does the acoustic model add?"** See the ablation rows; it removes questions on some sets and not on others, and the README says so.
 - **"What gets through?"** Calls where every recogniser hears the same wrong value. Two of 220 on the newest locked set.
-- **"Latency?"** Median added hold 0 ms because evidence is gathered while the model is still thinking; the limit is 1.2 seconds.
+- **"Latency?"** In live runs the hold was about 350 ms at the median and about 1.6 s at worst (9 calls). The recogniser deadline is 1.2 seconds. The 0 ms in the results table is the offline replay figure.
+- **"Does it work on new input?"** `results/fresh_input.md`: 12 new sentences through the live path. The model alone acted on 5 wrong values, Pramaan on none, and it asked on 4. One synthetic voice, so it is not an accuracy estimate.
