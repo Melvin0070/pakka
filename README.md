@@ -120,7 +120,16 @@ All numbers above come from `make eval`, which replays committed evidence with n
 8 kHz AMR-NB + A-law phone channel, part with babble noise). No human recordings are in the test set yet, so
 these numbers say nothing certain about real callers. To test on people: `make serve`, open `/record.html`
 (15 prompts per speaker, same phone channel applied on the server), then `make human` once, which scores the
-recordings on the frozen policy and writes `results/human.md` without touching the table above.
+recordings on the frozen policy and writes `results/human.md` without touching the table above. The recorder
+serves `data/human/prompts.jsonl`: 150 prompts for ten people, with values absent from every synthetic batch.
+
+### With a stronger agent prompt
+
+The agent in the tables above has a short, generic prompt. `make strong-baseline` reruns locked set 2 with a
+prompt that teaches Hindi fractions, lakh and crore, and digit handling, under the same frozen policy. The model
+alone is wrong on 40 of 220 calls (18.2%, against 29.5%). Pramaan on that agent is wrong on 1 (0.5%) and asks on
+10 (4.5%). The prompt was written once, after this set's earlier results had been seen; its worked examples
+avoid every amount in the set. Results are in `results/strong_baseline.json`.
 
 ## Where it wins, ties and loses
 
@@ -308,7 +317,9 @@ caller audio ──┬──────────────► gpt-realtime
   usually already agree.
 - Asking only when gpt-transcribe and Sarvam disagree (B-2S) remains a strong, much simpler baseline. Pramaan's
   measured advantage over it is fewer questions, not fewer errors.
-- One human speaker (15 clips) has been recorded and scored; see `results/human.md`. Far too few to rank arms.
+- One human speaker (15 clips) has been recorded and scored; see `results/human_pilot.md`. It is the author,
+  on prompts the tuning voices also spoke, scored more than once, so it is a pilot and stays out of the locked
+  human set in `data/human/manifest.jsonl`. Far too few to rank arms.
 - The ElevenLabs Scribe adapter exists but was not run (no key).
 - Not claimed: proof, zero error, per-language bounds, or that this is first. Prior art: ROVER and confusion
   networks, inverse text normalisation, likelihood-ratio utterance verification for digit strings (1990s),
