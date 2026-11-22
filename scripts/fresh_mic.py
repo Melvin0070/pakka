@@ -34,7 +34,10 @@ SLOTS = ("amount_rupees", "weekday", "day_of_month", "phone")
 
 def pcm(i: int, text: str) -> bytes:
     path = CLIPS / f"f{i:02d}.wav"
-    subprocess.run(["say", "-v", "Lekha", "-o", str(path), "--file-format=WAVE", "--data-format=LEI16@24000", text], check=True)
+    subprocess.run(
+        ["say", "-v", "Lekha", "-o", str(path), "--file-format=WAVE", "--data-format=LEI16@24000", text],
+        check=True,
+    )
     with wave.open(str(path)) as w:
         return w.readframes(w.getnframes())
 
@@ -47,6 +50,7 @@ def vals(e):
 async def call(audio: bytes) -> list[dict]:
     events: list[dict] = []
     async with websockets.connect(f"ws://127.0.0.1:{PORT}/ws", max_size=None) as ws:
+
         async def reader():
             async for raw in ws:
                 e = json.loads(raw)
@@ -65,7 +69,9 @@ async def call(audio: bytes) -> list[dict]:
             next_at += 0.1
             await asyncio.sleep(max(next_at - time.monotonic(), 0))
             kinds = {e["type"] for e in events}
-            settled = "left.committed" in kinds and bool(kinds & {"right.committed", "right.escalated", "question.asked"})
+            settled = "left.committed" in kinds and bool(
+                kinds & {"right.committed", "right.escalated", "question.asked"}
+            )
             if pos > spoken_end and settled:
                 await asyncio.sleep(1.0)
                 break
@@ -81,14 +87,30 @@ async def main() -> None:
         right = [vals(e) for e in events if e["type"] == "right.committed"]
         kinds = sorted({e["type"] for e in events if e["type"].startswith("right.")})
         a, p = left[-1] if left else None, right[-1] if right else None
-        rows.append({"i": i, "text": text, "truth": truth, "alone": a, "pramaan": p, "kinds": kinds, "events": events})
-        print(i, "truth", truth, "| alone", a, "OK" if a == truth else "WRONG", "| pramaan", p, "OK" if p == truth else ("NO-COMMIT" if p is None else "WRONG"), kinds, flush=True)
+        rows.append(
+            {"i": i, "text": text, "truth": truth, "alone": a, "pramaan": p, "kinds": kinds, "events": events}
+        )
+        print(
+            i,
+            "truth",
+            truth,
+            "| alone",
+            a,
+            "OK" if a == truth else "WRONG",
+            "| pramaan",
+            p,
+            "OK" if p == truth else ("NO-COMMIT" if p is None else "WRONG"),
+            kinds,
+            flush=True,
+        )
     (OUT / "fresh_mic.json").write_text(json.dumps(rows, ensure_ascii=False))
     n = len(rows)
     wrong_a = sum(r["alone"] != r["truth"] for r in rows)
     right_p = sum(r["pramaan"] == r["truth"] for r in rows)
     wrong_p = sum(r["pramaan"] is not None and r["pramaan"] != r["truth"] for r in rows)
-    print(f"\nalone not right {wrong_a}/{n}; pramaan right {right_p}/{n}, wrong committed {wrong_p}/{n}, no commit {n-right_p-wrong_p}/{n}")
+    print(
+        f"\nalone not right {wrong_a}/{n}; pramaan right {right_p}/{n}, wrong committed {wrong_p}/{n}, no commit {n - right_p - wrong_p}/{n}"
+    )
 
 
 asyncio.run(main())
