@@ -5,17 +5,15 @@ from __future__ import annotations
 
 from typing import Any
 
+from .. import lang
 from ..audio import wav_bytes
 from ..types import Hypothesis
 from ._openai import client
 from .base import Source
 
 MODEL = "gpt-transcribe"
-LANGUAGES = ["hi", "en"]
-DOMAIN_PROMPT = (
-    "A phone call in India in Hindi, English or both. The caller may state an amount in rupees "
-    "(hazaar, lakh, sava, saadhe, paune, dedh, dhai), a date or weekday, or a 10-digit mobile number."
-)
+LANGUAGES = list(lang.HI.transcribe_languages)
+DOMAIN_PROMPT = lang.HI.domain_prompt
 
 
 async def _call(pcm24k: bytes, params: dict[str, Any]) -> dict[str, Any]:
@@ -44,7 +42,7 @@ def plain() -> Source:
     return Source(
         "gpt-transcribe",
         "openai-transcribe",
-        {"model": MODEL, "languages": LANGUAGES},
+        {"model": MODEL, "languages": list(lang.get().transcribe_languages)},
         _call,
         _parser("gpt-transcribe"),
     )
@@ -52,5 +50,6 @@ def plain() -> Source:
 
 def hinted() -> Source:
     name = "gpt-transcribe+hints"
-    params = {"model": MODEL, "languages": LANGUAGES, "prompt": DOMAIN_PROMPT}
+    cur = lang.get()
+    params = {"model": MODEL, "languages": list(cur.transcribe_languages), "prompt": cur.domain_prompt}
     return Source(name, "openai-transcribe", params, _call, _parser(name))

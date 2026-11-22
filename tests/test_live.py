@@ -249,6 +249,18 @@ async def test_block_asks_the_caller_to_repeat() -> None:
     assert rig.executed == []
 
 
+async def test_mirrored_left_is_the_first_tool_call_unguarded() -> None:
+    rig = Rig(script=("ask", "pass"))
+    rig.session.left, rig.session.mirror_left = None, True
+    await rig.say()
+    await rig.tool_call({**ARGS, "amount_rupees": 3000})
+    await rig.say()
+    await rig.tool_call()
+    left = [e for e in rig.events if e["type"] == "left.committed"]
+    assert [e["values"] for e in left] == [{"amount_rupees": 3000, "weekday": "tuesday"}]
+    assert rig.executed == [{"amount_rupees": 2750, "weekday": "tuesday"}]
+
+
 async def test_left_agent_commits_immediately_and_is_only_reported() -> None:
     rig = Rig()
     await rig.say()
@@ -321,3 +333,57 @@ async def test_value_that_passed_survives_a_later_tool_call_that_drops_it() -> N
     await rig.say()
     await rig.tool_call({"amount_rupees": 2750})  # the agent answers with the amount only
     assert rig.executed == [{"amount_rupees": 2750, "weekday": "tuesday"}]
+
+
+class SlowLink(FakeLink):
+    """A link whose tool outputs take a while to send, as a real socket under load does."""
+
+    async def send(self, event: dict[str, Any]) -> None:
+        if event.get("item", {}).get("type") == "function_call_output":
+            await asyncio.sleep(0.05)
+        await super().send(event)
+
+
+async def test_barge_in_while_the_commit_is_being_reported_does_not_execute_twice() -> None:
+    rig = Rig(script=("pass", "pass"))
+    rig.session.right = rig.right = SlowLink()
+    await rig.say()
+    await rig.tool_call(wait=False)
+    await asyncio.sleep(0.01)  # committed; the reply to the model is still in flight
+    assert len(rig.executed) == 1
+    await rig.say()
+    await rig.session.idle()
+    assert "right.voided" not in rig.kinds()
+    await rig.tool_call()  # the model repeats the same call
+    assert len(rig.executed) == 1
+    assert [o["status"] for o in rig.right.outputs()] == ["committed", "committed"]
+
+
+async def test_two_tool_calls_in_one_response_lose_no_value() -> None:
+    rig = Rig(script=("pass", "pass"))
+    await rig.say()
+    await rig.session.on_right({"type": "response.created", "response": {"id": "r"}})
+    items = [
+        {"type": "function_call", "name": "log_commitment", "call_id": f"c{i}", "arguments": json.dumps(a)}
+        for i, a in enumerate(({"amount_rupees": 5000}, {"phone": "9844712000"}))
+    ]
+    await rig.session.on_right(
+        {"type": "response.done", "response": {"id": "r", "status": "completed", "output": items}}
+    )
+    await rig.session.idle()
+    assert rig.executed == [{"amount_rupees": 5000}, {"phone": "9844712000"}]
+    assert [o["status"] for o in rig.right.outputs()] == ["committed", "committed"]
+
+
+async def test_a_crash_outside_the_evidence_check_answers_the_model_and_executes_nothing() -> None:
+    rig = Rig(script=("pass",))
+
+    async def boom(turn_id: str, pcm: bytes) -> None:
+        raise RuntimeError("recogniser pool gone")
+
+    rig.guard.start_turn = boom  # type: ignore[method-assign]
+    await rig.say()
+    await rig.tool_call()
+    assert rig.executed == []
+    assert rig.right.outputs()[-1]["status"] == "voided"
+    assert rig.last("error")["side"] == "guard"

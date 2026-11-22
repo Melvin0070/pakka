@@ -12,6 +12,7 @@ from typing import Any
 
 import httpx
 
+from .. import lang
 from ..audio import wav_bytes
 from ..types import Hypothesis
 from .base import Source
@@ -45,4 +46,4 @@ def parse(resp: dict[str, Any], latency_ms: float) -> Hypothesis:
 
 
 def source() -> Source:
-    return Source(NAME, "verbx", {"model": "verbx-vocaline", "language": "hi"}, _call, parse)
+    return Source(NAME, "verbx", {"model": "verbx-vocaline", "language": lang.get().verbx_code}, _call, parse)

@@ -12,9 +12,10 @@ from typing import Any
 
 import websockets
 
+from .. import lang
 from ..audio import sha
 from ..cache import Cache, CacheMiss, default_cache
-from ..types import SLOTS, Values
+from ..types import CORE_SLOTS, DIGIT_SLOTS, SLOTS, Values
 from .base import PermanentError, log, with_retries
 
 NAME = "gpt-realtime-2.1"
@@ -46,19 +47,21 @@ TOOL: dict[str, Any] = {
                 "description": "10-digit Indian mobile number, digits only.",
             },
         },
-        "required": list(SLOTS),
+        "required": list(CORE_SLOTS),
     },
 }
-INSTRUCTIONS = (
-    "You are an assistant answering a phone call in India. Callers speak Hindi, English or a mix. "
-    "When the caller states an amount, a date or a phone number, call log_commitment with those values."
-)
+INSTRUCTIONS = lang.HI.agent_instructions
 PARAMS: dict[str, Any] = {
     "model": MODEL,
     "instructions": INSTRUCTIONS,
     "tool": TOOL,
     "tool_choice": "required",
 }
+
+
+def params() -> dict[str, Any]:
+    """PARAMS for the language in force. The Hindi dict is the constant above, unchanged, so its cache key holds."""
+    return {**PARAMS, "instructions": lang.get().agent_instructions}
 
 
 @dataclass(frozen=True)
@@ -76,6 +79,8 @@ def norm(slot: str, v: Any) -> int | str | None:
     if slot == "phone":
         d = "".join(c for c in str(v) if c.isdigit())
         return d[-10:] if len(d) >= 10 else d
+    if slot in DIGIT_SLOTS:
+        return "".join(c for c in str(v) if c.isdigit()) or None
     if slot == "weekday":
         return str(v).strip().lower()
     try:
@@ -148,12 +153,13 @@ async def propose(
 ) -> AgentProposal | None:
     """The agent's proposed tool arguments, or None if it failed. CacheMiss propagates (offline hole)."""
     c = cache or default_cache()
+    p = params()
     try:
         e = await c.cached(
             audio_sha or sha(pcm24k),
             NAME,
-            PARAMS,
-            lambda: with_retries(lambda: _call(pcm24k, PARAMS)),
+            p,
+            lambda: with_retries(lambda: _call(pcm24k, p)),
             cache_errors=PermanentError,
         )
         return None if e.is_error else parse(e.response, e.latency_ms)

@@ -35,7 +35,7 @@ select = ["E", "F", "I", "UP", "B"]
 ignore = ["E501"]
 
 [tool.pyright]
-include = ["src"]
+include = ["src", "eval", "scripts", "main.py"]
 typeCheckingMode = "basic"
 
 [tool.pytest.ini_options]

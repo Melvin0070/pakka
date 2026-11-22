@@ -386,9 +386,9 @@ def test_amount_renderings_fixed(n: int) -> None:
         assert parse_number(r) == n, r
 
 
-@pytest.mark.xfail(raises=IndexError, reason="render._fraction_forms: paune with k=99 indexes HI_0_99[100]")
-def test_render_paune_overflow() -> None:
-    amount_renderings(99_750)
+def test_render_paune_at_the_top_of_the_two_digit_table() -> None:
+    for r in amount_renderings(99_750):
+        assert parse_number(r) == 99_750, r
 
 
 @settings(max_examples=300)

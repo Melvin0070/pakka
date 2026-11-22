@@ -19,7 +19,7 @@ from .. import audio
 from ..cache import CacheMiss
 from ..pipeline import Guard, Judgement
 from ..sources import realtime_agent
-from ..types import Values
+from ..types import Asked, Values
 from .session import CallSession
 from .tooling import TOOL_NAME
 
@@ -41,8 +41,10 @@ class ClipGuard:
     async def start_turn(self, turn_id: str, pcm24k: bytes) -> None:
         await self.inner.start_turn(turn_id, self.pcm or pcm24k)
 
-    async def judge(self, turn_id: str, proposed: Values, confirming: bool = False) -> Judgement:
-        return await self.inner.judge(turn_id, proposed, confirming)
+    async def judge(
+        self, turn_id: str, proposed: Values, confirming: bool = False, asked: Asked | None = None
+    ) -> Judgement:
+        return await self.inner.judge(turn_id, proposed, confirming, asked)
 
     async def cancel(self, turn_id: str) -> None:
         await self.inner.cancel(turn_id)

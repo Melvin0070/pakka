@@ -69,7 +69,7 @@ class Cache:
     def __init__(self, path: Path | str | None = None) -> None:
         self.path = Path(path or os.environ.get("PRAMAAN_CACHE") or DEFAULT_PATH)
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        # One connection used only from the event-loop thread; default rollback journal (not WAL) so the
+        # One connection, used from the event loop and its worker threads one call at a time; rollback journal (not WAL) so the
         # committed file is self-contained with no -wal sidecar.
         self._db = sqlite3.connect(self.path, check_same_thread=False)
         self._db.executescript(_SCHEMA)
@@ -147,9 +147,3 @@ def default_cache() -> Cache:
     if _default is None:
         _default = Cache()
     return _default
-
-
-async def cached(
-    audio_sha: str, source: str, params: dict[str, Any], fn: Callable[[], Awaitable[Any]]
-) -> Entry:
-    return await default_cache().cached(audio_sha, source, params, fn)

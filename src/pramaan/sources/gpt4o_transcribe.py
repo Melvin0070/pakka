@@ -8,13 +8,14 @@ from __future__ import annotations
 
 from typing import Any
 
+from .. import lang
 from ..audio import wav_bytes
 from ..types import Hypothesis, Word
 from ._openai import client
 from .base import Source
 
 NAME = "gpt-4o-transcribe"
-SCRIPT_PROMPT = "यह भारत में एक फ़ोन कॉल है, हिंदी और English में।"
+SCRIPT_PROMPT = lang.HI.script_prompt
 
 
 async def _call(pcm24k: bytes, params: dict[str, Any]) -> dict[str, Any]:
@@ -39,10 +40,11 @@ def parse(resp: dict[str, Any], latency_ms: float) -> Hypothesis:
 
 
 def source() -> Source:
+    cur = lang.get()
     return Source(
         NAME,
         "openai-transcribe",
-        {"model": "gpt-4o-transcribe", "language": "hi", "prompt": SCRIPT_PROMPT},
+        {"model": "gpt-4o-transcribe", "language": cur.code, "prompt": cur.script_prompt},
         _call,
         parse,
     )

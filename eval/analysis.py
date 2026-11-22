@@ -208,7 +208,8 @@ def main() -> None:
             "",
             f"After a question ({questions['n']} asked test actions replayed live, synthetic cooperative answers): "
             + "; ".join(f"{c} {k.replace('_', ' ')}" for k, c in o.items())
-            + f". Mean questions per asked action {questions['questions_per_action_mean']}.",
+            + f". {questions['committed_without_asking_live']} of the committed passed live with no question, so "
+            f"{questions['n'] - questions['committed_without_asking_live']} were actually asked. Mean questions per asked action {questions['questions_per_action_mean']}.",
         ]
     body = "\n".join(lines)
     (RESULTS / "analysis.md").write_text(body + "\n")

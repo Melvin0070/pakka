@@ -15,6 +15,8 @@ EVIDENCE = ROOT / "data" / "evidence.jsonl"
 HUMAN_EVIDENCE = ROOT / "data" / "human" / "evidence.jsonl"
 FRESH_EVIDENCE = ROOT / "data" / "fresh" / "evidence.jsonl"
 FRESH2_EVIDENCE = ROOT / "data" / "fresh2" / "evidence.jsonl"  # test speakers only; never used for tuning
+# Telugu: same voices and split. Its tuning speakers informed the Telugu lexicon, never the policy.
+TE_EVIDENCE = ROOT / "data" / "te" / "evidence.jsonl"
 POLICY = ROOT / "data" / "policy.json"
 RESULTS = ROOT / "results"
 ALPHA, DELTA = 0.05, 0.05

@@ -24,6 +24,7 @@ from .common import (
     HUMAN_EVIDENCE,
     LOCAL,
     RESULTS,
+    TE_EVIDENCE,
     Outcome,
     Row,
     guard,
@@ -112,25 +113,34 @@ def pct(x: float) -> str:
 
 def main() -> None:
     rows, agent_failed = load()
-    tune, test = split(rows)
+    test = split(rows)[1]
     # Human recordings are test only: thresholds and the policy still come from the synthetic tuning speakers.
     human, fresh2 = "--human" in sys.argv, "--fresh2" in sys.argv
     fresh = "--fresh" in sys.argv or fresh2
+    telugu = "--te" in sys.argv
     tune = tuning_rows()
-    if human:
+    if telugu:
+        # Telugu test speakers. The policy and every threshold still come from the Hindi tuning speakers.
+        rows, agent_failed = load(TE_EVIDENCE)
+        test = split(rows)[1]
+    elif human:
         test, agent_failed = load(HUMAN_EVIDENCE)
     elif fresh:
         # The locked batch: test speakers, new values, scored after the policy was frozen.
         rows, agent_failed = load(FRESH2_EVIDENCE if fresh2 else FRESH_EVIDENCE)
         test = split(rows)[1]
     kind = "human" if human else "synthetic"
-    stem = "human" if human else "fresh2" if fresh2 else "fresh" if fresh else None
+    stem = "te" if telugu else "human" if human else "fresh2" if fresh2 else "fresh" if fresh else None
     policy = load_policy()
     has_second = any(hyp(r, SECOND) is not None for r in test)
     second = SECOND if has_second else LOCAL
 
     lp_threshold = ltt_select([(o.score, o.wrong) for o in map(logprob_gate, tune)], ALPHA, DELTA).threshold
     lp_arm = thresholded(logprob_gate, lp_threshold if lp_threshold is not None else 2.0)
+    # No log-probability threshold meets the risk target on the tuning speakers, so this arm can only ask.
+    lp_name = "Trust one model's confidence" + (
+        "" if lp_threshold is not None else "; none certifies, so it always asks"
+    )
 
     def pramaan(row: Row) -> Outcome:
         return guard(row, policy)
@@ -138,7 +148,7 @@ def main() -> None:
     arms: list[tuple[str, str, str, Callable[[Row], Outcome], bool]] = [
         ("A", "Realtime model alone", "gpt-realtime-2.1 hears the audio and calls the tool", bare, False),
         ("B", "Transcribe, then fill the form", "gpt-transcribe with a domain prompt, then typed normalisation", cascade(CASCADE), False),
-        ("B-LP", "Trust one model's confidence", "gpt-4o-transcribe token log-probabilities, threshold set the same way", lp_arm, False),
+        ("B-LP", lp_name, "gpt-4o-transcribe token log-probabilities, threshold set the same way", lp_arm, False),
         ("B-2M", "Ask when two models disagree", f"{CASCADE} against {second}", two_model(second), False),
         ("A-RB", "Read everything back", "Confirm every action with the caller", read_back, False),
         ("P", "Pramaan", "Hold the realtime model's action until the evidence supports it", pramaan, True),
@@ -209,9 +219,14 @@ def main() -> None:
     headline = {
         "dataset": {
             "kind": "human-recorded" if human else "synthetic-tts",
+            "language": "te" if telugu else "hi",
             "n_actions": len(test),
             "n_speakers": len({r.speaker for r in test}),
-            "batch": "locked: new values, scored once after the policy was frozen" if fresh else "first",
+            "batch": "Telugu: policy frozen on Hindi, no Telugu tuning"
+            if telugu
+            else "locked: new values, scored once after the policy was frozen"
+            if fresh
+            else "first",
             "condition": "laptop microphone, then 8 kHz AMR-NB + A-law phone channel"
             if human
             else "8 kHz AMR-NB + A-law phone channel, part with babble noise",
@@ -232,12 +247,9 @@ def main() -> None:
         "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
     }
     RESULTS.mkdir(exist_ok=True)
-    (RESULTS / (f"{stem}.json" if stem else "headline.json")).write_text(
-        json.dumps(headline, indent=1, ensure_ascii=False) + "\n"
-    )
 
     lines = [
-        f"{len(test)} actions, {headline['dataset']['n_speakers']} held-out {kind} speakers, phone-grade audio. Policy `{policy.hash}`.",
+        f"{len(test)} {'Telugu ' if telugu else ''}actions, {headline['dataset']['n_speakers']} held-out {kind} speakers, phone-grade audio. Policy `{policy.hash}`.",
         "",
         "| Arm | Wrong and acted on | Caller asked | of which the value was wrong | Acted without asking |",
         "|---|---|---|---|---|",
@@ -258,6 +270,23 @@ def main() -> None:
         "|---|---|---|---|",
         *(f"| {a['name']} | {a['wrong_silent']} | {a['asked']} | {a['asked_needed']} |" for a in ablations),
     ]
+    if telugu:
+        # The swapped-in acoustic model on its own: does the true value outscore every rival it was given?
+        scored = [
+            (max(w.loglik, key=lambda k: (w.loglik[k], k)) == str(r.truth[w.slot]))
+            for r in test
+            for w in r.evidence.witness
+            if w.slot in r.truth and str(r.truth[w.slot]) in w.loglik and len(w.loglik) > 1
+        ]
+        headline["witness_truth_top"] = {"top": sum(scored), "scored": len(scored)}
+        lines += [
+            "",
+            f"Telugu acoustic model alone: the true value outscored every transcribed and confusable rival in "
+            f"{sum(scored)} of {len(scored)} values it scored.",
+        ]
+    (RESULTS / (f"{stem}.json" if stem else "headline.json")).write_text(
+        json.dumps(headline, indent=1, ensure_ascii=False) + "\n"
+    )
     (RESULTS / (f"{stem}.md" if stem else "table.md")).write_text("\n".join(lines) + "\n")
     readme = RESULTS.parent / "README.md"
     mark = "results" if stem is None else stem

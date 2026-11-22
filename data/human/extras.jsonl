@@ -1,0 +1,70 @@
+{"id": "x00p", "kind": "digits", "say": "मेरा पिन कोड है तीन नौ दो दो एक नौ।", "lang": "hi", "meaning": "392219", "truth": {"pincode": "392219"}}
+{"id": "x00a", "kind": "digits", "say": "My account number is one nine zero four one six three one five five six.", "lang": "en", "meaning": "19041631556", "truth": {"account_number": "19041631556"}}
+{"id": "x00q0", "kind": "answer", "say": "Das hazaar, ya ek lakh bees hazaar?", "lang": "hi", "meaning": "₹1,20,000", "truth": {"amount_rupees": 120000}, "asked": {"slot": "amount_rupees", "options": [10000, 120000]}}
+{"id": "x00q1", "kind": "answer", "say": "Doosra ank saat hai ya chhah?", "lang": "hi", "meaning": "9 6 5 5 5 0 7 3 8 8", "truth": {"phone": "9655507388"}, "asked": {"slot": "phone", "options": ["9755507388", "9655507388"]}}
+{"id": "x00q2", "kind": "answer", "say": "Ikkees taarikh, ya chaudah taarikh?", "lang": "hi", "meaning": "date 14", "truth": {"day_of_month": 14}, "asked": {"slot": "day_of_month", "options": [21, 14]}}
+{"id": "x00q3", "kind": "answer", "say": "Budhvaar, ya mangalvaar?", "lang": "hi", "meaning": "Wednesday", "truth": {"weekday": "wednesday"}, "asked": {"slot": "weekday", "options": ["wednesday", "tuesday"]}}
+{"id": "x00q4", "kind": "answer", "say": "Aakhri ank teen hai ya do?", "lang": "hi", "meaning": "5 4 1 9 6 3", "truth": {"pincode": "541963"}, "asked": {"slot": "pincode", "options": ["541963", "541962"]}}
+{"id": "x01p", "kind": "digits", "say": "मेरा पिन कोड है सात आठ दो एक छह छह।", "lang": "hi", "meaning": "782166", "truth": {"pincode": "782166"}}
+{"id": "x01a", "kind": "digits", "say": "My account number is eight five one nine two four zero three six zero seven.", "lang": "en", "meaning": "85192403607", "truth": {"account_number": "85192403607"}}
+{"id": "x01q0", "kind": "answer", "say": "Ek lakh pachaas hazaar, ya do lakh?", "lang": "hi", "meaning": "₹1,50,000", "truth": {"amount_rupees": 150000}, "asked": {"slot": "amount_rupees", "options": [150000, 200000]}}
+{"id": "x01q1", "kind": "answer", "say": "Chautha ank chaar hai ya ek?", "lang": "hi", "meaning": "7 3 3 4 1 2 5 4 9 6", "truth": {"phone": "7334125496"}, "asked": {"slot": "phone", "options": ["7334125496", "7331125496"]}}
+{"id": "x01q2", "kind": "answer", "say": "Chaar taarikh, ya das taarikh?", "lang": "hi", "meaning": "date 10", "truth": {"day_of_month": 10}, "asked": {"slot": "day_of_month", "options": [4, 10]}}
+{"id": "x01q3", "kind": "answer", "say": "Shanivaar, ya mangalvaar?", "lang": "hi", "meaning": "Tuesday", "truth": {"weekday": "tuesday"}, "asked": {"slot": "weekday", "options": ["saturday", "tuesday"]}}
+{"id": "x01q4", "kind": "answer", "say": "Aakhri se doosra ank chaar hai ya ek?", "lang": "hi", "meaning": "4 1 9 6 4 0", "truth": {"pincode": "419640"}, "asked": {"slot": "pincode", "options": ["419640", "419610"]}}
+{"id": "x02p", "kind": "digits", "say": "मेरा पिन कोड है दो आठ तीन तीन चार पाँच।", "lang": "hi", "meaning": "283345", "truth": {"pincode": "283345"}}
+{"id": "x02a", "kind": "digits", "say": "मेरा खाता नंबर है आठ पाँच एक आठ शून्य शून्य चार शून्य सात नौ नौ चार पाँच शून्य।", "lang": "hi", "meaning": "85180040799450", "truth": {"account_number": "85180040799450"}}
+{"id": "x02q0", "kind": "answer", "say": "Saat hazaar, ya chhah hazaar paanch sau?", "lang": "hi", "meaning": "₹6,500", "truth": {"amount_rupees": 6500}, "asked": {"slot": "amount_rupees", "options": [7000, 6500]}}
+{"id": "x02q1", "kind": "answer", "say": "Doosra ank saat hai ya chhah?", "lang": "hi", "meaning": "9 6 8 9 8 8 3 0 3 7", "truth": {"phone": "9689883037"}, "asked": {"slot": "phone", "options": ["9789883037", "9689883037"]}}
+{"id": "x02q2", "kind": "answer", "say": "Ek taarikh, ya das taarikh?", "lang": "hi", "meaning": "date 10", "truth": {"day_of_month": 10}, "asked": {"slot": "day_of_month", "options": [1, 10]}}
+{"id": "x02q3", "kind": "answer", "say": "Budhvaar, ya shukravaar?", "lang": "hi", "meaning": "Friday", "truth": {"weekday": "friday"}, "asked": {"slot": "weekday", "options": ["wednesday", "friday"]}}
+{"id": "x02q4", "kind": "answer", "say": "Pehla ank nau hai ya paanch?", "lang": "hi", "meaning": "5 3 1 8 2 0", "truth": {"pincode": "531820"}, "asked": {"slot": "pincode", "options": ["931820", "531820"]}}
+{"id": "x03p", "kind": "digits", "say": "मेरा पिन कोड है चार सात एक आठ तीन आठ।", "lang": "hi", "meaning": "471838", "truth": {"pincode": "471838"}}
+{"id": "x03a", "kind": "digits", "say": "मेरा खाता नंबर है नौ तीन नौ चार आठ पाँच तीन आठ सात एक शून्य एक।", "lang": "hi", "meaning": "939485387101", "truth": {"account_number": "939485387101"}}
+{"id": "x03q0", "kind": "answer", "say": "Paanch hazaar, ya paintaalees hazaar?", "lang": "hi", "meaning": "₹45,000", "truth": {"amount_rupees": 45000}, "asked": {"slot": "amount_rupees", "options": [5000, 45000]}}
+{"id": "x03q1", "kind": "answer", "say": "Aakhri se paanchvaan ank aath hai ya saat?", "lang": "hi", "meaning": "8 5 5 9 8 8 4 3 8 3", "truth": {"phone": "8559884383"}, "asked": {"slot": "phone", "options": ["8559884383", "8559874383"]}}
+{"id": "x03q2", "kind": "answer", "say": "Saat taarikh, ya iktees taarikh?", "lang": "hi", "meaning": "date 7", "truth": {"day_of_month": 7}, "asked": {"slot": "day_of_month", "options": [7, 31]}}
+{"id": "x03q3", "kind": "answer", "say": "Somvaar, ya mangalvaar?", "lang": "hi", "meaning": "Tuesday", "truth": {"weekday": "tuesday"}, "asked": {"slot": "weekday", "options": ["monday", "tuesday"]}}
+{"id": "x03q4", "kind": "answer", "say": "Aakhri se doosra ank teen hai ya do?", "lang": "hi", "meaning": "2 0 5 4 3 4", "truth": {"pincode": "205434"}, "asked": {"slot": "pincode", "options": ["205434", "205424"]}}
+{"id": "x04p", "kind": "digits", "say": "मेरा पिन कोड है चार नौ तीन एक तीन तीन।", "lang": "hi", "meaning": "493133", "truth": {"pincode": "493133"}}
+{"id": "x04a", "kind": "digits", "say": "मेरा खाता नंबर है आठ सात तीन छह आठ एक नौ आठ आठ एक दो सात दो छह।", "lang": "hi", "meaning": "87368198812726", "truth": {"account_number": "87368198812726"}}
+{"id": "x04q0", "kind": "answer", "say": "Ek lakh pachaas hazaar, ya ek lakh?", "lang": "hi", "meaning": "₹1,50,000", "truth": {"amount_rupees": 150000}, "asked": {"slot": "amount_rupees", "options": [150000, 100000]}}
+{"id": "x04q1", "kind": "answer", "say": "Aakhri ank teen hai ya do?", "lang": "hi", "meaning": "9 2 5 0 0 8 1 3 2 2", "truth": {"phone": "9250081322"}, "asked": {"slot": "phone", "options": ["9250081323", "9250081322"]}}
+{"id": "x04q2", "kind": "answer", "say": "Terah taarikh, ya chaubees taarikh?", "lang": "hi", "meaning": "date 24", "truth": {"day_of_month": 24}, "asked": {"slot": "day_of_month", "options": [13, 24]}}
+{"id": "x04q3", "kind": "answer", "say": "Somvaar, ya shukravaar?", "lang": "hi", "meaning": "Friday", "truth": {"weekday": "friday"}, "asked": {"slot": "weekday", "options": ["monday", "friday"]}}
+{"id": "x04q4", "kind": "answer", "say": "Aakhri se doosra ank teen hai ya do?", "lang": "hi", "meaning": "5 2 7 8 2 9", "truth": {"pincode": "527829"}, "asked": {"slot": "pincode", "options": ["527839", "527829"]}}
+{"id": "x05p", "kind": "digits", "say": "My PIN code is four five one zero two one.", "lang": "en", "meaning": "451021", "truth": {"pincode": "451021"}}
+{"id": "x05a", "kind": "digits", "say": "My account number is nine nine three eight zero five eight eight eight five two six four four.", "lang": "en", "meaning": "99380588852644", "truth": {"account_number": "99380588852644"}}
+{"id": "x05q0", "kind": "answer", "say": "Baarah lakh, ya baarah hazaar?", "lang": "hi", "meaning": "₹12,000", "truth": {"amount_rupees": 12000}, "asked": {"slot": "amount_rupees", "options": [1200000, 12000]}}
+{"id": "x05q1", "kind": "answer", "say": "Aakhri se chautha ank ek hai ya nau?", "lang": "hi", "meaning": "9 3 6 9 6 0 1 9 1 9", "truth": {"phone": "9369601919"}, "asked": {"slot": "phone", "options": ["9369601919", "9369609919"]}}
+{"id": "x05q2", "kind": "answer", "say": "Untees taarikh, ya atthaais taarikh?", "lang": "hi", "meaning": "date 29", "truth": {"day_of_month": 29}, "asked": {"slot": "day_of_month", "options": [29, 28]}}
+{"id": "x05q3", "kind": "answer", "say": "Shanivaar, ya mangalvaar?", "lang": "hi", "meaning": "Saturday", "truth": {"weekday": "saturday"}, "asked": {"slot": "weekday", "options": ["saturday", "tuesday"]}}
+{"id": "x05q4", "kind": "answer", "say": "Aakhri se teesra ank do hai ya teen?", "lang": "hi", "meaning": "9 9 5 3 4 4", "truth": {"pincode": "995344"}, "asked": {"slot": "pincode", "options": ["995244", "995344"]}}
+{"id": "x06p", "kind": "digits", "say": "मेरा पिन कोड है तीन एक सात नौ तीन नौ।", "lang": "hi", "meaning": "317939", "truth": {"pincode": "317939"}}
+{"id": "x06a", "kind": "digits", "say": "मेरा खाता नंबर है आठ चार पाँच चार दो पाँच पाँच सात छह आठ आठ।", "lang": "hi", "meaning": "84542557688", "truth": {"account_number": "84542557688"}}
+{"id": "x06q0", "kind": "answer", "say": "Pachaasi lakh, ya pachaasi hazaar?", "lang": "hi", "meaning": "₹85,000", "truth": {"amount_rupees": 85000}, "asked": {"slot": "amount_rupees", "options": [8500000, 85000]}}
+{"id": "x06q1", "kind": "answer", "say": "Pehla ank saat hai ya aath?", "lang": "hi", "meaning": "7 1 6 1 1 6 6 8 7 1", "truth": {"phone": "7161166871"}, "asked": {"slot": "phone", "options": ["7161166871", "8161166871"]}}
+{"id": "x06q2", "kind": "answer", "say": "Pachchees taarikh, ya chhah taarikh?", "lang": "hi", "meaning": "date 6", "truth": {"day_of_month": 6}, "asked": {"slot": "day_of_month", "options": [25, 6]}}
+{"id": "x06q3", "kind": "answer", "say": "Ravivaar, ya budhvaar?", "lang": "hi", "meaning": "Sunday", "truth": {"weekday": "sunday"}, "asked": {"slot": "weekday", "options": ["sunday", "wednesday"]}}
+{"id": "x06q4", "kind": "answer", "say": "Doosra ank nau hai ya paanch?", "lang": "hi", "meaning": "8 9 8 6 2 2", "truth": {"pincode": "898622"}, "asked": {"slot": "pincode", "options": ["898622", "858622"]}}
+{"id": "x07p", "kind": "digits", "say": "मेरा पिन कोड है आठ आठ एक छह तीन शून्य।", "lang": "hi", "meaning": "881630", "truth": {"pincode": "881630"}}
+{"id": "x07a", "kind": "digits", "say": "मेरा खाता नंबर है तीन दो आठ चार आठ छह तीन सात चार शून्य शून्य।", "lang": "hi", "meaning": "32848637400", "truth": {"account_number": "32848637400"}}
+{"id": "x07q0", "kind": "answer", "say": "Sattaais hazaar paanch sau, ya do hazaar saat sau?", "lang": "hi", "meaning": "₹27,500", "truth": {"amount_rupees": 27500}, "asked": {"slot": "amount_rupees", "options": [27500, 2700]}}
+{"id": "x07q1", "kind": "answer", "say": "Pehla ank saat hai ya chhah?", "lang": "hi", "meaning": "6 7 8 6 8 8 6 7 2 3", "truth": {"phone": "6786886723"}, "asked": {"slot": "phone", "options": ["7786886723", "6786886723"]}}
+{"id": "x07q2", "kind": "answer", "say": "Nau taarikh, ya unnees taarikh?", "lang": "hi", "meaning": "date 9", "truth": {"day_of_month": 9}, "asked": {"slot": "day_of_month", "options": [9, 19]}}
+{"id": "x07q3", "kind": "answer", "say": "Budhvaar, ya shukravaar?", "lang": "hi", "meaning": "Friday", "truth": {"weekday": "friday"}, "asked": {"slot": "weekday", "options": ["wednesday", "friday"]}}
+{"id": "x07q4", "kind": "answer", "say": "Teesra ank paanch hai ya nau?", "lang": "hi", "meaning": "5 2 5 9 0 8", "truth": {"pincode": "525908"}, "asked": {"slot": "pincode", "options": ["525908", "529908"]}}
+{"id": "x08p", "kind": "digits", "say": "मेरा पिन कोड है चार एक चार सात तीन तीन।", "lang": "hi", "meaning": "414733", "truth": {"pincode": "414733"}}
+{"id": "x08a", "kind": "digits", "say": "मेरा खाता नंबर है सात आठ शून्य आठ पाँच दो नौ चार दो नौ आठ।", "lang": "hi", "meaning": "78085294298", "truth": {"account_number": "78085294298"}}
+{"id": "x08q0", "kind": "answer", "say": "Sattaais hazaar paanch sau, ya do hazaar saat sau?", "lang": "hi", "meaning": "₹27,500", "truth": {"amount_rupees": 27500}, "asked": {"slot": "amount_rupees", "options": [27500, 2700]}}
+{"id": "x08q1", "kind": "answer", "say": "Aakhri se doosra ank ek hai ya chaar?", "lang": "hi", "meaning": "9 4 4 7 1 9 1 2 4 0", "truth": {"phone": "9447191240"}, "asked": {"slot": "phone", "options": ["9447191210", "9447191240"]}}
+{"id": "x08q2", "kind": "answer", "say": "Bees taarikh, ya chhabbees taarikh?", "lang": "hi", "meaning": "date 26", "truth": {"day_of_month": 26}, "asked": {"slot": "day_of_month", "options": [20, 26]}}
+{"id": "x08q3", "kind": "answer", "say": "Shukravaar, ya shanivaar?", "lang": "hi", "meaning": "Saturday", "truth": {"weekday": "saturday"}, "asked": {"slot": "weekday", "options": ["friday", "saturday"]}}
+{"id": "x08q4", "kind": "answer", "say": "Aakhri se doosra ank saat hai ya chhah?", "lang": "hi", "meaning": "6 5 9 7 6 4", "truth": {"pincode": "659764"}, "asked": {"slot": "pincode", "options": ["659774", "659764"]}}
+{"id": "x09p", "kind": "digits", "say": "मेरा पिन कोड है एक सात छह तीन छह तीन।", "lang": "hi", "meaning": "176363", "truth": {"pincode": "176363"}}
+{"id": "x09a", "kind": "digits", "say": "मेरा खाता नंबर है नौ आठ नौ दो आठ तीन नौ एक शून्य तीन पाँच नौ।", "lang": "hi", "meaning": "989283910359", "truth": {"account_number": "989283910359"}}
+{"id": "x09q0", "kind": "answer", "say": "Do hazaar do sau, ya baaees hazaar paanch sau?", "lang": "hi", "meaning": "₹22,500", "truth": {"amount_rupees": 22500}, "asked": {"slot": "amount_rupees", "options": [2200, 22500]}}
+{"id": "x09q1", "kind": "answer", "say": "Aakhri se doosra ank aath hai ya saat?", "lang": "hi", "meaning": "9 8 8 5 1 6 4 3 8 3", "truth": {"phone": "9885164383"}, "asked": {"slot": "phone", "options": ["9885164383", "9885164373"]}}
+{"id": "x09q2", "kind": "answer", "say": "Solah taarikh, ya untees taarikh?", "lang": "hi", "meaning": "date 16", "truth": {"day_of_month": 16}, "asked": {"slot": "day_of_month", "options": [16, 29]}}
+{"id": "x09q3", "kind": "answer", "say": "Guruvaar, ya mangalvaar?", "lang": "hi", "meaning": "Tuesday", "truth": {"weekday": "tuesday"}, "asked": {"slot": "weekday", "options": ["thursday", "tuesday"]}}
+{"id": "x09q4", "kind": "answer", "say": "Pehla ank saat hai ya aath?", "lang": "hi", "meaning": "7 3 0 6 7 2", "truth": {"pincode": "730672"}, "asked": {"slot": "pincode", "options": ["730672", "830672"]}}

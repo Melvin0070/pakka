@@ -1,0 +1,16 @@
+.venv
+.git
+models
+data/clips
+data/witness_cache
+data/human/clips
+data/bundles.jsonl
+data/*.live.sqlite
+data/te/*.live.sqlite
+g0/clips
+tests
+.pytest_cache
+.ruff_cache
+.hypothesis
+.gstack
+.env*

@@ -13,8 +13,11 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-Slot = Literal["amount_rupees", "day_of_month", "weekday", "phone"]
-SLOTS: tuple[Slot, ...] = ("amount_rupees", "day_of_month", "weekday", "phone")
+Slot = Literal["amount_rupees", "day_of_month", "weekday", "phone", "pincode", "account_number"]
+# The agent schema in the recorded evaluation. Its hash keys the replay cache, so it must not grow.
+CORE_SLOTS: tuple[Slot, ...] = ("amount_rupees", "day_of_month", "weekday", "phone")
+SLOTS: tuple[Slot, ...] = (*CORE_SLOTS, "pincode", "account_number")
+DIGIT_SLOTS: tuple[Slot, ...] = ("phone", "pincode", "account_number")
 Value = int | str
 Values = dict[str, Value]  # slot -> typed value; a missing key means "no value heard"
 
@@ -95,6 +98,13 @@ class SlotDecision(Frozen):
     contested_positions: tuple[int, ...] = ()  # digit indexes (phone) or decimal places that differ
     # The value to execute when the verdict is PASS: the proposed one, or the repair the evidence supports.
     final: Value | None = None
+
+
+class Asked(Frozen):
+    """The forced choice put to the caller, in the order it was spoken."""
+
+    slot: Slot
+    options: tuple[Value, ...]
 
 
 class Decision(Frozen):

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pramaan: record a caller</title>
 <link rel="icon" href="data:,">
-<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,300..600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400..700&family=DM+Sans:opsz,wght@9..40,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css?v=22">
 <style>
   .rec { max-width: 720px; margin: 0 auto; padding: 48px 20px; }
   .rec h1 { font-size: 24px; font-weight: 500; margin: 0 0 8px; }
@@ -29,7 +29,7 @@
 <body>
 <main class="rec">
   <h1>Record a caller</h1>
-  <p>You will read 15 short lines, one at a time, the way you would say them on a phone call. About three minutes.</p>
+  <p>You will read 17 short lines the way you would say them on a phone call, then answer 5 quick questions in your own words. About five minutes.</p>
 
   <section class="card" id="intro">
     <div class="row">
@@ -38,12 +38,14 @@
     </div>
     <label class="consent"><input type="checkbox" id="consent">
       I agree that my voice recordings are stored on this laptop and sent to speech recognition services
-      (OpenAI, VerbX) to measure their accuracy. Use a code, not your name.</label>
+      (OpenAI, Sarvam, VerbX) to measure their accuracy. Use a code, not your name. The numbers on screen are
+      made up: do not say your real phone, PIN or account number.</label>
     <div class="note" id="introNote"></div>
   </section>
 
   <section class="card" id="stage" hidden>
     <div class="meta"><span id="count"></span><span id="who"></span></div>
+    <p id="cue" hidden></p>
     <div class="say" id="say" lang="hi"></div>
     <div class="row">
       <button class="btn primary" id="rec">Record (space)</button>
@@ -72,8 +74,11 @@ $('begin').onclick = async () => {
   const r = await fetch('/api/record/prompts?speaker=' + speaker);
   if (!r.ok) { $('introNote').textContent = (await r.json()).detail; $('introNote').className = 'note bad'; return; }
   const data = await r.json();
-  total = data.prompts.length;
-  queue = data.prompts.filter(p => !p.done);
+  const more = await (await fetch('/api/record/extras?speaker=' + speaker)).json();
+  // Reading lines first, so the questions come after the speaker has settled in.
+  const items = [...data.prompts, ...more.prompts.filter(p => p.kind === 'digits'), ...more.prompts.filter(p => p.kind === 'answer')];
+  total = items.length;
+  queue = items.filter(p => !p.done);
   try {
     // Processing off: the phone channel is applied on the server, and browser noise suppression is not what a call centre hears.
     const stream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: false, noiseSuppression: false, autoGainControl: true, channelCount: 1}});
@@ -96,7 +101,11 @@ function show() {
   if (!queue.length) { $('stage').hidden = true; $('done').hidden = false; totals(); return; }
   $('stage').hidden = false;
   $('count').textContent = (total - queue.length + 1) + ' of ' + total;
-  $('say').textContent = queue[0].say; $('say').lang = queue[0].lang;
+  const answering = queue[0].kind === 'answer';
+  $('say').textContent = queue[0].say; $('say').lang = answering ? 'hi-Latn' : queue[0].lang;
+  $('cue').hidden = !answering;
+  $('cue').textContent = answering ? `The agent asks you this. You meant ${queue[0].meaning}.` : '';
+  say(answering ? 'Do not read the question. Answer it the way you naturally would on a call.' : 'Read it once in your normal voice. Do not slow down for the numbers.');
 }
 
 async function totals() {
@@ -131,8 +140,11 @@ async function save() {
   if (!wav || recording) return;
   $('save').disabled = true;
   const p = queue[0];
-  const r = await fetch(`/api/record/${speaker}/${p.id}`, {method: 'POST', body: wav, headers: {'content-type': 'audio/wav'}});
-  const d = await r.json();
+  let r, d;
+  try {
+    r = await fetch(`/api/record/${speaker}/${p.id}`, {method: 'POST', body: wav, headers: {'content-type': 'audio/wav'}});
+    d = await r.json();
+  } catch (e) { say('Could not save (' + e.message + '). Try again.', true); $('save').disabled = false; return; }
   if (!r.ok) { say(d.detail + '. Record it again.', true); return; }
   say(d.clipped ? 'Saved, but it clipped: move back from the microphone a little.' : 'Saved.', d.clipped);
   queue.shift(); $('rec').textContent = 'Record (space)'; $('rec').className = 'btn primary'; $('save').className = 'btn';
