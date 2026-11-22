@@ -151,7 +151,10 @@ function leftNote() {
   const wrong = Object.keys(ref).filter(k => String(S.left.values[k] ?? '') !== String(ref[k] ?? ''));
   if (!wrong.length) return note('L', '');
   const k = wrong[0];
-  note('L', `<strong>Logged ${esc(show(k, S.left.values[k]))}. ${label} ${esc(show(k, ref[k]))}.</strong> Nothing in the model's output marked the value as uncertain, so nobody finds out until later.`);
+  const omitted = S.left.values[k] == null;
+  const slotName = {amount_rupees: 'amount', phone: 'phone number', weekday: 'day', day_of_month: 'date'}[k] || 'value';
+  const acted = omitted ? `Left out the ${slotName}` : `Logged ${esc(show(k, S.left.values[k]))}`;
+  note('L', `<strong>${acted}. ${label} ${esc(show(k, ref[k]))}.</strong> Nothing in the model's output marked the value as uncertain, so nobody finds out until later.`);
   slip('L', S.left.values, Object.fromEntries(wrong.map(w => [w, {alt: ref[w], positions: []}])));
 }
 
