@@ -67,8 +67,7 @@ _EN_TENS = "_ _ ट्वेंटी थर्टी फोर्टी फि�
 
 
 def english_amount(n: int) -> list[str]:
-    """English number words as a Hindi model spells them. Belongs in render.py; kept here because
-    this script may not edit it."""
+    """English number words as a Hindi model spells them, as this gate was run before render.py had them."""
 
     def below_100(k: int) -> str:
         return _EN_ONES[k] if k < 20 else (_EN_TENS[k // 10] + (f" {_EN_ONES[k % 10]}" if k % 10 else ""))
@@ -208,7 +207,7 @@ def main() -> None:
                 )
                 score_ms.append(ws.latency_ms / len(cands))
                 t = ws.loglik[str(truth)]
-                best = max(ws.loglik, key=ws.loglik.get)
+                best = max(ws.loglik, key=lambda k: ws.loglik[k])
                 top[mode, cond][0] += best == str(truth)
                 top[mode, cond][1] += 1
                 for v in alts:
@@ -267,7 +266,7 @@ def main() -> None:
             f"{' (a base arm also heard this)' if f['from_base_arm'] else ''}\n      greedy: {f['greedy']}"
         )
 
-    timing = {"score_ms_per_candidate_mean": round(float(np.mean(score_ms)), 2)}
+    timing: dict[str, object] = {"score_ms_per_candidate_mean": round(float(np.mean(score_ms)), 2)}
     if "--no-timing" not in sys.argv:
         clips = sorted((G0 / "clips").glob("*_phone.wav"))[:20]
         for int8 in (False, True):

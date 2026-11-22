@@ -20,7 +20,7 @@
 
 ## Not shown
 - Real callers and real phone lines. One person (15 clips) has been recorded, which is too few to rank methods.
-- Pramaan does not beat the simple "ask when OpenAI and Sarvam disagree" baseline on errors. Its measured advantage is fewer questions on most sets.
+- Pramaan does not beat the simple "ask when OpenAI and Sarvam disagree" baseline on errors. Its measured advantage is fewer questions, on every synthetic set.
 
 ## Data
 All audio is synthetic or recorded by the author. No customer or third-party call data is used.

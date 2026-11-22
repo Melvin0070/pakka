@@ -113,7 +113,7 @@ def pct(x: float) -> str:
 
 def main() -> None:
     rows, agent_failed = load()
-    tune, test = split(rows)
+    test = split(rows)[1]
     # Human recordings are test only: thresholds and the policy still come from the synthetic tuning speakers.
     human, fresh2 = "--human" in sys.argv, "--fresh2" in sys.argv
     fresh = "--fresh" in sys.argv or fresh2
@@ -137,6 +137,10 @@ def main() -> None:
 
     lp_threshold = ltt_select([(o.score, o.wrong) for o in map(logprob_gate, tune)], ALPHA, DELTA).threshold
     lp_arm = thresholded(logprob_gate, lp_threshold if lp_threshold is not None else 2.0)
+    # No log-probability threshold meets the risk target on the tuning speakers, so this arm can only ask.
+    lp_name = "Trust one model's confidence" + (
+        "" if lp_threshold is not None else "; none certifies, so it always asks"
+    )
 
     def pramaan(row: Row) -> Outcome:
         return guard(row, policy)
@@ -144,7 +148,7 @@ def main() -> None:
     arms: list[tuple[str, str, str, Callable[[Row], Outcome], bool]] = [
         ("A", "Realtime model alone", "gpt-realtime-2.1 hears the audio and calls the tool", bare, False),
         ("B", "Transcribe, then fill the form", "gpt-transcribe with a domain prompt, then typed normalisation", cascade(CASCADE), False),
-        ("B-LP", "Trust one model's confidence", "gpt-4o-transcribe token log-probabilities, threshold set the same way", lp_arm, False),
+        ("B-LP", lp_name, "gpt-4o-transcribe token log-probabilities, threshold set the same way", lp_arm, False),
         ("B-2M", "Ask when two models disagree", f"{CASCADE} against {second}", two_model(second), False),
         ("A-RB", "Read everything back", "Confirm every action with the caller", read_back, False),
         ("P", "Pramaan", "Hold the realtime model's action until the evidence supports it", pramaan, True),
@@ -243,9 +247,6 @@ def main() -> None:
         "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
     }
     RESULTS.mkdir(exist_ok=True)
-    (RESULTS / (f"{stem}.json" if stem else "headline.json")).write_text(
-        json.dumps(headline, indent=1, ensure_ascii=False) + "\n"
-    )
 
     lines = [
         f"{len(test)} {'Telugu ' if telugu else ''}actions, {headline['dataset']['n_speakers']} held-out {kind} speakers, phone-grade audio. Policy `{policy.hash}`.",
@@ -283,7 +284,9 @@ def main() -> None:
             f"Telugu acoustic model alone: the true value outscored every transcribed and confusable rival in "
             f"{sum(scored)} of {len(scored)} values it scored.",
         ]
-        (RESULTS / "te.json").write_text(json.dumps(headline, indent=1, ensure_ascii=False) + "\n")
+    (RESULTS / (f"{stem}.json" if stem else "headline.json")).write_text(
+        json.dumps(headline, indent=1, ensure_ascii=False) + "\n"
+    )
     (RESULTS / (f"{stem}.md" if stem else "table.md")).write_text("\n".join(lines) + "\n")
     readme = RESULTS.parent / "README.md"
     mark = "results" if stem is None else stem

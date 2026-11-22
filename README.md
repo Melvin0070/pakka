@@ -14,10 +14,10 @@ model and on this system.
 - Hindi: https://pramaan-voice.vercel.app
 - Telugu: https://pramaan-voice-te.vercel.app
 
-Both run in replay mode with no API keys: the recorded calls play, every recogniser answers from the committed
-cache, and the acoustic check, the decision and the ledger are computed on the server for each play. The
-microphone is off there; for live speech run `make serve` or `make serve-te` with your own keys. `main.py` is
-the hosted entrypoint, and `make deploy` republishes both.
+Both run in replay mode and call no paid API: the recorded calls play, every recogniser answers from the
+committed cache, and the acoustic check, the decision and the ledger are computed on the server for each play.
+The microphone is off there; for live speech run `make serve` or `make serve-te` with your own keys. `main.py`
+is the hosted entrypoint and forces replay mode, and `make deploy` republishes both.
 
 ## Results
 
@@ -30,7 +30,7 @@ the hosted entrypoint, and `make deploy` republishes both.
 | Transcribe, then fill the form (B) | 40 (7.3%) | 0 (0.0%) | 0 | 550 |
 | Second vendor, then fill the form (V) | 140 (25.5%) | 0 (0.0%) | 0 | 550 |
 | Sarvam, then fill the form (S) | 45 (8.2%) | 0 (0.0%) | 0 | 550 |
-| Trust one model's confidence (B-LP) | 0 (0.0%) | 550 (100.0%) | 140 | 0 |
+| Trust one model's confidence; none certifies, so it always asks (B-LP) | 0 (0.0%) | 550 (100.0%) | 140 | 0 |
 | Ask when two models disagree (B-2M) | 10 (1.8%) | 151 (27.5%) | 30 | 399 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 6 (1.1%) | 70 (12.7%) | 34 | 480 |
 | Read everything back (A-RB) | 0 (0.0%) | 550 (100.0%) | 176 | 0 |
@@ -66,7 +66,7 @@ the test speakers' clips were scored once.
 | Transcribe, then fill the form (B) | 17 (7.7%) | 0 (0.0%) | 0 | 220 |
 | Second vendor, then fill the form (V) | 47 (21.4%) | 0 (0.0%) | 0 | 220 |
 | Sarvam, then fill the form (S) | 6 (2.7%) | 0 (0.0%) | 0 | 220 |
-| Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 57 | 0 |
+| Trust one model's confidence; none certifies, so it always asks (B-LP) | 0 (0.0%) | 220 (100.0%) | 57 | 0 |
 | Ask when two models disagree (B-2M) | 3 (1.4%) | 56 (25.5%) | 14 | 164 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 3 (1.4%) | 15 (6.8%) | 14 | 205 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
@@ -104,7 +104,7 @@ generated after the fixes and scored once.
 | Transcribe, then fill the form (B) | 9 (4.1%) | 0 (0.0%) | 0 | 220 |
 | Second vendor, then fill the form (V) | 59 (26.8%) | 0 (0.0%) | 0 | 220 |
 | Sarvam, then fill the form (S) | 11 (5.0%) | 0 (0.0%) | 0 | 220 |
-| Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 40 | 0 |
+| Trust one model's confidence; none certifies, so it always asks (B-LP) | 0 (0.0%) | 220 (100.0%) | 40 | 0 |
 | Ask when two models disagree (B-2M) | 2 (0.9%) | 63 (28.6%) | 7 | 157 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 0 (0.0%) | 18 (8.2%) | 9 | 202 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 65 | 0 |
@@ -158,7 +158,7 @@ clips were used to fix the Telugu parser on real recogniser output; the eight te
 | Transcribe, then fill the form (B) | 31 (14.1%) | 0 (0.0%) | 0 | 220 |
 | Second vendor, then fill the form (V) | 38 (17.3%) | 0 (0.0%) | 0 | 220 |
 | Sarvam, then fill the form (S) | 24 (10.9%) | 0 (0.0%) | 0 | 220 |
-| Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 84 | 0 |
+| Trust one model's confidence; none certifies, so it always asks (B-LP) | 0 (0.0%) | 220 (100.0%) | 84 | 0 |
 | Ask when two models disagree (B-2M) | 7 (3.2%) | 46 (20.9%) | 24 | 174 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 8 (3.6%) | 32 (14.5%) | 23 | 188 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
@@ -199,7 +199,8 @@ The agent in the tables above has a short, generic prompt. `make strong-baseline
 prompt that teaches Hindi fractions, lakh and crore, and digit handling, under the same frozen policy. The model
 alone is wrong on 40 of 220 calls (18.2%, against 29.5%). Pramaan on that agent is wrong on 1 (0.5%) and asks on
 10 (4.5%). The prompt was written once, after this set's earlier results had been seen; its worked examples
-avoid every amount in the set. Results are in `results/strong_baseline.json`.
+avoid every amount in the set. Results are in `results/strong_baseline.json`; `make strong-baseline` rescoring
+needs the clips regenerated under `data/clips`, which are not in the repository.
 
 ## Where it wins, ties and loses
 
@@ -247,7 +248,7 @@ Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the tw
 
 Checking one action (5.6 s of audio) costs about $0.0019 in recogniser calls at list prices as of 2026-11-21 ($1.92 per 1,000 actions; VerbX has no public price and is left out; the realtime agent's own cost is the same with or without the guard).
 
-After a question (29 asked test actions replayed live, synthetic cooperative answers): 26 committed right; 3 escalated. Mean questions per asked action 0.97.
+After a question (29 asked test actions replayed live, synthetic cooperative answers): 26 committed right; 3 escalated. 7 of the committed passed live with no question, so 22 were actually asked. Mean questions per asked action 0.97.
 <!-- analysis:end -->
 
 Reading it plainly:
@@ -322,9 +323,11 @@ caller audio ──┬──────────────► gpt-realtime
 - **Decision** (`decide.py`): pure function of the evidence and a frozen policy. Family support and the witness
   are hard predicates; a monotone score is thresholded on top. Live calls and the offline evaluation call the
   same function.
-- **Risk gate** (`gate.py`): own exact binomial and Clopper-Pearson; Learn-then-Test fixed-sequence selection;
-  speaker-level bound; a betting e-process. The policy is chosen on the tuning speakers only (`eval/tune.py`),
-  frozen with a hash, and the certificate is one bound on the test speakers.
+- **Risk gate** (`gate.py`): own exact binomial and Clopper-Pearson, and a speaker-level bound. The policy is
+  chosen on the tuning speakers only (`eval/tune.py`: the most permissive grid point that passes a binomial
+  test there, uncorrected for the grid), frozen with a hash, and the certificate is one bound on the test
+  speakers. Learn-then-Test fixed-sequence selection sets the threshold of the log-probability baseline; a
+  betting e-process is implemented and tested but does not choose anything.
 - **Deadline-aware evaluation**: every source's latency is recorded with its response. The offline replay drops
   any source that would have missed the live deadline, so the reported numbers are for the system as deployed,
   slow sources included.
@@ -339,12 +342,12 @@ caller audio ──┬──────────────► gpt-realtime
 | Claim | Evidence |
 |---|---|
 | The bare realtime model acts on wrong spoken values often on this test set | arm A in `results/headline.json`; raw responses in `data/cache.sqlite` |
-| The open acoustic model separates the true value from confusable ones | `results/g2.json`, `eval/g2.py` |
+| The open acoustic model separates the true value from confusable ones | `results/g2.json` (written by `eval/g2.py`, which needs the early probe clips under `g0/clips`, not in the repository) |
 | Each stage earns its place, or does not | ablation table, `eval/run_eval.py` |
 | The bound is honest | `eval/tune.py` touches only tuning speakers; `data/splits.json` was fixed before any result |
 | No double execution under barge-in, retries, corrections | `tests/test_executor.py`, `tests/test_live.py` |
 | Every number reproduces offline | `make eval` |
-| Tests, types and the published tables are checked on every push | `.github/workflows/ci.yml` |
+| Tests, types (`src`, `eval`, `scripts`) and the published tables are checked on every push | `.github/workflows/ci.yml` |
 | What happens after a question | `scripts/measure_questions.py`, `results/questions.json` |
 | Cost and latency per action | `eval/analysis.py`, `eval/prices.json` (prices with their sources) |
 
@@ -388,16 +391,19 @@ caller audio ──┬──────────────► gpt-realtime
   tuning speakers (2 of 13 such repairs were wrong, 0 of 86 others) but it was prompted by test-set failures,
   so the first test set and locked set 1 are optimistic on this point. It costs questions: 19 to 31 on the
   first test set. Locked set 2 has no such repair and its numbers did not move. After the change 29 calls were
-  replayed: 26 ended right, 3 escalated, none committed a wrong value.
-- The acoustic model's contribution is not consistent. It removes questions on the tuning speakers (22 to 13)
-  and on the first test set (35 to 19), but not on either locked set. It picks the true value among confusable
-  candidates in 591 of 600 Hindi cases on the tuning speakers; it is rarely decisive because the transcribers
-  usually already agree.
+  replayed: 26 ended right, 3 escalated, none committed a wrong value. Seven of the 26 passed live with no
+  question, so 22 calls were actually asked: 19 ended right and 3 escalated. Two of the 31 asked offline were
+  not replayed, because the slot in question was one the caller never gave.
+- The acoustic model's contribution is not consistent. It removes questions on the tuning speakers (30 to 24)
+  and on the first test set (45 to 31), makes no difference on locked set 1 (4 either way) and adds three on
+  locked set 2 (10 to 13). On the tuning speakers the true value outscores every transcribed and confusable
+  rival in 655 of the 705 values it scored; it is rarely decisive because the transcribers usually already
+  agree.
 - Asking only when gpt-transcribe and Sarvam disagree (B-2S) remains a strong, much simpler baseline. Pramaan's
   measured advantage over it is fewer questions, not fewer errors.
 - One human speaker (15 clips) has been recorded and scored; see `results/human_pilot.md`. It is the author,
   on prompts the tuning voices also spoke, scored more than once, so it is a pilot and stays out of the locked
-  human set in `data/human/manifest.jsonl`. Far too few to rank arms.
+  human set, which `/record.html` will write to `data/human/manifest.jsonl`. Far too few to rank arms.
 - The ElevenLabs Scribe adapter exists but was not run (no key).
 - Not claimed: proof, zero error, per-language bounds, or that this is first. Prior art: ROVER and confusion
   networks, inverse text normalisation, likelihood-ratio utterance verification for digit strings (1990s),
@@ -410,8 +416,14 @@ src/pramaan/   types, lang (per-language settings), normalise, render, confusabl
                evidence, score, decide, gate, question, executor, bundle, cache, pipeline, sources/, live/
 eval/          tune.py (policy, tuning speakers only), run_eval.py (all arms, test speakers), analysis.py
                (baselines at matched budgets, slices, cost), g2.py (witness gate)
-scripts/       gen_prompts, gen_clips, gen_fresh (locked set), gen_te (Telugu), collect, build_evidence,
-               measure_questions, fetch_model, selfcheck
+scripts/       gen_prompts, gen_clips, gen_fresh (locked set), gen_te (Telugu), gen_human_prompts,
+               gen_human_extras, collect, build_evidence, measure_questions, measure_extras, strong_baseline,
+               fresh_mic, fetch_model, selfcheck
 data/          prompts, manifest, splits, cache.sqlite (raw responses), evidence.jsonl, policy.json
+results/       every published table and the JSON behind it
+demo/          the recorded calls the hosted demos play
+tests/         unit and property tests, all offline
 ui/            live call, evidence and results views
+g0/            the first probe: prompts and results that eval/g2.py and one test still read
+main.py        hosted entrypoint (Vercel), replay mode only
 ```

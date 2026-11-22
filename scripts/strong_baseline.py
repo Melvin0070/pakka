@@ -1,6 +1,6 @@
 """Does the model-alone result survive a better prompt? Reruns locked set 2 with number-specific instructions.
 
-The prompt was written once, before any result, and is not tuned. Its worked examples avoid every amount in
+The prompt was written once, after this set's earlier results had been seen, and is not tuned. Its worked examples avoid every amount in
 this set, so it cannot be answering from the test values. Responses go to their own cache so the evidence
 behind `make eval` cannot change. The frozen policy is applied unchanged. Usage: make strong-baseline
 """
@@ -132,4 +132,6 @@ async def score() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(collect() if sys.argv[1:] == ["collect"] else score())
+    if sys.argv[1:] not in (["collect"], ["score"]):
+        sys.exit("usage: python -m scripts.strong_baseline collect|score")
+    asyncio.run(collect() if sys.argv[1] == "collect" else score())

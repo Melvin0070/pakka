@@ -1,7 +1,8 @@
 .venv/
 __pycache__/
 *.pyc
-.env
+.env*
+!.env.example
 models/
 *.wav
 *.mp3
@@ -14,9 +15,6 @@ data/witness_cache/
 data/bundles.jsonl
 data/clips/
 data/human/clips/
-
 data/cache.live.sqlite
 data/te/cache.live.sqlite
 .vercel
-.env*
-.env.local

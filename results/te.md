@@ -6,7 +6,7 @@
 | Transcribe, then fill the form (B) | 31 (14.1%) | 0 (0.0%) | 0 | 220 |
 | Second vendor, then fill the form (V) | 38 (17.3%) | 0 (0.0%) | 0 | 220 |
 | Sarvam, then fill the form (S) | 24 (10.9%) | 0 (0.0%) | 0 | 220 |
-| Trust one model's confidence (B-LP) | 0 (0.0%) | 220 (100.0%) | 84 | 0 |
+| Trust one model's confidence; none certifies, so it always asks (B-LP) | 0 (0.0%) | 220 (100.0%) | 84 | 0 |
 | Ask when two models disagree (B-2M) | 7 (3.2%) | 46 (20.9%) | 24 | 174 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 8 (3.6%) | 32 (14.5%) | 23 | 188 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
