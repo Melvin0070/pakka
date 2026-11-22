@@ -37,7 +37,7 @@ Say: "Nothing in the decision rule knows Hindi. For Telugu we swapped the number
 model, and kept the policy that was frozen on Hindi." Play "తొంభై heard as తొమ్మిది": the model alone logs
 ₹9,000, the guarded side logs ₹90,000. Then the Results tab, "Telugu".
 
-The Telugu calls are live only: `make demo-offline` covers the Hindi calls.
+With no keys or network: `make demo-offline` covers the Hindi calls, `make demo-offline-te` the Telugu ones.
 
 ## If something breaks
 - Network or API down: `make demo-offline`. Same four calls, recorded model answers, real checks. It stops at the question and has no agent voice.

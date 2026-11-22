@@ -2,7 +2,7 @@
 -include .env
 export
 
-.PHONY: setup check test eval human human-extras strong-baseline digits-data digits serve demo demo-offline te-data te-collect te-evidence te serve-te deploy
+.PHONY: setup check test eval human human-extras strong-baseline digits-data digits serve demo demo-offline demo-offline-te play te-data te-collect te-evidence te serve-te deploy
 
 setup:
 	uv sync
@@ -94,4 +94,14 @@ demo:
 # No network and no keys: recorded calls only, the model's answers and every recogniser come from the cache.
 demo-offline:
 	PRAMAAN_OFFLINE=1 uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port $(PORT)
+
+# The same in Telugu, on port 8766. Downloads the Telugu acoustic model (481 MB) on the first run.
+demo-offline-te:
+	uv run python scripts/fetch_model.py te
+	PRAMAAN_OFFLINE=1 $(TE) uv run uvicorn pramaan.live.server:app --host 127.0.0.1 --port 8766
+
+# Plays recorded calls against a running server and prints both sides: `make play`, `make play CALL=one_question`,
+# `make play PORT=8766` for the Telugu server.
+play:
+	uv run python scripts/play_call.py $(CALL) --url http://127.0.0.1:$(PORT)
 
