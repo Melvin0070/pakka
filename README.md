@@ -7,7 +7,7 @@ executed, support it. If the evidence supports a different value, the argument i
 split, the caller is asked one short question.
 
 Built for the Equal AI Builders hackathon, challenge 2 (Voice AI for India): the same recordings on a base
-model and on this system.
+model and on this system. To set it up and try it end to end, with or without API keys, follow `AGENTS.md`.
 
 ## Live
 
