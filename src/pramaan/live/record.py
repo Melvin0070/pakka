@@ -12,9 +12,12 @@ import json
 import os
 import random
 import re
+import subprocess
 import wave
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 import numpy as np
 from fastapi import APIRouter, HTTPException, Request
@@ -32,10 +35,17 @@ EXTRAS_MANIFEST = HUMAN / "extras_manifest.jsonl"
 PER_SPEAKER = 15
 EXTRAS_PER_SPEAKER = 7
 ORDER_SEED = 20261121
-MAX_BYTES = 3_000_000  # about 60 s at 24 kHz PCM16
+MAX_BYTES = 6_000_000  # about 60 s at 48 kHz PCM16
+# The header's rate sizes the resample, so an arbitrary one is a way to ask for gigabytes.
+RATES = (16000, 22050, 24000, 32000, 44100, 48000)
 _SPEAKER = re.compile(r"[a-z0-9]{2,12}")
 
 router = APIRouter(prefix="/api/record")
+
+
+def same_site(origin: str, headers: Mapping[str, str]) -> bool:
+    # Behind a proxy the page's host arrives as X-Forwarded-Host and Host may be an internal name.
+    return urlsplit(origin).netloc in (headers.get("host"), headers.get("x-forwarded-host"))
 
 
 def _prompts() -> list[dict[str, Any]]:
@@ -110,19 +120,30 @@ def prompts(speaker: str) -> dict[str, Any]:
 @router.post("/{speaker}/{prompt_id}")
 async def save(speaker: str, prompt_id: str, request: Request) -> dict[str, Any]:
     _check(speaker)
+    # A typeless cross-site POST needs no preflight, and this endpoint writes the locked test set.
+    origin = request.headers.get("origin")
+    if origin and not same_site(origin, request.headers):
+        raise HTTPException(403, "cross-site upload")
+    if int(request.headers.get("content-length") or 0) > MAX_BYTES:
+        raise HTTPException(413, "clip too long")
+    body = bytearray()
+    async for chunk in request.stream():
+        body += chunk
+        if len(body) > MAX_BYTES:
+            raise HTTPException(413, "clip too long")
+    # Read after the upload, so two overlapping saves do not write back each other's stale rows.
     rows = _manifest()
     prompt = next((p for p in _assigned(speaker, rows) if p["id"] == prompt_id), None)
     extra = next((p for p in _assigned_extras(speaker, rows) if p["id"] == prompt_id), None)
     prompt = prompt or extra
     if prompt is None:
         raise HTTPException(404, "prompt not assigned to this speaker")
-    body = await request.body()
-    if len(body) > MAX_BYTES:
-        raise HTTPException(413, "clip too long")
     try:
         with wave.open(io.BytesIO(body)) as w:
             if w.getnchannels() != 1 or w.getsampwidth() != 2:
                 raise ValueError("need PCM16 mono")
+            if w.getframerate() not in RATES:
+                raise ValueError(f"sample rate {w.getframerate()} not accepted")
             pcm, rate = w.readframes(w.getnframes()), w.getframerate()
     except (wave.Error, ValueError, EOFError) as e:
         raise HTTPException(422, f"bad wav: {e}") from e
@@ -137,7 +158,10 @@ async def save(speaker: str, prompt_id: str, request: Request) -> dict[str, Any]
     raw = HUMAN / "clips" / speaker / f"{prompt_id}_raw.wav"
     phone = raw.with_name(f"{prompt_id}_phone.wav")
     audio.write_wav(raw, pcm)
-    audio.phone_amr(raw, phone)
+    try:
+        audio.phone_amr(raw, phone)
+    except (OSError, subprocess.CalledProcessError) as e:
+        raise HTTPException(500, "phone channel failed: ffmpeg with libopencore_amrnb is required") from e
     row = {
         "clip_id": f"{speaker}_{prompt_id}_phone",
         "speaker": speaker,

@@ -14,6 +14,7 @@ import os
 import time
 import uuid
 import wave
+from collections import deque
 from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
@@ -22,18 +23,19 @@ import httpx
 import numpy as np
 import soxr
 import websockets
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from .. import lang
 from ..cache import offline
-from ..pipeline import Guard
+from ..pipeline import Guard, Pipeline
 from ..types import Values
 from . import offline as offline_replay
 from .fake_guard import FakeGuard
 from .ledger import make_ledger
 from .record import router as record_router
+from .record import same_site
 from .ring import RATE
 from .session import CallSession
 from .tooling import LEFT_INSTRUCTIONS, RIGHT_INSTRUCTIONS, TOOL
@@ -64,17 +66,16 @@ app = FastAPI(title="Pramaan live guard", lifespan=_lifespan)
 
 _guard: Guard | None = None
 _health: tuple[float, bool, str] = (0.0, False, "")
-_crm: list[dict[str, Any]] = []  # what the guarded agent actually executed, newest last
-_sessions: dict[str, CallSession] = {}
+# Stands in for the system of record: what the guarded agent actually executed, newest last.
+_crm: deque[dict[str, Any]] = deque(maxlen=200)
+_executed = 0
 
 
 def make_guard() -> Guard:
-    """The real pipeline when it imports and constructs; otherwise scripted evidence, flagged in the UI."""
+    """The real pipeline when it constructs; otherwise scripted evidence, flagged in the UI and in /api/health."""
     global _guard
     if _guard is None:
         try:
-            from ..pipeline import Pipeline  # type: ignore[attr-defined]
-
             _guard = Pipeline()
         except Exception as e:  # noqa: BLE001 - any failure here must degrade to the labelled fake
             log.info(json.dumps({"event": "guard.fallback", "reason": f"{type(e).__name__}: {e}"}))
@@ -87,8 +88,10 @@ def guard_kind(guard: Guard) -> str:
 
 
 def _log_commitment(values: Values) -> dict[str, Any]:
+    global _executed
+    _executed += 1
     _crm.append({"at": time.time(), **values})
-    return {"ok": True, "row": len(_crm)}
+    return {"ok": True, "row": _executed}
 
 
 # ---- replayable clips
@@ -179,7 +182,7 @@ async def health() -> dict[str, Any]:
         except httpx.HTTPError as e:
             _health = (time.time(), False, type(e).__name__)
     guard = make_guard()
-    models = ROOT / "models"
+    models = lang.get().model_dir
     return {
         "offline": offline(),
         "key_present": bool(key),
@@ -188,8 +191,7 @@ async def health() -> dict[str, Any]:
         "model_error": _health[2],
         "guard": guard_kind(guard),
         "policy_hash": getattr(getattr(guard, "policy", None), "hash", ""),
-        "witness_loaded": getattr(guard, "witness", None) is not None,
-        "witness_files": models.exists() and any(models.rglob("*.onnx")),
+        "witness_files": models.exists() and any(models.glob("*.onnx")),
         "results_present": (ROOT / "results" / "headline.json").exists(),
     }
 
@@ -227,24 +229,6 @@ async def analysis() -> JSONResponse:
 @app.get("/api/clips")
 async def clips() -> list[dict[str, Any]]:
     return _clips()
-
-
-@app.get("/api/bundles/{bundle_id}")
-async def bundle(bundle_id: str) -> JSONResponse:
-    for session in _sessions.values():
-        if bundle_id in session.judgements:
-            return JSONResponse(session.judgements[bundle_id].model_dump(mode="json"))
-    store = ROOT / "results" / "bundles.jsonl"
-    if store.exists():
-        for line in store.read_text().splitlines():
-            if bundle_id in line[:400] and json.loads(line).get("id") == bundle_id:
-                return JSONResponse(json.loads(line))
-    raise HTTPException(404, "unknown bundle")
-
-
-@app.get("/api/crm")
-async def crm() -> list[dict[str, Any]]:
-    return _crm[-50:]
 
 
 # ---- Realtime
@@ -342,6 +326,12 @@ async def _replay(session: CallSession, paths: list[Path], idle_s: float = 20.0)
 
 @app.websocket("/ws")
 async def ws(browser: WebSocket) -> None:
+    # Browsers do not apply the same-origin policy to WebSockets: without this any open page could start
+    # calls on this server's keys. Clients that send no Origin (scripts, tests) are not that threat.
+    origin = browser.headers.get("origin")
+    if origin and not same_site(origin, browser.headers):
+        await browser.close(code=1008)
+        return
     await browser.accept()
     params = browser.query_params
     session_id = uuid.uuid4().hex[:8]
@@ -356,7 +346,8 @@ async def ws(browser: WebSocket) -> None:
 
     off = offline()
     problem = ""
-    if off and not params.get("replay"):
+    wanted = [r for r in params.get("replay", "").split(",") if r]
+    if off and not wanted:
         problem = "Offline mode replays recorded calls only; the microphone needs the network."
     elif not off and not os.environ.get("OPENAI_API_KEY"):
         problem = "OPENAI_API_KEY is not set"
@@ -365,7 +356,7 @@ async def ws(browser: WebSocket) -> None:
         await browser.close()
         return
     try:
-        replay = [_resolve_clip(r) for r in params.get("replay", "").split(",") if r]
+        replay = [_resolve_clip(r) for r in wanted]
     except (FileNotFoundError, ValueError) as e:
         await browser.send_text(json.dumps({"type": "error", "turn_id": "", "message": f"unknown clip: {e}"}))
         await browser.close()
@@ -389,16 +380,11 @@ async def ws(browser: WebSocket) -> None:
             if left:
                 left.handler = session.on_left
         else:
-            right_ws, left_ws = await asyncio.gather(
-                _connect(RIGHT_INSTRUCTIONS, speak=True),
-                _connect(LEFT_INSTRUCTIONS, speak=False) if independent else asyncio.sleep(0),
-            )
+            right_ws = await _connect(RIGHT_INSTRUCTIONS, speak=True)
+            left_ws = await _connect(LEFT_INSTRUCTIONS, speak=False) if independent else None
             session = CallSession(session_id, guard, make_ledger(_log_commitment), RealtimeLink(right_ws),
                                   RealtimeLink(left_ws) if left_ws else None, emit,
                                   mirror_left=with_left and not independent)  # fmt: skip
-        _sessions[session_id] = session
-        while len(_sessions) > 20:
-            _sessions.pop(next(iter(_sessions)))
         await session.emit(
             "session.ready", guard=guard_kind(guard), model=MODEL,
             mode="offline-replay" if off else "replay" if replay else "mic",
@@ -438,10 +424,10 @@ async def ws(browser: WebSocket) -> None:
             tasks.append(asyncio.create_task(watch_disconnect()))
         done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
         for t in done:
-            if t.exception() and not isinstance(t.exception(), WebSocketDisconnect):
-                log.info(
-                    json.dumps({"session": session_id, "event": "task.error", "error": repr(t.exception())})
-                )
+            err = t.exception()
+            if err and not isinstance(err, WebSocketDisconnect | websockets.ConnectionClosedOK):
+                log.info(json.dumps({"session": session_id, "event": "task.error", "error": repr(err)}))
+                await emit({"type": "error", "turn_id": "", "message": f"call ended: {type(err).__name__}"})
         await asyncio.sleep(0.2)  # let the writer drain the last events
         for t in pending:
             t.cancel()
@@ -465,5 +451,7 @@ async def ws(browser: WebSocket) -> None:
             await browser.close()
 
 
-app.include_router(record_router)
+# The recorder writes the human test set to disk: local, keyed runs only, never the replay-only host.
+if not offline():
+    app.include_router(record_router)
 app.mount("/", StaticFiles(directory=UI, html=True), name="ui")

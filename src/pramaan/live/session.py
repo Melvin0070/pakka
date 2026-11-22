@@ -1,7 +1,7 @@
 """One call: a Realtime agent's tool calls held until judged, beside the same call left unguarded.
 
 By default the left pane is the guarded agent's own first tool call, executed as it stood. A second,
-independent agent can be attached instead (`left`), which the offline replay and one script still use.
+independent agent can be attached instead (`left`), which the offline replay and scripts/fresh_mic.py use.
 
 No network here. The server feeds Realtime events in and passes a `Link` for sending; tests do the same with fakes.
 """
@@ -20,7 +20,7 @@ from typing import Any, Protocol
 
 from .. import lang
 from .. import question as questions
-from ..pipeline import Guard, Judgement
+from ..pipeline import Guard
 from ..types import Asked, Values, Verdict
 from .ledger import Entry, Ledger
 from .ring import RATE, RingBuffer, audio_sha
@@ -95,7 +95,6 @@ class CallSession:
         self.ring = RingBuffer()
         self.turns: list[Turn] = []
         self.action = Action(version=1)
-        self.judgements: dict[str, Judgement] = {}
         self.awaiting_answer = False
         self.question_spoken = False  # the agent has finished saying the pending question
         self.final = False  # committed or escalated: replay mode may stop
@@ -106,6 +105,7 @@ class CallSession:
             Turn
         ] = []  # caller turns since the last proposal: one value can straddle a VAD split
         self._judging: tuple[asyncio.Task[None], Turn, str] | None = None
+        self._answered: str | None = None  # call id whose proposal has reached its outcome
         self._active_response: str | None = None
         self._audio_started: float | None = None
         self._audio_bytes = 0
@@ -140,6 +140,12 @@ class CallSession:
             self._judging[0].cancel()
             with contextlib.suppress(asyncio.CancelledError):
                 await self._judging[0]
+        # Recogniser calls for turns nobody will judge would otherwise run on, and keep their audio.
+        for turn in self.turns:
+            if turn.started is not None:
+                turn.started.cancel()
+            with contextlib.suppress(Exception):
+                await self.guard.cancel(turn.id)
 
     async def _tool_output(self, call_id: str, output: dict[str, Any], respond: bool) -> None:
         await self.right.send(
@@ -213,7 +219,10 @@ class CallSession:
             if self._active_response:
                 await self.right.send({"type": "response.cancel"})
             self.agent_quiet_at = self.clock()
-        if self._judging and not self._judging[0].done():
+        # Once a proposal has committed or been put to the caller, only its reply to the model is left:
+        # cancelling there would tell the model "voided" about an action that already ran, and it would
+        # run again on the model's retry.
+        if self._judging and not self._judging[0].done() and self._judging[2] != self._answered:
             # The caller spoke again while an action was held and unjudged: what they say may correct it.
             task, held_turn, call_id = self._judging
             task.cancel()
@@ -263,8 +272,9 @@ class CallSession:
             if o.get("type") == "function_call" and o.get("name") == TOOL_NAME
         ]
         status = response.get("status")
+        turn = next((t for t in reversed(self.turns) if t.stopped_at is not None), None)
+        proposals: list[tuple[str, Values]] = []
         for call in calls:
-            turn = next((t for t in reversed(self.turns) if t.stopped_at is not None), None)
             if status != "completed":
                 # arguments.done also fires on cancelled responses; nothing from them may execute.
                 await self.emit(
@@ -279,12 +289,27 @@ class CallSession:
                     call["call_id"], {"status": "voided", "reason": "no caller turn"}, respond=False
                 )
                 continue
+            proposals.append((call["call_id"], clean_args(call.get("arguments", "{}"))))
+        if proposals and turn is not None:
             self._span = []
-            task = asyncio.create_task(
-                self._proposal(turn, call["call_id"], clean_args(call.get("arguments", "{}")))
-            )
+            task = asyncio.create_task(self._proposals(turn, proposals))
             task.add_done_callback(self._report)
-            self._judging = (task, turn, call["call_id"])
+            self._judging = (task, turn, proposals[0][0])
+
+    async def _proposals(self, turn: Turn, proposals: list[tuple[str, Values]]) -> None:
+        """One at a time: calls from one response share a ledger row, so judged together one would be lost."""
+        task = asyncio.current_task()
+        assert task is not None
+        for call_id, values in proposals:
+            self._judging = (task, turn, call_id)
+            try:
+                await self._proposal(turn, call_id, values)
+            except Exception as e:  # noqa: BLE001 - the model must get an answer, and nothing may run
+                if self._answered == call_id:
+                    raise
+                await self.emit("error", turn.id, side="guard", message=f"{type(e).__name__}: {e}")
+                await self._void(turn.id, "guard_error")
+                await self._tool_output(call_id, {"status": "voided", "reason": "internal error"}, True)
 
     async def _void(self, turn_id: str, reason: str) -> None:
         entry = self.action.entry
@@ -305,6 +330,7 @@ class CallSession:
         if action.committed is not None:
             if values == action.committed:
                 # A regenerated call for something already done: answer from the ledger, execute nothing.
+                self._answered = call_id
                 await self.emit("right.duplicate", turn.id, values=values)
                 await self._tool_output(
                     call_id, {"status": "committed", "note": "already recorded"}, respond=True
@@ -358,7 +384,6 @@ class CallSession:
             if j is None:
                 verdict, decision = Verdict.BLOCK, None
             else:
-                self.judgements[j.bundle_id or turn.id] = j
                 await self.emit(
                     "evidence",
                     turn.id,
@@ -405,6 +430,7 @@ class CallSession:
                 entry = action.entry = self.ledger.propose(self.id, self.operation, values)
                 self.ledger.hold(entry)
             executed, outcome = self.ledger.commit(entry)
+            self._answered = call_id
             action.committed, action.closed = dict(values), True
             self.final = True
             await self._ledger_event(entry, turn.id)
@@ -423,6 +449,7 @@ class CallSession:
 
         if action.questions >= MAX_QUESTIONS:
             self.ledger.void(entry, "escalated")
+            self._answered = call_id
             await self._ledger_event(entry, turn.id)
             await self.emit("right.escalated", turn.id, values=values, questions=action.questions)
             self._new_version()
@@ -448,6 +475,7 @@ class CallSession:
             options = doubt.candidates[: questions.MAX_SPOKEN_OPTIONS]
             action.asked = Asked(slot=doubt.slot, options=tuple(questions.option_order(options)))
         self.ledger.ask(entry, question)
+        self._answered = call_id
         self.awaiting_answer, self.question_spoken = True, False
         await self._ledger_event(entry, turn.id)
         await self.emit(

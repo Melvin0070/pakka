@@ -65,9 +65,8 @@ function phoneCells(el, value, alt, positions) {
   const a = String(value ?? ''), b = alt == null ? null : String(alt);
   const marked = new Set(positions || []);
   if (b != null && a.length === b.length) [...a].forEach((ch, k) => { if (ch !== b[k]) marked.add(k); });
-  const bad = a.length !== 10;
   el.innerHTML = [...a.padEnd(10, ' ')].slice(0, Math.max(10, a.length)).map((ch, k) => {
-    const doubt = marked.has(k) || (b != null && a.length !== b.length) || (bad && b == null && value != null && marked.size === 0 && false);
+    const doubt = marked.has(k) || (b != null && a.length !== b.length);
     const hint = doubt && b && a.length === b.length && b[k] !== ch ? ` data-alt="${esc(b[k])}"` : '';
     return `<span class="cell${doubt ? ' doubt' : ''}${ch === ' ' ? ' empty' : ''}"${hint}>${ch === ' ' ? '0' : esc(ch)}</span>`;
   }).join('');
@@ -338,7 +337,7 @@ function renderEvidence() {
       kv.push([esc(show(s.slot, s.proposed)), `${esc(reason(s.reason))}; score ${Number(s.score).toFixed(2)}${llr}`]);
     }
   }
-  kv.push(['Added to the call', `${secs(ev.waited_ms ?? 0)} to decide after the tool call` + (S.deadline ? `, limit ${secs(S.deadline)}` : '')]);
+  kv.push(['Added to the call', `${secs(ev.waited_ms ?? 0)} to decide after the tool call` + (S.deadline ? `; recognisers get ${secs(S.deadline)}, then the acoustic scoring runs` : '')]);
   if (ev.absent_sources && ev.absent_sources.length) kv.push(['Not counted', esc(ev.absent_sources.join(', '))]);
   kv.push(['Record', `bundle ${esc(ev.bundle_id || 'none')}, policy ${esc(ev.policy_hash || S.policy || 'none')}, audio kept by reference`]);
   $('kv').innerHTML = kv.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
@@ -479,12 +478,14 @@ function level(f) {
 
 function connect(query) {
   resetCall();
-  ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws${query}`);
-  ws.binaryType = 'arraybuffer';
-  ws.onmessage = m => { const e = JSON.parse(m.data); (handlers[e.type] || (() => {}))(e); };
-  ws.onclose = () => endCall();
-  ws.onerror = () => handlers.error({message: 'The connection to the server dropped.'});
-  return ws;
+  const sock = ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws${query}`);
+  sock.binaryType = 'arraybuffer';
+  // A finished call's socket closes late; its events must not end or write into the call that replaced it.
+  const mine = fn => (...a) => { if (ws === sock) fn(...a); };
+  sock.onmessage = mine(m => { const e = JSON.parse(m.data); (handlers[e.type] || (() => {}))(e); });
+  sock.onclose = mine(() => endCall());
+  sock.onerror = mine(() => handlers.error({message: 'The connection to the server dropped.'}));
+  return sock;
 }
 function setBusy(busy) {
   for (const b of document.querySelectorAll('.call')) b.disabled = busy;
@@ -502,7 +503,10 @@ function endCall() {
   $('said').classList.remove('playing');
   setBusy(false);
 }
+let micStarting = false;
 async function startMic() {
+  if (micStarting) return;
+  micStarting = true;
   current = null;
   for (const b of document.querySelectorAll('.call')) b.setAttribute('aria-pressed', 'false');
   setQuote('Listening. Say an amount, a date or a phone number.', 'Hindi, English or a mix. Use a headset so the agent does not hear itself.', true);
@@ -524,6 +528,8 @@ async function startMic() {
     showCall();
   } catch (e) {
     endCall(); handlers.error({message: `Could not open the microphone: ${e.message}`});
+  } finally {
+    micStarting = false;
   }
 }
 $('mic').addEventListener('click', () => (ws ? endCall() : startMic()));

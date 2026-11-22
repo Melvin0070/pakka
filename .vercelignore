@@ -13,4 +13,4 @@ tests
 .ruff_cache
 .hypothesis
 .gstack
-.env
+.env*

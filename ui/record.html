@@ -140,8 +140,11 @@ async function save() {
   if (!wav || recording) return;
   $('save').disabled = true;
   const p = queue[0];
-  const r = await fetch(`/api/record/${speaker}/${p.id}`, {method: 'POST', body: wav, headers: {'content-type': 'audio/wav'}});
-  const d = await r.json();
+  let r, d;
+  try {
+    r = await fetch(`/api/record/${speaker}/${p.id}`, {method: 'POST', body: wav, headers: {'content-type': 'audio/wav'}});
+    d = await r.json();
+  } catch (e) { say('Could not save (' + e.message + '). Try again.', true); $('save').disabled = false; return; }
   if (!r.ok) { say(d.detail + '. Record it again.', true); return; }
   say(d.clipped ? 'Saved, but it clipped: move back from the microphone a little.' : 'Saved.', d.clipped);
   queue.shift(); $('rec').textContent = 'Record (space)'; $('rec').className = 'btn primary'; $('save').className = 'btn';
