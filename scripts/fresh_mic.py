@@ -49,7 +49,7 @@ def vals(e):
 
 async def call(audio: bytes) -> list[dict]:
     events: list[dict] = []
-    async with websockets.connect(f"ws://127.0.0.1:{PORT}/ws", max_size=None) as ws:
+    async with websockets.connect(f"ws://127.0.0.1:{PORT}/ws?left=independent", max_size=None) as ws:
 
         async def reader():
             async for raw in ws:

@@ -26,7 +26,11 @@ HUMAN = ROOT / "data" / "human"
 MANIFEST = HUMAN / "manifest.jsonl"
 # Separate from the synthetic batches: the policy and normaliser were developed on those values.
 PROMPTS = HUMAN / "prompts.jsonl"
+# PIN and account lines and answers to a question. Kept out of MANIFEST: `make human` scores only the locked set.
+EXTRAS = HUMAN / "extras.jsonl"
+EXTRAS_MANIFEST = HUMAN / "extras_manifest.jsonl"
 PER_SPEAKER = 15
+EXTRAS_PER_SPEAKER = 7
 ORDER_SEED = 20261121
 MAX_BYTES = 3_000_000  # about 60 s at 24 kHz PCM16
 _SPEAKER = re.compile(r"[a-z0-9]{2,12}")
@@ -61,6 +65,32 @@ def _assigned(speaker: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [prompts[(i * PER_SPEAKER + j) % len(prompts)] for j in range(PER_SPEAKER)]
 
 
+def _extras_manifest() -> list[dict[str, Any]]:
+    path = MANIFEST.with_name(EXTRAS_MANIFEST.name)
+    return [json.loads(x) for x in path.read_text().splitlines() if x.strip()] if path.exists() else []
+
+
+def _assigned_extras(speaker: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    if not EXTRAS.exists():
+        return []
+    items = [json.loads(x) for x in EXTRAS.read_text().splitlines() if x.strip()]
+    order = list(dict.fromkeys(r["speaker"] for r in rows))
+    i = order.index(speaker) if speaker in order else len(order)
+    return [items[(i * EXTRAS_PER_SPEAKER + j) % len(items)] for j in range(EXTRAS_PER_SPEAKER)]
+
+
+@router.get("/extras")
+def extras(speaker: str) -> dict[str, Any]:
+    _check(speaker)
+    done = {r["prompt_id"] for r in _extras_manifest() if r["speaker"] == speaker}
+    return {
+        "prompts": [
+            {k: p[k] for k in ("id", "say", "lang", "kind", "meaning")} | {"done": p["id"] in done}
+            for p in _assigned_extras(speaker, _manifest())
+        ]
+    }
+
+
 @router.get("/prompts")
 def prompts(speaker: str) -> dict[str, Any]:
     _check(speaker)
@@ -82,6 +112,8 @@ async def save(speaker: str, prompt_id: str, request: Request) -> dict[str, Any]
     _check(speaker)
     rows = _manifest()
     prompt = next((p for p in _assigned(speaker, rows) if p["id"] == prompt_id), None)
+    extra = next((p for p in _assigned_extras(speaker, rows) if p["id"] == prompt_id), None)
+    prompt = prompt or extra
     if prompt is None:
         raise HTTPException(404, "prompt not assigned to this speaker")
     body = await request.body()
@@ -115,10 +147,14 @@ async def save(speaker: str, prompt_id: str, request: Request) -> dict[str, Any]
         "audio_sha": audio.sha(audio.read_pcm24k(phone)),
         "truth": prompt["truth"],
     }
-    rows = [r for r in rows if r["clip_id"] != row["clip_id"]] + [row]
-    tmp = MANIFEST.with_suffix(".tmp")
+    if extra is not None:
+        row |= {"kind": extra["kind"], "asked": extra.get("asked")}
+    target = MANIFEST.with_name(EXTRAS_MANIFEST.name) if extra is not None else MANIFEST
+    kept = _extras_manifest() if extra is not None else rows
+    rows = [r for r in kept if r["clip_id"] != row["clip_id"]] + [row]
+    tmp = target.with_suffix(".tmp")
     tmp.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
-    tmp.replace(MANIFEST)
+    tmp.replace(target)
     return {
         "clip_id": row["clip_id"],
         "seconds": round(seconds, 1),

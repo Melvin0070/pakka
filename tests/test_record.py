@@ -55,3 +55,14 @@ def test_rerecord_replaces_and_truth_comes_from_prompt(client):
 def test_rejects(client, speaker, body, status):
     pid = client.get("/api/record/prompts", params={"speaker": "p01"}).json()["prompts"][0]["id"]
     assert client.post(f"/api/record/{speaker}/{pid}", content=body).status_code == status
+
+
+def test_extras_stay_out_of_the_locked_manifest(client):
+    items = client.get("/api/record/extras", params={"speaker": "p01"}).json()["prompts"]
+    assert len(items) == record.EXTRAS_PER_SPEAKER and {p["kind"] for p in items} == {"digits", "answer"}
+    assert client.post(f"/api/record/p01/{items[0]['id']}", content=tone(2)).status_code == 200
+    assert not record.MANIFEST.exists()
+    row = json.loads((record.MANIFEST.with_name(record.EXTRAS_MANIFEST.name)).read_text())
+    assert row["kind"] == items[0]["kind"] and row["truth"]
+    again = client.get("/api/record/extras", params={"speaker": "p01"}).json()["prompts"]
+    assert again[0]["done"]

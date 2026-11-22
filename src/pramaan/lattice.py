@@ -11,7 +11,7 @@ from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 
 from .lexicon import WEEKDAYS
-from .types import Evidence, Hypothesis, Slot, Value
+from .types import DIGIT_SLOTS, Evidence, Hypothesis, Slot, Value
 
 AGENT_FAMILY = "openai-realtime"
 EPS = ""  # epsilon token in the confusion network
@@ -40,7 +40,7 @@ def canon(slot: str, value: object) -> Value | None:
         return None
     if slot == "weekday":
         return value.strip().lower() if isinstance(value, str) and value.strip() else None
-    if slot == "phone":
+    if slot in DIGIT_SLOTS:
         s = str(value).strip()
         return s if s.isdigit() else None
     return None
@@ -57,6 +57,10 @@ def is_valid(slot: str, value: Value | None) -> bool:
         return value in WEEKDAYS
     if slot == "phone":
         return isinstance(value, str) and len(value) == 10 and value[0] in "6789" and value.isdigit()
+    if slot == "pincode":
+        return isinstance(value, str) and len(value) == 6 and value[0] != "0" and value.isdigit()
+    if slot == "account_number":
+        return isinstance(value, str) and 9 <= len(value) <= 18 and value.isdigit()
     return False
 
 
@@ -177,6 +181,7 @@ class ConfusionNetwork:
     medoid: str
     slots: tuple[NetSlot, ...]
     costs: SubCosts | None = None
+    slot: str = "phone"
 
     def distribution(self, index: int) -> dict[str, float]:
         """Vote share per digit at a medoid position (EPS for a deletion)."""
@@ -206,7 +211,7 @@ class ConfusionNetwork:
         return tuple(s.index for s in self.slots if s.index is not None and len(s.votes) > 1)
 
     def top_paths(self, k: int) -> list[tuple[str, float]]:
-        """Best k distinct valid phone numbers through the network by summed vote log-probability."""
+        """Best k distinct valid digit strings through the network by summed vote log-probability."""
         opts = [[(t, s.logp(t)) for t, _ in s.ranked()] for s in self.slots]
         if not opts or k <= 0:
             return []
@@ -223,7 +228,7 @@ class ConfusionNetwork:
             c, idx = heapq.heappop(heap)
             pops += 1
             s = "".join(opts[n][i][0] for n, i in enumerate(idx))
-            if is_valid("phone", s) and s not in out:
+            if is_valid(self.slot, s) and s not in out:
                 out[s] = -c
             for n in range(len(idx)):
                 if idx[n] + 1 < len(opts[n]):
@@ -234,23 +239,23 @@ class ConfusionNetwork:
         return sorted(out.items(), key=lambda sv: (-sv[1], sv[0]))
 
 
-def medoid(strings: Sequence[tuple[str, float]], costs: SubCosts | None = None) -> str:
-    """Weighted medoid of (string, weight) pairs; ties prefer a valid phone, then the smaller string."""
+def medoid(strings: Sequence[tuple[str, float]], costs: SubCosts | None = None, slot: str = "phone") -> str:
+    """Weighted medoid of (string, weight) pairs; ties prefer a valid value, then the smaller string."""
     distinct = sorted({s for s, _ in strings})
 
     def total(c: str) -> float:
         return sum(w * align(c, s, costs)[0] for s, w in strings)
 
-    return min(distinct, key=lambda c: (round(total(c), 9), not is_valid("phone", c), c))
+    return min(distinct, key=lambda c: (round(total(c), 9), not is_valid(slot, c), c))
 
 
 def build_network(
-    weighted: Sequence[tuple[str, str, float]], costs: SubCosts | None = None
+    weighted: Sequence[tuple[str, str, float]], costs: SubCosts | None = None, slot: str = "phone"
 ) -> ConfusionNetwork | None:
     """weighted: (digit string, family, weight). Each string is aligned to the medoid independently."""
     if not weighted:
         return None
-    center = medoid([(s, w) for s, _, w in weighted], costs)
+    center = medoid([(s, w) for s, _, w in weighted], costs, slot)
     mapped = [(_tokens_against(center, s, costs), fam, w) for s, fam, w in weighted]
     used_gaps = sorted({g for (_, gaps), _, _ in mapped for g in gaps})
     order: list[tuple[int | None, int | None]] = []
@@ -271,7 +276,7 @@ def build_network(
                 index=index, gap=gap, votes={t: dict(sorted(v.items())) for t, v in sorted(votes.items())}
             )
         )
-    return ConfusionNetwork(medoid=center, slots=tuple(slots), costs=costs)
+    return ConfusionNetwork(medoid=center, slots=tuple(slots), costs=costs, slot=slot)
 
 
 # ---------------------------------------------------------------- lattice
@@ -358,7 +363,7 @@ def build(
 
     network: ConfusionNetwork | None = None
     path_lp: dict[str, float] = {}
-    if slot == "phone":
+    if slot in DIGIT_SLOTS:
         weighted: list[tuple[str, str, float]] = []
         for h in others:
             v = canon(slot, h.values.get(slot))
@@ -367,7 +372,7 @@ def build(
                     1 for g in others if g.family == h.family and canon(slot, g.values.get(slot)) is not None
                 )
                 weighted.append((v, h.family, 1.0 / n_valued))
-        network = build_network(weighted, costs)
+        network = build_network(weighted, costs, slot)
         if network is not None:
             for s, _ in network.top_paths(max_candidates):
                 values.setdefault(s, s)

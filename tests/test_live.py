@@ -249,6 +249,18 @@ async def test_block_asks_the_caller_to_repeat() -> None:
     assert rig.executed == []
 
 
+async def test_mirrored_left_is_the_first_tool_call_unguarded() -> None:
+    rig = Rig(script=("ask", "pass"))
+    rig.session.left, rig.session.mirror_left = None, True
+    await rig.say()
+    await rig.tool_call({**ARGS, "amount_rupees": 3000})
+    await rig.say()
+    await rig.tool_call()
+    left = [e for e in rig.events if e["type"] == "left.committed"]
+    assert [e["values"] for e in left] == [{"amount_rupees": 3000, "weekday": "tuesday"}]
+    assert rig.executed == [{"amount_rupees": 2750, "weekday": "tuesday"}]
+
+
 async def test_left_agent_commits_immediately_and_is_only_reported() -> None:
     rig = Rig()
     await rig.say()

@@ -1,14 +1,14 @@
 [
- {"id": "amount_dropped", "title": "An amount the agent left out", "say": "डेढ़ लाख का cheque वीरवार को मिलेगा।",
+ {"id": "amount_dropped", "title": "An amount the agent left out", "hint": "Hindi: amount and a day", "say": "डेढ़ लाख का cheque वीरवार को मिलेगा।",
   "truth": {"amount_rupees": 150000, "weekday": "thursday"}, "alone": "Thursday, no amount", "guarded": "₹1,50,000, Thursday", "outcome": "Restored",
   "note": "The model logs the day and silently drops the amount. The evidence puts it back."},
- {"id": "phone_digit", "title": "One digit of a phone number", "say": "मेरा नंबर नोट करो: सात एक, डबल सेवन डबल एट, आठ सात एक सात।",
+ {"id": "phone_digit", "title": "One digit of a phone number", "hint": "Hindi-English: a mobile number", "say": "मेरा नंबर नोट करो: सात एक, डबल सेवन डबल एट, आठ सात एक सात।",
   "truth": {"phone": "7177888717"}, "alone": "91778 88717", "guarded": "71778 88717", "outcome": "Corrected",
   "note": "The first digit is misheard. Three other recognisers and the acoustic model say seven."},
- {"id": "one_question", "answer": "one_question_answer", "title": "Evidence is split, so it asks", "say": "callback number है सिक्स फ़ाइव एट नाइन, ज़ीरो एक तीन, टू फ़ोर फ़ाइव।",
+ {"id": "one_question", "answer": "one_question_answer", "title": "Evidence is split, so it asks", "hint": "Hinglish: a callback number", "say": "callback number है सिक्स फ़ाइव एट नाइन, ज़ीरो एक तीन, टू फ़ोर फ़ाइव।",
   "truth": {"phone": "6589013245"}, "alone": "65890 18245", "guarded": "65890 13245", "outcome": "Asked once",
   "note": "The recognisers disagree on a single digit, so the agent asks about that digit only."},
- {"id": "amount_misheard", "title": "A Hindi fraction, misheard", "say": "अभी सवा दो लाख भेज रहा हूँ, बाकी तीस तारीख को।",
+ {"id": "amount_misheard", "title": "A Hindi fraction, misheard", "hint": "Hindi: सवा दो लाख and a date", "say": "अभी सवा दो लाख भेज रहा हूँ, बाकी तीस तारीख को।",
   "truth": {"amount_rupees": 225000, "day_of_month": 30}, "alone": "₹2,00,000", "guarded": "₹2,25,000", "outcome": "Corrected",
   "note": "\"सवा दो लाख\" is two and a quarter lakh. The model alone often drops or changes the quarter."}
 ]

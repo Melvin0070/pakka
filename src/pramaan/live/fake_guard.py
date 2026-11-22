@@ -6,7 +6,7 @@ import asyncio
 from collections import defaultdict
 
 from ..pipeline import Judgement, SourceTiming
-from ..types import Decision, Evidence, Hypothesis, Policy, SlotDecision, Value, Values, Verdict
+from ..types import Asked, Decision, Evidence, Hypothesis, Policy, SlotDecision, Value, Values, Verdict
 from .ring import audio_sha
 
 
@@ -41,7 +41,9 @@ class FakeGuard:
     async def cancel(self, turn_id: str) -> None:
         self.cancelled.append(turn_id)
 
-    async def judge(self, turn_id: str, proposed: Values, confirming: bool = False) -> Judgement:
+    async def judge(
+        self, turn_id: str, proposed: Values, confirming: bool = False, asked: Asked | None = None
+    ) -> Judgement:
         session = turn_id.rsplit("-t", 1)[0]
         step = self.script[min(self._calls[session], len(self.script) - 1)]
         self._calls[session] += 1
