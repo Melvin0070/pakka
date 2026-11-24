@@ -2,7 +2,7 @@
 
 **Live, no login, nothing to install:**
 
-- Hindi and Hinglish: https://pakka.vercel.app
+- Hindi and Hinglish: https://pakka-voice.vercel.app
 - Telugu: https://pakka-te.vercel.app
 
 **Runs locally with no API key, no account and no network after setup** (about 3 minutes, 481 MB download):
@@ -252,7 +252,7 @@ a vendor is down. The same tables are in `README.md` and `results/`.
 
 ### 5. Your own voice (hosted URLs, or `make serve` with a key)
 
-1. Open https://pakka.vercel.app in Chrome, with a headset if possible.
+1. Open https://pakka-voice.vercel.app in Chrome, with a headset if possible.
 2. Click **Use your voice** and allow the microphone.
 3. Say an amount and a day in Hindi or Hinglish, for example "पौने तीन हज़ार रुपये शुक्रवार को दूँगा" or
    "ढाई लाख, pandrah tareekh ko". Or dictate a 10-digit number: "mera number note karo, nine eight double

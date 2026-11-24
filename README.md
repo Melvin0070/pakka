@@ -11,7 +11,7 @@ model and on this system. To set it up and try it end to end, with or without AP
 
 ## Live
 
-- Hindi: https://pakka.vercel.app
+- Hindi: https://pakka-voice.vercel.app
 - Telugu: https://pakka-te.vercel.app
 
 Both are live: the microphone works, and the recorded calls play through the real models. The sites run on
