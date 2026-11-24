@@ -1,6 +1,6 @@
 """Replay cache: every adapter response, keyed by (audio_sha, source, params_sha), with its original latency.
 
-The DB is committed so `make eval` runs with no network. PRAMAAN_OFFLINE=1 turns any miss into CacheMiss.
+The DB is committed so `make eval` runs with no network. PAKKA_OFFLINE=1 turns any miss into CacheMiss.
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS responses (
 
 
 class CacheMiss(RuntimeError):
-    """Raised on a miss when PRAMAAN_OFFLINE=1. Deliberately not swallowed by adapters: an offline run
+    """Raised on a miss when PAKKA_OFFLINE=1. Deliberately not swallowed by adapters: an offline run
     with a hole in the cache must fail loudly, not silently drop a source."""
 
 
@@ -62,12 +62,12 @@ def params_sha(params: dict[str, Any]) -> str:
 
 
 def offline() -> bool:
-    return os.environ.get("PRAMAAN_OFFLINE", "") not in ("", "0", "false")
+    return os.environ.get("PAKKA_OFFLINE", "") not in ("", "0", "false")
 
 
 class Cache:
     def __init__(self, path: Path | str | None = None) -> None:
-        self.path = Path(path or os.environ.get("PRAMAAN_CACHE") or DEFAULT_PATH)
+        self.path = Path(path or os.environ.get("PAKKA_CACHE") or DEFAULT_PATH)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         # One connection, used from the event loop and its worker threads one call at a time; rollback journal (not WAL) so the
         # committed file is self-contained with no -wal sidecar.

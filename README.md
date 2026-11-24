@@ -1,6 +1,6 @@
-# Pramaan (प्रमाण): evidence-gated actions for voice agents
+# Pakka (पक्का): evidence-gated actions for voice agents
 
-A speech-to-speech model goes from sound to a tool call with nothing in between to check. Pramaan sits at that
+A speech-to-speech model goes from sound to a tool call with nothing in between to check. Pakka sits at that
 point. When the agent tries to act on a spoken amount, date or phone number, the action is held until
 recognisers from different model families, and an open Hindi acoustic model scoring the exact value about to be
 executed, support it. If the evidence supports a different value, the argument is corrected. If the evidence is
@@ -11,13 +11,13 @@ model and on this system. To set it up and try it end to end, with or without AP
 
 ## Live
 
-- Hindi: https://pramaan-voice.vercel.app
-- Telugu: https://pramaan-voice-te.vercel.app
+- Hindi: https://pakka-voice.vercel.app
+- Telugu: https://pakka-te.vercel.app
 
 Both are live: the microphone works, and the recorded calls play through the real models. The sites run on
 the author's API keys with no login, so they may be switched back to replay mode (recorded calls only, every
 recogniser answering from the committed cache, the checks still computed for each play) at any time. `main.py`
-is the hosted entrypoint: it serves replay mode unless the project sets `PRAMAAN_HOSTED_LIVE=1`. `make deploy`
+is the hosted entrypoint: it serves replay mode unless the project sets `PAKKA_HOSTED_LIVE=1`. `make deploy`
 republishes both; `make serve` and `make serve-te` run the same thing locally with your own keys.
 
 ## Results
@@ -35,13 +35,13 @@ republishes both; `make serve` and `make serve-te` run the same thing locally wi
 | Ask when two models disagree (B-2M) | 10 (1.8%) | 151 (27.5%) | 30 | 399 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 6 (1.1%) | 70 (12.7%) | 34 | 480 |
 | Read everything back (A-RB) | 0 (0.0%) | 550 (100.0%) | 176 | 0 |
-| **Pramaan** (P) | 9 (1.6%) | 31 (5.6%) | 21 | 519 |
+| **Pakka** (P) | 9 (1.6%) | 31 (5.6%) | 21 | 519 |
 
-Certificate: of 519 actions Pramaan let through, 9 were wrong; one-sided 95% Clopper-Pearson upper bound 3.0%. Speaker-level: 6 of 8 speakers had any silent error (bound 95.4%). Added hold p50 0 ms, p95 1200 ms.
+Certificate: of 519 actions Pakka let through, 9 were wrong; one-sided 95% Clopper-Pearson upper bound 3.0%. Speaker-level: 6 of 8 speakers had any silent error (bound 95.4%). Added hold p50 0 ms, p95 1200 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 9 | 31 | 21 |
+| Pakka as frozen | 9 | 31 | 21 |
 | without the acoustic model | 10 | 45 | 26 |
 | OpenAI transcribers only | 35 | 13 | 9 |
 | acoustic model as the only check | 14 | 25 | 15 |
@@ -71,13 +71,13 @@ the test speakers' clips were scored once.
 | Ask when two models disagree (B-2M) | 3 (1.4%) | 56 (25.5%) | 14 | 164 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 3 (1.4%) | 15 (6.8%) | 14 | 205 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
-| **Pramaan** (P) | 3 (1.4%) | 4 (1.8%) | 3 | 216 |
+| **Pakka** (P) | 3 (1.4%) | 4 (1.8%) | 3 | 216 |
 
-Certificate: of 216 actions Pramaan let through, 3 were wrong; one-sided 95% Clopper-Pearson upper bound 3.5%. Speaker-level: 3 of 8 speakers had any silent error (bound 71.1%). Added hold p50 0 ms, p95 1200 ms.
+Certificate: of 216 actions Pakka let through, 3 were wrong; one-sided 95% Clopper-Pearson upper bound 3.5%. Speaker-level: 3 of 8 speakers had any silent error (bound 71.1%). Added hold p50 0 ms, p95 1200 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 3 | 4 | 3 |
+| Pakka as frozen | 3 | 4 | 3 |
 | without the acoustic model | 3 | 4 | 2 |
 | OpenAI transcribers only | 8 | 11 | 6 |
 | acoustic model as the only check | 5 | 2 | 1 |
@@ -109,13 +109,13 @@ generated after the fixes and scored once.
 | Ask when two models disagree (B-2M) | 2 (0.9%) | 63 (28.6%) | 7 | 157 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 0 (0.0%) | 18 (8.2%) | 9 | 202 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 65 | 0 |
-| **Pramaan** (P) | 2 (0.9%) | 13 (5.9%) | 6 | 207 |
+| **Pakka** (P) | 2 (0.9%) | 13 (5.9%) | 6 | 207 |
 
-Certificate: of 207 actions Pramaan let through, 2 were wrong; one-sided 95% Clopper-Pearson upper bound 3.0%. Speaker-level: 2 of 8 speakers had any silent error (bound 60.0%). Added hold p50 0 ms, p95 1200 ms.
+Certificate: of 207 actions Pakka let through, 2 were wrong; one-sided 95% Clopper-Pearson upper bound 3.0%. Speaker-level: 2 of 8 speakers had any silent error (bound 60.0%). Added hold p50 0 ms, p95 1200 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 2 | 13 | 6 |
+| Pakka as frozen | 2 | 13 | 6 |
 | without the acoustic model | 2 | 10 | 6 |
 | OpenAI transcribers only | 5 | 6 | 5 |
 | acoustic model as the only check | 3 | 7 | 4 |
@@ -164,13 +164,13 @@ clips were used to fix the Telugu parser on real recogniser output; the eight te
 | Ask when two models disagree (B-2M) | 7 (3.2%) | 46 (20.9%) | 24 | 174 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 8 (3.6%) | 32 (14.5%) | 23 | 188 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
-| **Pramaan** (P) | 7 (3.2%) | 17 (7.7%) | 13 | 203 |
+| **Pakka** (P) | 7 (3.2%) | 17 (7.7%) | 13 | 203 |
 
-Certificate: of 203 actions Pramaan let through, 7 were wrong; one-sided 95% Clopper-Pearson upper bound 6.4%. Speaker-level: 4 of 8 speakers had any silent error (bound 80.7%). Added hold p50 0 ms, p95 0 ms.
+Certificate: of 203 actions Pakka let through, 7 were wrong; one-sided 95% Clopper-Pearson upper bound 6.4%. Speaker-level: 4 of 8 speakers had any silent error (bound 80.7%). Added hold p50 0 ms, p95 0 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 7 | 17 | 13 |
+| Pakka as frozen | 7 | 17 | 13 |
 | without the acoustic model | 6 | 21 | 16 |
 | OpenAI transcribers only | 16 | 21 | 14 |
 | acoustic model as the only check | 10 | 21 | 9 |
@@ -183,7 +183,7 @@ Certificate: of 203 actions Pramaan let through, 7 were wrong; one-sided 95% Clo
 Telugu acoustic model alone: the true value outscored every transcribed and confusable rival in 321 of 336 values it scored.
 <!-- te:end -->
 
-Reading it plainly: the model alone acts on a wrong Telugu value on 38.6% of calls; Pramaan on 3.2%, asking on
+Reading it plainly: the model alone acts on a wrong Telugu value on 38.6% of calls; Pakka on 3.2%, asking on
 7.7%. Asking whenever gpt-transcribe and Sarvam disagree gets 3.6% while asking on 14.5%. The upper bound
 here is 6.4%, above the 5% the policy was frozen for on Hindi: an untuned transfer, and these 220 calls are too
 few to separate 7 errors from 8. Single-recogniser pipelines are much weaker in Telugu than in Hindi (10.9% to
@@ -199,7 +199,7 @@ to its value. `make te` reprints the table offline; `make serve-te` runs the liv
 
 The agent in the tables above has a short, generic prompt. `make strong-baseline` reruns locked set 2 with a
 prompt that teaches Hindi fractions, lakh and crore, and digit handling, under the same frozen policy. The model
-alone is wrong on 40 of 220 calls (18.2%, against 29.5%). Pramaan on that agent is wrong on 1 (0.5%) and asks on
+alone is wrong on 40 of 220 calls (18.2%, against 29.5%). Pakka on that agent is wrong on 1 (0.5%) and asks on
 10 (4.5%). The prompt was written once, after this set's earlier results had been seen; its worked examples
 avoid every amount in the set. Results are in `results/strong_baseline.json`; `make strong-baseline` rescoring
 needs the clips regenerated under `data/clips`, which are not in the repository.
@@ -215,9 +215,9 @@ them; the policy is the one frozen before either type existed. Scored once.
 | 220 actions | Wrong and acted on | Caller asked | of which the value was wrong |
 |---|---|---|---|
 | Realtime model alone | 78 (35.5%) | 0 | 0 |
-| **Pramaan** | 3 (1.4%) | 53 (24.1%) | 28 |
-| PIN codes only (119): model alone, Pramaan | 30, 0 | 0, 30 | 0, 11 |
-| Account numbers only (101): model alone, Pramaan | 48, 3 | 0, 23 | 0, 17 |
+| **Pakka** | 3 (1.4%) | 53 (24.1%) | 28 |
+| PIN codes only (119): model alone, Pakka | 30, 0 | 0, 30 | 0, 11 |
+| Account numbers only (101): model alone, Pakka | 48, 3 | 0, 23 | 0, 17 |
 
 Of the 167 actions let through, 3 were wrong: one-sided 95% Clopper-Pearson upper bound 4.6%. Reading it
 plainly:
@@ -225,7 +225,7 @@ plainly:
 - Forty of the 53 questions are one cause. A PIN or account number is recognised only when the digits follow
   the spoken label directly ("मेरा पिन कोड है ..."). Seven of the 40 lines put words in between ("पिन कोड नोट
   कीजिए, ..."), on purpose, and every one of their 40 clips was held for a question: safe, and a cost a wider
-  label rule would remove. On the other 180 clips Pramaan asked 13 times and was wrong 3 times, against 62 wrong
+  label rule would remove. On the other 180 clips Pakka asked 13 times and was wrong 3 times, against 62 wrong
   for the model alone.
 - All 3 wrong actions are account numbers, and 2 of them (one 16-digit line, clean and noisy) are a value the
   model had right and the guard repaired to a wrong one. Long digit strings are where the recognisers agree on
@@ -238,24 +238,24 @@ the clips regenerated under `data/clips` (`make digits-data`).
 ## Where it wins, ties and loses
 
 <!-- analysis:start -->
-Read from the same 550 test actions and frozen policy. Not tuned; the matched rows move only Pramaan's acceptance threshold after the fact.
+Read from the same 550 test actions and frozen policy. Not tuned; the matched rows move only Pakka's acceptance threshold after the fact.
 
-| Against | Its result | Pramaan with no more questions | Pramaan with no more errors |
+| Against | Its result | Pakka with no more questions | Pakka with no more errors |
 |---|---|---|---|
 | gpt-transcribe vs VerbX (B-2M) | 10 wrong, 151 asked | 5 wrong, 118 asked | 9 wrong, 31 asked |
 | gpt-transcribe vs Sarvam (B-2S) | 6 wrong, 70 asked | 7 wrong, 37 asked | 6 wrong, 117 asked |
 
 Of the 176 actions where the realtime model's value was wrong: 146 repaired to the true value; 21 caller asked; 9 acted on, wrong.
-Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the two-model baseline acts on all of them): Pramaan 4 acted on, wrong; 2 caller asked.
+Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the two-model baseline acts on all of them): Pakka 4 acted on, wrong; 2 caller asked.
 
 | If a vendor is down | Wrong and acted on | Caller asked |
 |---|---|---|
-| Pramaan without Sarvam | 11 | 97 |
-| Pramaan without VerbX | 6 | 37 |
-| Pramaan without OpenAI transcription | 10 | 91 |
+| Pakka without Sarvam | 11 | 97 |
+| Pakka without VerbX | 6 | 37 |
+| Pakka without OpenAI transcription | 10 | 91 |
 | Two-model baseline without Sarvam (falls back to VerbX) | 10 | 151 |
 
-| Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pramaan wrong / asked |
+| Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pakka wrong / asked |
 |---|---|---|---|---|
 | condition: noisy | 150 | 60 (40.0%) | 3 / 23 | 5 / 7 |
 | condition: phone | 400 | 116 (29.0%) | 3 / 47 | 4 / 24 |
@@ -286,7 +286,7 @@ After a question (29 asked test actions replayed live, synthetic cooperative ans
 
 Reading it plainly:
 
-- Against the strongest cheap alternative (ask whenever gpt-transcribe and Sarvam disagree), Pramaan asks
+- Against the strongest cheap alternative (ask whenever gpt-transcribe and Sarvam disagree), Pakka asks
   fewer questions on every set, and makes the same or slightly more wrong actions. On locked set 2 that is 13
   questions and 2 wrong against 18 questions and none. The error differences are within noise at these sizes.
 - Most of the saving is on Hindi and Hinglish speech, where the acoustic model is in its own language. On
@@ -401,10 +401,10 @@ caller audio ──┬──────────────► gpt-realtime
   already passed could be lost the same way.
 - A live call is not deterministic: the realtime model does not always make the same tool call for the same
   audio, so live outcomes differ slightly from the offline table.
-- The witness is a Hindi model (or the Telugu one under `PRAMAAN_LANG=te`). English number words are scored
+- The witness is a Hindi model (or the Telugu one under `PAKKA_LANG=te`). English number words are scored
   through Devanagari or Telugu spellings, which is weaker, and without a transcript in the model's own script
   for context the witness abstains.
-- One language per deployment: `PRAMAAN_LANG` picks the recogniser settings and the acoustic model at start.
+- One language per deployment: `PAKKA_LANG` picks the recogniser settings and the acoustic model at start.
   A call that switches between Hindi and Telugu is not routed between the two models.
 - Telugu has no tuned policy, no locked second set, no human recordings and no measured question loop. Its
   questions are phrased in Telugu but have not been played to a Telugu speaker. Tamil is not built.
@@ -432,7 +432,7 @@ caller audio ──┬──────────────► gpt-realtime
   locked set 2 (10 to 13). On the tuning speakers the true value outscores every transcribed and confusable
   rival in 655 of the 705 values it scored; it is rarely decisive because the transcribers usually already
   agree.
-- Asking only when gpt-transcribe and Sarvam disagree (B-2S) remains a strong, much simpler baseline. Pramaan's
+- Asking only when gpt-transcribe and Sarvam disagree (B-2S) remains a strong, much simpler baseline. Pakka's
   measured advantage over it is fewer questions, not fewer errors.
 - One human speaker (15 clips) has been recorded and scored; see `results/human_pilot.md`. It is the author,
   on prompts the tuning voices also spoke, scored more than once, so it is a pilot and stays out of the locked
@@ -445,7 +445,7 @@ caller audio ──┬──────────────► gpt-realtime
 ## Layout
 
 ```
-src/pramaan/   types, lang (per-language settings), normalise, render, confusables, lattice, witness,
+src/pakka/   types, lang (per-language settings), normalise, render, confusables, lattice, witness,
                evidence, score, decide, gate, question, executor, bundle, cache, pipeline, sources/, live/
 eval/          tune.py (policy, tuning speakers only), run_eval.py (all arms, test speakers), analysis.py
                (baselines at matched budgets, slices, cost), g2.py (witness gate)

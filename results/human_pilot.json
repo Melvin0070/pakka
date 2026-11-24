@@ -125,7 +125,7 @@
   },
   {
    "id": "P",
-   "name": "Pramaan",
+   "name": "Pakka",
    "how": "Hold the realtime model's action until the evidence supports it",
    "ours": true,
    "n": 15,
@@ -261,7 +261,7 @@
  },
  "ablations": [
   {
-   "name": "Pramaan as frozen",
+   "name": "Pakka as frozen",
    "n": 15,
    "wrong_silent": 0,
    "asked": 0,

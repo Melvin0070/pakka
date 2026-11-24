@@ -1,7 +1,7 @@
-"""Where Pramaan wins, ties and loses against the two-model baselines, and what it costs.
+"""Where Pakka wins, ties and loses against the two-model baselines, and what it costs.
 
 Everything here is read off the frozen policy's test-speaker outcomes; nothing is tuned. The matched-budget
-rows move Pramaan's acceptance threshold after the fact, so they describe its risk-coverage curve and are not
+rows move Pakka's acceptance threshold after the fact, so they describe its risk-coverage curve and are not
 certified operating points. Writes results/analysis.json and results/analysis.md, and the README block.
 """
 
@@ -12,9 +12,9 @@ import statistics
 from collections import Counter, defaultdict
 from collections.abc import Callable
 
-from pramaan.decide import decide
-from pramaan.pipeline import load_policy
-from pramaan.types import Verdict
+from pakka.decide import decide
+from pakka.pipeline import load_policy
+from pakka.types import Verdict
 
 from .common import EVIDENCE, RESULTS, ROOT, Outcome, Row, guard, hyp, load, split, within
 from .run_eval import CASCADE, SARVAM, SECOND, bare, pct, summarise, two_model
@@ -23,7 +23,7 @@ PRICES = ROOT / "eval" / "prices.json"
 
 
 def matched(outs: list[Outcome], base: dict) -> dict:
-    """Pramaan's curve read at the baseline's question budget, and at the baseline's error count."""
+    """Pakka's curve read at the baseline's question budget, and at the baseline's error count."""
     points = []
     for t in sorted({o.score for o in outs if o.executed}):
         acc = [o for o in outs if o.executed and o.score >= t]
@@ -33,10 +33,10 @@ def matched(outs: list[Outcome], base: dict) -> dict:
     return {
         "baseline_asked": base["asked"],
         "baseline_wrong": base["wrong_silent"],
-        "pramaan_wrong_at_no_more_questions": same_q[1] if same_q else None,
-        "pramaan_asked_there": same_q[0] if same_q else None,
-        "pramaan_asked_at_no_more_errors": same_e[0] if same_e else None,
-        "pramaan_wrong_there": same_e[1] if same_e else None,
+        "pakka_wrong_at_no_more_questions": same_q[1] if same_q else None,
+        "pakka_asked_there": same_q[0] if same_q else None,
+        "pakka_asked_at_no_more_errors": same_e[0] if same_e else None,
+        "pakka_wrong_there": same_e[1] if same_e else None,
     }
 
 
@@ -56,12 +56,12 @@ def main() -> None:
     policy = load_policy()
     n = len(test)
 
-    def pramaan(r: Row) -> Outcome:
+    def pakka(r: Row) -> Outcome:
         return guard(r, policy)
 
-    outs = [pramaan(r) for r in test]
+    outs = [pakka(r) for r in test]
     two = {"B-2M": two_model(SECOND), "B-2S": two_model(SARVAM)}
-    arms = {"A": bare, **two, "P": pramaan}
+    arms = {"A": bare, **two, "P": pakka}
     base = {k: summarise(test, fn) for k, fn in two.items()}
 
     # What each approach does with the errors that matter.
@@ -73,7 +73,7 @@ def main() -> None:
     shared = [r for r in test if hyp(r, CASCADE) == hyp(r, SARVAM) and hyp(r, CASCADE) != r.truth]
     shared_fate = Counter(
         "acted on, wrong" if o.executed and o.wrong else "acted on, right" if o.executed else "caller asked"
-        for o in map(pramaan, shared)
+        for o in map(pakka, shared)
     )
 
     outage = {}
@@ -135,7 +135,7 @@ def main() -> None:
         "policy_hash": policy.hash,
         "matched": {k: matched(outs, b) for k, b in base.items()},
         "agent_errors": {"n": len(agent_wrong), "fate": dict(fate)},
-        "shared_transcriber_errors": {"n": len(shared), "two_model_baseline": "acted on, wrong", "pramaan": dict(shared_fate)},
+        "shared_transcriber_errors": {"n": len(shared), "two_model_baseline": "acted on, wrong", "pakka": dict(shared_fate)},
         "vendor_outage": outage,
         "by": by,
         "latency": latency,
@@ -148,22 +148,22 @@ def main() -> None:
 
     m = out["matched"]
     lines = [
-        f"Read from the same {n} test actions and frozen policy. Not tuned; the matched rows move only Pramaan's "
+        f"Read from the same {n} test actions and frozen policy. Not tuned; the matched rows move only Pakka's "
         "acceptance threshold after the fact.",
         "",
-        "| Against | Its result | Pramaan with no more questions | Pramaan with no more errors |",
+        "| Against | Its result | Pakka with no more questions | Pakka with no more errors |",
         "|---|---|---|---|",
     ]
     names = {"B-2M": "gpt-transcribe vs VerbX", "B-2S": "gpt-transcribe vs Sarvam"}
     for k, v in m.items():
         q = (
-            f"{v['pramaan_wrong_at_no_more_questions']} wrong, {v['pramaan_asked_there']} asked"
-            if v["pramaan_asked_there"] is not None
+            f"{v['pakka_wrong_at_no_more_questions']} wrong, {v['pakka_asked_there']} asked"
+            if v["pakka_asked_there"] is not None
             else "not reachable"
         )
         e = (
-            f"{v['pramaan_wrong_there']} wrong, {v['pramaan_asked_at_no_more_errors']} asked"
-            if v["pramaan_asked_at_no_more_errors"] is not None
+            f"{v['pakka_wrong_there']} wrong, {v['pakka_asked_at_no_more_errors']} asked"
+            if v["pakka_asked_at_no_more_errors"] is not None
             else "not reachable"
         )
         lines.append(
@@ -175,16 +175,16 @@ def main() -> None:
         + "; ".join(f"{c} {k}" for k, c in fate.most_common())
         + ".",
         f"Of the {len(shared)} actions where gpt-transcribe and Sarvam agreed on a wrong value (the two-model "
-        "baseline acts on all of them): Pramaan "
+        "baseline acts on all of them): Pakka "
         + "; ".join(f"{c} {k}" for k, c in shared_fate.most_common())
         + ".",
         "",
         "| If a vendor is down | Wrong and acted on | Caller asked |",
         "|---|---|---|",
-        *(f"| Pramaan without {k} | {v['wrong_silent']} | {v['asked']} |" for k, v in outage.items()),
+        *(f"| Pakka without {k} | {v['wrong_silent']} | {v['asked']} |" for k, v in outage.items()),
         f"| Two-model baseline without Sarvam (falls back to VerbX) | {base['B-2M']['wrong_silent']} | {base['B-2M']['asked']} |",
         "",
-        "| Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pramaan wrong / asked |",
+        "| Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pakka wrong / asked |",
         "|---|---|---|---|---|",
     ]
     for title, groups in by.items():

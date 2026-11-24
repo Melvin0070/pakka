@@ -4,7 +4,7 @@ import math
 import numpy as np
 import pytest
 
-from pramaan.witness import (
+from pakka.witness import (
     MODEL_DIR,
     Arc,
     Pieces,

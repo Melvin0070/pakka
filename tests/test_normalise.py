@@ -7,9 +7,9 @@ import pytest
 from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
-from pramaan.lexicon import HI_0_99
-from pramaan.normalise import extract, parse_number, values
-from pramaan.render import (
+from pakka.lexicon import HI_0_99
+from pakka.normalise import extract, parse_number, values
+from pakka.render import (
     amount_renderings,
     english_day_renderings,
     hindi_cardinal,

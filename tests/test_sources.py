@@ -4,11 +4,11 @@ from pathlib import Path
 
 import pytest
 
-from pramaan.cache import Cache, CacheMiss
-from pramaan.sources import gpt4o_transcribe, gpt_transcribe, realtime_agent, saaras, scribe
-from pramaan.sources.base import PermanentError, Source
-from pramaan.sources.registry import gather
-from pramaan.types import Hypothesis
+from pakka.cache import Cache, CacheMiss
+from pakka.sources import gpt4o_transcribe, gpt_transcribe, realtime_agent, saaras, scribe
+from pakka.sources.base import PermanentError, Source
+from pakka.sources.registry import gather
+from pakka.types import Hypothesis
 
 FIX = Path(__file__).parent / "fixtures"
 
@@ -96,7 +96,7 @@ def test_gather_failures_and_deadline_replay(tmp_path):
 
 
 def test_gather_offline_hole_is_loud(tmp_path, monkeypatch):
-    monkeypatch.setenv("PRAMAAN_OFFLINE", "1")
+    monkeypatch.setenv("PAKKA_OFFLINE", "1")
     c = Cache(tmp_path / "c.sqlite")
     with pytest.raises(ExceptionGroup) as ei:
         asyncio.run(gather(b"\0\0", None, [_fake("x", c)]))
@@ -104,7 +104,7 @@ def test_gather_offline_hole_is_loud(tmp_path, monkeypatch):
 
 
 def test_verbx_fixture():
-    from pramaan.sources import verbx
+    from pakka.sources import verbx
 
     f = fixture("verbx.json")
     h = verbx.parse(f["response"], f["latency_ms"])

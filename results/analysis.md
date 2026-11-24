@@ -1,21 +1,21 @@
-Read from the same 550 test actions and frozen policy. Not tuned; the matched rows move only Pramaan's acceptance threshold after the fact.
+Read from the same 550 test actions and frozen policy. Not tuned; the matched rows move only Pakka's acceptance threshold after the fact.
 
-| Against | Its result | Pramaan with no more questions | Pramaan with no more errors |
+| Against | Its result | Pakka with no more questions | Pakka with no more errors |
 |---|---|---|---|
 | gpt-transcribe vs VerbX (B-2M) | 10 wrong, 151 asked | 5 wrong, 118 asked | 9 wrong, 31 asked |
 | gpt-transcribe vs Sarvam (B-2S) | 6 wrong, 70 asked | 7 wrong, 37 asked | 6 wrong, 117 asked |
 
 Of the 176 actions where the realtime model's value was wrong: 146 repaired to the true value; 21 caller asked; 9 acted on, wrong.
-Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the two-model baseline acts on all of them): Pramaan 4 acted on, wrong; 2 caller asked.
+Of the 6 actions where gpt-transcribe and Sarvam agreed on a wrong value (the two-model baseline acts on all of them): Pakka 4 acted on, wrong; 2 caller asked.
 
 | If a vendor is down | Wrong and acted on | Caller asked |
 |---|---|---|
-| Pramaan without Sarvam | 11 | 97 |
-| Pramaan without VerbX | 6 | 37 |
-| Pramaan without OpenAI transcription | 10 | 91 |
+| Pakka without Sarvam | 11 | 97 |
+| Pakka without VerbX | 6 | 37 |
+| Pakka without OpenAI transcription | 10 | 91 |
 | Two-model baseline without Sarvam (falls back to VerbX) | 10 | 151 |
 
-| Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pramaan wrong / asked |
+| Slice | Actions | Realtime alone wrong | Sarvam baseline wrong / asked | Pakka wrong / asked |
 |---|---|---|---|---|
 | condition: noisy | 150 | 60 (40.0%) | 3 / 23 | 5 / 7 |
 | condition: phone | 400 | 116 (29.0%) | 3 / 47 | 4 / 24 |

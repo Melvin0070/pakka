@@ -4,13 +4,13 @@ Run on 2026-11-22 on policy `50d83054eef1`. Twelve new Hindi and Hinglish senten
 before the run, were spoken by the macOS Lekha voice and streamed in real time to the same WebSocket the browser
 microphone uses. None of the audio was in the replay cache, so every recogniser and both realtime agents ran live.
 
-| Result | Realtime model alone | With Pramaan |
+| Result | Realtime model alone | With Pakka |
 |---|---|---|
 | Right value acted on | 7 of 12 | 8 of 12 |
 | Wrong value acted on | 5 of 12 | 0 of 12 |
 | Held, caller asked one question | 0 of 12 | 4 of 12 |
 
-| Caller said | Truth | Model alone | Pramaan |
+| Caller said | Truth | Model alone | Pakka |
 |---|---|---|---|
 | बारह हज़ार पाँच सौ, शुक्रवार | ₹12,500, Friday | right | committed, right |
 | साढ़े चार हज़ार, सत्रह तारीख | ₹4,500, 17th | right | committed, right |

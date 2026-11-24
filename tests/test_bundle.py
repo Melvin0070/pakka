@@ -2,9 +2,9 @@ import json
 
 import pytest
 
-from pramaan.bundle import BundleStore, ChainError, ReplayMismatch, make_bundle, masked, replay, verify_chain
-from pramaan.decide import decide
-from pramaan.types import Bundle, Evidence, Hypothesis, Policy, Verdict, WitnessScore
+from pakka.bundle import BundleStore, ChainError, ReplayMismatch, make_bundle, masked, replay, verify_chain
+from pakka.decide import decide
+from pakka.types import Bundle, Evidence, Hypothesis, Policy, Verdict, WitnessScore
 
 POLICY = Policy()
 

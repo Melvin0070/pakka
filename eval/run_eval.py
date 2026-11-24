@@ -13,8 +13,8 @@ from collections import defaultdict
 from collections.abc import Callable
 from datetime import UTC, datetime
 
-from pramaan.gate import cp_upper, ltt_select, risk_coverage, speaker_bound
-from pramaan.pipeline import load_policy
+from pakka.gate import cp_upper, ltt_select, risk_coverage, speaker_bound
+from pakka.pipeline import load_policy
 
 from .common import (
     ALPHA,
@@ -142,7 +142,7 @@ def main() -> None:
         "" if lp_threshold is not None else "; none certifies, so it always asks"
     )
 
-    def pramaan(row: Row) -> Outcome:
+    def pakka(row: Row) -> Outcome:
         return guard(row, policy)
 
     arms: list[tuple[str, str, str, Callable[[Row], Outcome], bool]] = [
@@ -151,7 +151,7 @@ def main() -> None:
         ("B-LP", lp_name, "gpt-4o-transcribe token log-probabilities, threshold set the same way", lp_arm, False),
         ("B-2M", "Ask when two models disagree", f"{CASCADE} against {second}", two_model(second), False),
         ("A-RB", "Read everything back", "Confirm every action with the caller", read_back, False),
-        ("P", "Pramaan", "Hold the realtime model's action until the evidence supports it", pramaan, True),
+        ("P", "Pakka", "Hold the realtime model's action until the evidence supports it", pakka, True),
     ]  # fmt: skip
     if has_second:
         arms.insert(2, ("V", "Second vendor, then fill the form", f"{SECOND}, then typed normalisation", cascade(SECOND), False))  # fmt: skip
@@ -170,7 +170,7 @@ def main() -> None:
     p_arm["added_latency_p50_ms"] = round(statistics.median(waits))
     p_arm["added_latency_p95_ms"] = round(waits[int(0.95 * (len(waits) - 1))])
 
-    accepted = [(r, o) for r, o in ((r, pramaan(r)) for r in test) if o.executed]
+    accepted = [(r, o) for r, o in ((r, pakka(r)) for r in test) if o.executed]
     n_acc, k = len(accepted), sum(o.wrong for _, o in accepted)
     by_speaker: dict[str, list[bool]] = defaultdict(list)
     for r, o in accepted:
@@ -189,7 +189,7 @@ def main() -> None:
 
     ablations = []
     variants: list[tuple[str, Callable[[Row], Outcome]]] = [
-        ("Pramaan as frozen", pramaan),
+        ("Pakka as frozen", pakka),
         ("without the acoustic model", lambda r: guard(r, policy.model_copy(update={"require_witness": False}), witness=False)),
         ("OpenAI transcribers only", lambda r: guard(r, policy.model_copy(update={"min_families": 1, "require_witness": False}), witness=False, drop_families=frozenset({"verbx", "elevenlabs", "sarvam"}))),
         ("acoustic model as the only check", lambda r: guard(r, policy.model_copy(update={"min_families": 1}), drop_families=frozenset({"verbx", "elevenlabs", "sarvam"}))),
@@ -211,7 +211,7 @@ def main() -> None:
             by_slot[slot][0] += 1
             by_slot[slot][1] += r.evidence.proposed.get(slot) != truth
     by_condition = {
-        c: {"A": summarise(sub, bare), "P": summarise(sub, pramaan)}
+        c: {"A": summarise(sub, bare), "P": summarise(sub, pakka)}
         for c in sorted({r.condition for r in test})
         if (sub := [r for r in test if r.condition == c])
     }
@@ -239,7 +239,7 @@ def main() -> None:
         "alpha": ALPHA,
         "arms": out_arms,
         "certificate": certificate,
-        "risk_coverage": {"P": curve(test, pramaan), "B-LP": curve(test, logprob_gate)},
+        "risk_coverage": {"P": curve(test, pakka), "B-LP": curve(test, logprob_gate)},
         "ablations": ablations,
         "agent_error_by_slot": {s: {"n": n, "wrong": w} for s, (n, w) in sorted(by_slot.items())},
         "by_condition": by_condition,
@@ -262,7 +262,7 @@ def main() -> None:
         )
     lines += [
         "",
-        f"Certificate: of {n_acc} actions Pramaan let through, {k} were wrong; one-sided 95% Clopper-Pearson upper bound "
+        f"Certificate: of {n_acc} actions Pakka let through, {k} were wrong; one-sided 95% Clopper-Pearson upper bound "
         f"{pct(certificate['upper_bound'] or 0)}. Speaker-level: {sb.speakers_with_error} of {sb.speakers} speakers had any silent error "
         f"(bound {pct(sb.upper)}). Added hold p50 {p_arm['added_latency_p50_ms']} ms, p95 {p_arm['added_latency_p95_ms']} ms.",
         "",

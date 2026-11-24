@@ -10,13 +10,13 @@
 | Ask when two models disagree (B-2M) | 7 (3.2%) | 46 (20.9%) | 24 | 174 |
 | Ask when OpenAI and Sarvam disagree (B-2S) | 8 (3.6%) | 32 (14.5%) | 23 | 188 |
 | Read everything back (A-RB) | 0 (0.0%) | 220 (100.0%) | 85 | 0 |
-| **Pramaan** (P) | 7 (3.2%) | 17 (7.7%) | 13 | 203 |
+| **Pakka** (P) | 7 (3.2%) | 17 (7.7%) | 13 | 203 |
 
-Certificate: of 203 actions Pramaan let through, 7 were wrong; one-sided 95% Clopper-Pearson upper bound 6.4%. Speaker-level: 4 of 8 speakers had any silent error (bound 80.7%). Added hold p50 0 ms, p95 0 ms.
+Certificate: of 203 actions Pakka let through, 7 were wrong; one-sided 95% Clopper-Pearson upper bound 6.4%. Speaker-level: 4 of 8 speakers had any silent error (bound 80.7%). Added hold p50 0 ms, p95 0 ms.
 
 | Ablation | Wrong and acted on | Caller asked | of which wrong |
 |---|---|---|---|
-| Pramaan as frozen | 7 | 17 | 13 |
+| Pakka as frozen | 7 | 17 | 13 |
 | without the acoustic model | 6 | 21 | 16 |
 | OpenAI transcribers only | 16 | 21 | 14 |
 | acoustic model as the only check | 10 | 21 | 9 |

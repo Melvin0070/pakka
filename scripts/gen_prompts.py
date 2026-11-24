@@ -1,6 +1,6 @@
 """Generate data/prompts.jsonl: what synthetic callers say, with exact typed truth.
 
-Spoken numbers come from pramaan.render / lexicon, so the sentence says exactly the truth value.
+Spoken numbers come from pakka.render / lexicon, so the sentence says exactly the truth value.
 Deterministic (fixed seed); re-running rewrites the same file.
 """
 
@@ -10,8 +10,8 @@ import json
 import random
 from pathlib import Path
 
-from pramaan.lexicon import EN_DIGITS, EN_DIGITS_DEV, HI_0_99, HI_WEEKDAYS, WEEKDAYS
-from pramaan.render import amount_renderings, hindi_cardinal
+from pakka.lexicon import EN_DIGITS, EN_DIGITS_DEV, HI_0_99, HI_WEEKDAYS, WEEKDAYS
+from pakka.render import amount_renderings, hindi_cardinal
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "prompts.jsonl"

@@ -7,13 +7,13 @@ from typing import Any
 import numpy as np
 import pytest
 
-from pramaan import audio
-from pramaan.live import offline
-from pramaan.live.fake_guard import FakeGuard
-from pramaan.live.ledger import MemoryLedger
-from pramaan.live.session import CallSession
-from pramaan.sources import realtime_agent
-from pramaan.types import Values
+from pakka import audio
+from pakka.live import offline
+from pakka.live.fake_guard import FakeGuard
+from pakka.live.ledger import MemoryLedger
+from pakka.live.session import CallSession
+from pakka.sources import realtime_agent
+from pakka.types import Values
 
 pytestmark = pytest.mark.anyio
 

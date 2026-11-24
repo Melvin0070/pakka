@@ -37,7 +37,7 @@ class Lang:
 
     @property
     def model_dir(self) -> Path:
-        return Path(os.environ.get("PRAMAAN_MODELS") or ROOT / "models") / self.code
+        return Path(os.environ.get("PAKKA_MODELS") or ROOT / "models") / self.code
 
 
 HI = Lang(
@@ -112,12 +112,12 @@ TE = Lang(
 
 def state_dir() -> Path:
     """Where the process may write (bundles, cached posteriors). A read-only host points this at /tmp."""
-    return Path(os.environ.get("PRAMAAN_STATE") or ROOT / "data")
+    return Path(os.environ.get("PAKKA_STATE") or ROOT / "data")
 
 
 LANGS = {lang.code: lang for lang in (HI, TE)}
 
 
 def get(code: str | None = None) -> Lang:
-    """The named language, or the one PRAMAAN_LANG selects (Hindi when unset)."""
-    return LANGS[code or os.environ.get("PRAMAAN_LANG") or "hi"]
+    """The named language, or the one PAKKA_LANG selects (Hindi when unset)."""
+    return LANGS[code or os.environ.get("PAKKA_LANG") or "hi"]

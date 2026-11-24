@@ -18,7 +18,7 @@ from pathlib import Path
 import numpy as np
 from openai import AsyncOpenAI
 
-from pramaan.audio import (
+from pakka.audio import (
     RATE,
     add_noise,
     babble,

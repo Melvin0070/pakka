@@ -16,11 +16,11 @@ import time
 from collections import Counter
 from pathlib import Path
 
-from pramaan.audio import read_pcm24k
-from pramaan.cache import default_cache
-from pramaan.sources import realtime_agent
-from pramaan.sources.base import Source
-from pramaan.sources.registry import available_sources
+from pakka.audio import read_pcm24k
+from pakka.cache import default_cache
+from pakka.sources import realtime_agent
+from pakka.sources.base import Source
+from pakka.sources.registry import available_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 CLEAN_SUBSET = 100

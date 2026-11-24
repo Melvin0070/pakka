@@ -88,7 +88,7 @@ async def main() -> None:
         kinds = sorted({e["type"] for e in events if e["type"].startswith("right.")})
         a, p = left[-1] if left else None, right[-1] if right else None
         rows.append(
-            {"i": i, "text": text, "truth": truth, "alone": a, "pramaan": p, "kinds": kinds, "events": events}
+            {"i": i, "text": text, "truth": truth, "alone": a, "pakka": p, "kinds": kinds, "events": events}
         )
         print(
             i,
@@ -97,7 +97,7 @@ async def main() -> None:
             "| alone",
             a,
             "OK" if a == truth else "WRONG",
-            "| pramaan",
+            "| pakka",
             p,
             "OK" if p == truth else ("NO-COMMIT" if p is None else "WRONG"),
             kinds,
@@ -106,10 +106,10 @@ async def main() -> None:
     (OUT / "fresh_mic.json").write_text(json.dumps(rows, ensure_ascii=False))
     n = len(rows)
     wrong_a = sum(r["alone"] != r["truth"] for r in rows)
-    right_p = sum(r["pramaan"] == r["truth"] for r in rows)
-    wrong_p = sum(r["pramaan"] is not None and r["pramaan"] != r["truth"] for r in rows)
+    right_p = sum(r["pakka"] == r["truth"] for r in rows)
+    wrong_p = sum(r["pakka"] is not None and r["pakka"] != r["truth"] for r in rows)
     print(
-        f"\nalone not right {wrong_a}/{n}; pramaan right {right_p}/{n}, wrong committed {wrong_p}/{n}, no commit {n - right_p - wrong_p}/{n}"
+        f"\nalone not right {wrong_a}/{n}; pakka right {right_p}/{n}, wrong committed {wrong_p}/{n}, no commit {n - right_p - wrong_p}/{n}"
     )
 
 

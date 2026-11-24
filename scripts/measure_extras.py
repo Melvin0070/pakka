@@ -17,18 +17,18 @@ from pathlib import Path
 import numpy as np
 
 from eval.common import DELTA, ROOT, Row, guard
-from pramaan import audio
-from pramaan.cache import Cache
-from pramaan.decide import decide, resolve_answer
-from pramaan.evidence import assemble
-from pramaan.gate import cp_upper
-from pramaan.live.tooling import LEFT_INSTRUCTIONS, TOOL
-from pramaan.pipeline import load_policy
-from pramaan.sources import realtime_agent as ra
-from pramaan.sources.base import PermanentError, with_retries
-from pramaan.sources.registry import gather
-from pramaan.types import Asked, Verdict
-from pramaan.witness import Witness
+from pakka import audio
+from pakka.cache import Cache
+from pakka.decide import decide, resolve_answer
+from pakka.evidence import assemble
+from pakka.gate import cp_upper
+from pakka.live.tooling import LEFT_INSTRUCTIONS, TOOL
+from pakka.pipeline import load_policy
+from pakka.sources import realtime_agent as ra
+from pakka.sources.base import PermanentError, with_retries
+from pakka.sources.registry import gather
+from pakka.types import Asked, Verdict
+from pakka.witness import Witness
 
 PARAMS = {**ra.PARAMS, "instructions": LEFT_INSTRUCTIONS, "tool": TOOL}
 
@@ -49,7 +49,7 @@ async def main() -> None:
     rows = [json.loads(x) for x in (ROOT / args.manifest).read_text().splitlines() if x.strip()]
     policy, witness = load_policy(), Witness()
     answer_policy = policy.model_copy(update={"require_witness": False, "accept_threshold": 0.0})
-    cache = Cache(os.environ.get("PRAMAAN_EXTRAS_CACHE") or ROOT / "data" / "cache.extras.sqlite")
+    cache = Cache(os.environ.get("PAKKA_EXTRAS_CACHE") or ROOT / "data" / "cache.extras.sqlite")
     sem = asyncio.Semaphore(args.concurrency)
 
     async def one(r: dict) -> dict:

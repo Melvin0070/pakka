@@ -2,7 +2,7 @@ import asyncio
 
 import pytest
 
-from pramaan.cache import Cache, CacheMiss
+from pakka.cache import Cache, CacheMiss
 
 
 def test_round_trip_and_latency_preserved(tmp_path):
@@ -35,7 +35,7 @@ def test_reopen_persists(tmp_path):
 def test_offline_miss_raises(tmp_path, monkeypatch):
     c = Cache(tmp_path / "c.sqlite")
     c.put("hit", "src", {}, {"ok": True}, 5.0)
-    monkeypatch.setenv("PRAMAAN_OFFLINE", "1")
+    monkeypatch.setenv("PAKKA_OFFLINE", "1")
 
     async def fn():
         raise AssertionError("network must not be called offline")
@@ -57,7 +57,7 @@ def test_permanent_errors_cached_and_droppable(tmp_path):
 
 
 def test_timed_response_reports_own_latency(tmp_path):
-    from pramaan.cache import Timed
+    from pakka.cache import Timed
 
     c = Cache(tmp_path / "c.sqlite")
 

@@ -2,12 +2,12 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from pramaan import normalise, question
-from pramaan.confusables import neighbours
-from pramaan.decide import decide, resolve_answer
-from pramaan.lattice import canon, is_valid
-from pramaan.render import renderings
-from pramaan.types import Asked, Evidence, Hypothesis, Policy, Verdict
+from pakka import normalise, question
+from pakka.confusables import neighbours
+from pakka.decide import decide, resolve_answer
+from pakka.lattice import canon, is_valid
+from pakka.render import renderings
+from pakka.types import Asked, Evidence, Hypothesis, Policy, Verdict
 
 POLICY = Policy(require_witness=False, accept_threshold=0.0)
 

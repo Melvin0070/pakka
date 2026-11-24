@@ -4,7 +4,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from pramaan.gate import (
+from pakka.gate import (
     binom_cdf,
     cp_upper,
     eprocess,

@@ -8,12 +8,12 @@ from typing import Any
 
 import pytest
 
-from pramaan.live.fake_guard import FakeGuard
-from pramaan.live.ledger import MemoryLedger, SqlLedger
-from pramaan.live.ring import BYTES_PER_MS, RingBuffer, audio_sha
-from pramaan.live.session import LEAD_IN_MS, MAX_QUESTIONS, CallSession
-from pramaan.live.tooling import clean_args
-from pramaan.types import Values
+from pakka.live.fake_guard import FakeGuard
+from pakka.live.ledger import MemoryLedger, SqlLedger
+from pakka.live.ring import BYTES_PER_MS, RingBuffer, audio_sha
+from pakka.live.session import LEAD_IN_MS, MAX_QUESTIONS, CallSession
+from pakka.live.tooling import clean_args
+from pakka.types import Values
 
 pytestmark = pytest.mark.anyio  # anyio's pytest plugin is already installed; no extra dependency
 

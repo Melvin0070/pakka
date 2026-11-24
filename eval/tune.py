@@ -12,8 +12,8 @@ import itertools
 import json
 import subprocess
 
-from pramaan.gate import binom_cdf
-from pramaan.types import Policy
+from pakka.gate import binom_cdf
+from pakka.types import Policy
 
 from .common import ALPHA, DELTA, POLICY, ROOT, guard, tuning_rows
 

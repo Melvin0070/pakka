@@ -1,6 +1,6 @@
 """Replay a recorded call with no network: the Realtime model is replaced by its own recorded answer.
 
-Used when PRAMAAN_OFFLINE=1 (venue network down). Both agents get the tool call gpt-realtime-2.1 made for
+Used when PAKKA_OFFLINE=1 (venue network down). Both agents get the tool call gpt-realtime-2.1 made for
 this exact clip during collection, after the response time recorded with it; live they are two independent
 sessions and can differ. Every recogniser answers from data/cache.sqlite and the acoustic model runs locally,
 so the evidence, the decision and the ledger are the real code paths. The agent's speech is text only.
