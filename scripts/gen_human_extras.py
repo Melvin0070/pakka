@@ -11,10 +11,10 @@ import random
 import sys
 from pathlib import Path
 
-from pramaan import confusables, question
-from pramaan.lattice import is_valid
-from pramaan.lexicon import EN_DIGITS, HI_0_99, WEEKDAYS
-from pramaan.types import DIGIT_SLOTS, Slot, SlotDecision, Value, Verdict
+from pakka import confusables, question
+from pakka.lattice import is_valid
+from pakka.lexicon import EN_DIGITS, HI_0_99, WEEKDAYS
+from pakka.types import DIGIT_SLOTS, Slot, SlotDecision, Value, Verdict
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = 20261201

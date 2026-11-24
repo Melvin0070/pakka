@@ -354,8 +354,8 @@ class Witness:
         lang: str | None = None,
     ):
         if int8 is None:  # the quantised model is a third of the size: for hosts with little disk
-            int8 = os.environ.get("PRAMAAN_INT8", "") not in ("", "0")
-        if cache_dir is CACHE_DIR and os.environ.get("PRAMAAN_STATE"):
+            int8 = os.environ.get("PAKKA_INT8", "") not in ("", "0")
+        if cache_dir is CACHE_DIR and os.environ.get("PAKKA_STATE"):
             cache_dir = None  # a host that sets a state directory has little disk; posteriors are cheap
         self.language = languages.get(lang)
         self.lang = self.language.code
@@ -456,7 +456,7 @@ class Witness:
     ) -> WitnessScore:
         """Score every candidate value on the same audio.
 
-        candidates: str(value) -> spoken renderings (pramaan.render.renderings).
+        candidates: str(value) -> spoken renderings (pakka.render.renderings).
         context=(left, right): each rendering is scored as the full sentence left + rendering + right,
         identical around every candidate, by exact CTC. context=None: the rendering alone, with a
         filler either side. Phone values ignore the renderings and use the digit grammar.

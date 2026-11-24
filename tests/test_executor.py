@@ -6,7 +6,7 @@ from hypothesis import settings
 from hypothesis import strategies as st
 from hypothesis.stateful import RuleBasedStateMachine, invariant, rule
 
-from pramaan.executor import (
+from pakka.executor import (
     BadTransition,
     Ledger,
     StaleToken,
@@ -15,7 +15,7 @@ from pramaan.executor import (
     operation_name,
     value_hash,
 )
-from pramaan.types import LedgerState
+from pakka.types import LedgerState
 
 OP = operation_name("book_payment", "promise-1")
 

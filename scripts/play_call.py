@@ -26,9 +26,9 @@ def describe(ev: dict[str, Any]) -> str | None:
     if kind == "session.ready":
         return f"mode {ev.get('mode')}, guard {ev.get('guard')}, policy {ev.get('policy_hash')}"
     if kind == "left.committed":
-        return f"WITHOUT PRAMAAN executed  {show(ev.get('values'))}"
+        return f"WITHOUT PAKKA executed  {show(ev.get('values'))}"
     if kind == "right.proposed":
-        return f"with Pramaan: held        {show(ev.get('values'))}"
+        return f"with Pakka: held        {show(ev.get('values'))}"
     if kind == "evidence":
         heard = [
             f"    {t.get('source')} [{t.get('family')}] {round(t.get('latency_ms') or 0)} ms"
@@ -43,7 +43,7 @@ def describe(ev: dict[str, Any]) -> str | None:
         return f"decision {str(ev.get('verdict')).upper()}: {slots}"
     if kind == "right.committed":
         fixed = f"  (model proposed {show(ev['repaired_from'])})" if ev.get("repaired_from") else ""
-        return f"WITH PRAMAAN executed     {show(ev.get('values'))}{fixed}"
+        return f"WITH PAKKA executed     {show(ev.get('values'))}{fixed}"
     if kind == "agent.said":
         return f"agent says: {ev.get('text')}"
     if kind == "error":

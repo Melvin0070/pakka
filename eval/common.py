@@ -7,8 +7,8 @@ import statistics
 from dataclasses import dataclass
 from pathlib import Path
 
-from pramaan.decide import decide
-from pramaan.types import Evidence, Policy, Values, Verdict
+from pakka.decide import decide
+from pakka.types import Evidence, Policy, Values, Verdict
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "data" / "evidence.jsonl"

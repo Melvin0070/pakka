@@ -1,6 +1,6 @@
 """FastAPI shell: browser WebSocket <-> CallSession <-> two OpenAI Realtime sessions.
 
-Run: uvicorn pramaan.live.server:app --port 8765
+Run: uvicorn pakka.live.server:app --port 8765
 """
 
 from __future__ import annotations
@@ -42,14 +42,14 @@ from .tooling import LEFT_INSTRUCTIONS, RIGHT_INSTRUCTIONS, TOOL
 
 ROOT = Path(__file__).resolve().parents[3]
 UI = ROOT / "ui"
-MODEL = os.environ.get("PRAMAAN_REALTIME_MODEL", "gpt-realtime-2.1")
-VOICE = os.environ.get("PRAMAAN_VOICE", "marin")
+MODEL = os.environ.get("PAKKA_REALTIME_MODEL", "gpt-realtime-2.1")
+VOICE = os.environ.get("PAKKA_VOICE", "marin")
 REPLAY_ROOTS = (ROOT / "data" / "clips", ROOT / "demo", ROOT / "g0" / "clips")
 FRAME_MS = 100
 FRAME_BYTES = RATE * 2 * FRAME_MS // 1000
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
-log = logging.getLogger("pramaan.live")
+log = logging.getLogger("pakka.live")
 
 
 @contextlib.asynccontextmanager
@@ -62,7 +62,7 @@ async def _lifespan(_: FastAPI) -> AsyncIterator[None]:
     yield
 
 
-app = FastAPI(title="Pramaan live guard", lifespan=_lifespan)
+app = FastAPI(title="Pakka live guard", lifespan=_lifespan)
 
 _guard: Guard | None = None
 _health: tuple[float, bool, str] = (0.0, False, "")

@@ -17,15 +17,15 @@ import numpy as np
 
 from eval.common import DELTA, FRESH2_EVIDENCE, RESULTS, ROOT, Outcome, Row, guard, split
 from eval.common import load as load_rows
-from pramaan import audio
-from pramaan.cache import Cache
-from pramaan.evidence import assemble
-from pramaan.gate import cp_upper
-from pramaan.pipeline import load_policy
-from pramaan.sources import realtime_agent as ra
-from pramaan.sources.base import PermanentError, with_retries
-from pramaan.types import Evidence
-from pramaan.witness import Witness
+from pakka import audio
+from pakka.cache import Cache
+from pakka.evidence import assemble
+from pakka.gate import cp_upper
+from pakka.pipeline import load_policy
+from pakka.sources import realtime_agent as ra
+from pakka.sources.base import PermanentError, with_retries
+from pakka.types import Evidence
+from pakka.witness import Witness
 
 CACHE = ROOT / "data" / "cache.strong.sqlite"
 INSTRUCTIONS = (

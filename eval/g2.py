@@ -21,8 +21,8 @@ from collections import defaultdict
 
 import numpy as np
 
-from pramaan.render import renderings
-from pramaan.witness import Witness
+from pakka.render import renderings
+from pakka.witness import Witness
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 G0 = ROOT / "g0"

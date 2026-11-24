@@ -16,8 +16,8 @@ from pathlib import Path
 
 from openai import AsyncOpenAI
 
-from pramaan.lexicon import EN_DIGITS, TE_0_99, TE_SCALE_OBLIQUE, TE_WEEKDAYS, WEEKDAYS
-from pramaan.render import _te_fraction_forms, telugu_cardinal, telugu_ordinal
+from pakka.lexicon import EN_DIGITS, TE_0_99, TE_SCALE_OBLIQUE, TE_WEEKDAYS, WEEKDAYS
+from pakka.render import _te_fraction_forms, telugu_cardinal, telugu_ordinal
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pramaan</title>
+<title>Pakka</title>
 <link rel="icon" href="data:,">
 <script>
   // Dark is the default, as in the Equal app. Set before first paint so a saved choice does not flash.
   let saved = null;
-  try { saved = localStorage.getItem('pramaan-theme'); } catch (e) { /* private mode */ }
+  try { saved = localStorage.getItem('pakka-theme'); } catch (e) { /* private mode */ }
   document.documentElement.dataset.theme = saved || 'dark';
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@
   <div class="wrap bar-in">
     <div class="mark">
       <svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="var(--lime)"/><path d="M7 14.5l4.6 4.6L21 9.5" fill="none" stroke="var(--lime-ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <b>Pramaan</b><span lang="hi">प्रमाण</span>
+      <b>Pakka</b><span lang="hi">पक्का</span>
     </div>
     <nav class="tabs" role="tablist" aria-label="Views">
       <button role="tab" aria-selected="true" data-view="demo">Demo</button>
@@ -45,7 +45,7 @@
   <section class="view on" id="demo">
     <div class="band"><div class="wrap hero">
       <div class="pitch">
-        <h1>Voice agents act on what they hear <em>Pramaan checks the number first</em></h1>
+        <h1>Voice agents act on what they hear <em>Pakka checks the number first</em></h1>
         <p class="lede">When the agent is about to log an amount, a date or a phone number, the action is held while independent recognisers listen to the same audio</p>
         <ul class="outcomes">
           <li><b>They agree</b><span>The action goes through</span></li>
@@ -57,17 +57,17 @@
       <section class="score" id="ba" hidden aria-labelledby="scoreTitle">
         <div class="score-head">
           <h2 id="scoreTitle">Across <span id="scoreN"></span> recorded calls</h2>
-          <div class="seg" id="baPick" role="group" aria-label="Compare Pramaan against"></div>
+          <div class="seg" id="baPick" role="group" aria-label="Compare Pakka against"></div>
         </div>
         <div class="score-grid">
           <div class="side">
-            <p class="lab" id="baLab">Without Pramaan</p>
+            <p class="lab" id="baLab">Without Pakka</p>
             <p class="big bad" id="baBefore"></p>
             <p class="sm" id="baBeforeText"></p>
             <div class="dots" id="baBeforeDots" role="img"></div>
           </div>
           <div class="side ours">
-            <p class="lab">With Pramaan</p>
+            <p class="lab">With Pakka</p>
             <p class="big good" id="baAfter"></p>
             <p class="sm" id="baAfterText"></p>
             <div class="dots" id="baAfterDots" role="img"></div>
@@ -109,7 +109,7 @@
         <div class="pair">
           <article class="agent" id="agentL">
             <header>
-              <h2>Without Pramaan</h2>
+              <h2>Without Pakka</h2>
               <p>The model's tool call runs as it stands</p>
             </header>
             <div class="stamp" id="stampL"><b id="stampLt">Waiting</b><span id="stampLs"></span></div>
@@ -128,7 +128,7 @@
 
           <article class="agent guarded" id="agentR">
             <header>
-              <h2>With Pramaan</h2>
+              <h2>With Pakka</h2>
               <p>The same tool call, held until the number is checked</p>
             </header>
             <div class="stamp" id="stampR"><b id="stampRt">Waiting</b><span id="stampRs"></span></div>
@@ -212,8 +212,8 @@
           <div class="panel" id="qBox" hidden><h2>After the caller was asked</h2><div class="tiles" id="qOut"></div><p class="lede" id="qNote"></p></div>
         </div>
         <div class="sub">
-          <div class="panel"><h2>Against asking when two transcribers disagree</h2><table><thead><tr><th>Baseline</th><th class="n">Its result</th><th class="n">Pramaan, no more questions</th><th class="n">Pramaan, no more errors</th></tr></thead><tbody id="matched"></tbody></table><p class="lede">Read off Pramaan's curve after the fact, not certified operating points.</p></div>
-          <div class="panel"><h2>By language, and if a vendor is down</h2><table><thead><tr><th>Slice</th><th class="n">Calls</th><th class="n">Sarvam baseline wrong / asked</th><th class="n">Pramaan wrong / asked</th></tr></thead><tbody id="slices"></tbody></table><p class="lede" id="costLine"></p></div>
+          <div class="panel"><h2>Against asking when two transcribers disagree</h2><table><thead><tr><th>Baseline</th><th class="n">Its result</th><th class="n">Pakka, no more questions</th><th class="n">Pakka, no more errors</th></tr></thead><tbody id="matched"></tbody></table><p class="lede">Read off Pakka's curve after the fact, not certified operating points.</p></div>
+          <div class="panel"><h2>By language, and if a vendor is down</h2><table><thead><tr><th>Slice</th><th class="n">Calls</th><th class="n">Sarvam baseline wrong / asked</th><th class="n">Pakka wrong / asked</th></tr></thead><tbody id="slices"></tbody></table><p class="lede" id="costLine"></p></div>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ The host's filesystem is read-only apart from /tmp and the acoustic model is not
 points every write at /tmp, copies the committed response cache there and fetches the model on a cold start.
 The hosted server always runs in replay mode, whatever keys the project holds: recorded calls only,
 recogniser answers from the cache, the acoustic check and the decision computed for real. A public URL with
-an open microphone would let anyone spend the owner's API credits, so going live takes PRAMAAN_HOSTED_LIVE=1.
+an open microphone would let anyone spend the owner's API credits, so going live takes PAKKA_HOSTED_LIVE=1.
 """
 
 import os
@@ -13,15 +13,20 @@ import shutil
 import subprocess
 import sys
 
+# Hosted projects created before the rename set PRAMAAN_* variables; this runs before anything reads them.
+for _k, _v in list(os.environ.items()):
+    if _k.startswith("PRAMAAN_"):
+        os.environ.setdefault("PAKKA_" + _k[len("PRAMAAN_") :], _v)
+
 ROOT = pathlib.Path(__file__).resolve().parent
-TMP = pathlib.Path("/tmp/pramaan")
-LANG = os.environ.get("PRAMAAN_LANG") or "hi"
+TMP = pathlib.Path("/tmp/pakka")
+LANG = os.environ.get("PAKKA_LANG") or "hi"
 
 sys.path.insert(0, str(ROOT / "src"))
-os.environ.setdefault("PRAMAAN_STATE", str(TMP / "state"))
-os.environ.setdefault("PRAMAAN_MODELS", str(TMP / "models"))
-if os.environ.get("PRAMAAN_HOSTED_LIVE") != "1" or not os.environ.get("OPENAI_API_KEY"):
-    os.environ["PRAMAAN_OFFLINE"] = "1"
+os.environ.setdefault("PAKKA_STATE", str(TMP / "state"))
+os.environ.setdefault("PAKKA_MODELS", str(TMP / "models"))
+if os.environ.get("PAKKA_HOSTED_LIVE") != "1" or not os.environ.get("OPENAI_API_KEY"):
+    os.environ["PAKKA_OFFLINE"] = "1"
 
 cache = TMP / "cache.sqlite"
 if not cache.exists():
@@ -30,7 +35,7 @@ if not cache.exists():
     part = TMP / f"cache.{os.getpid()}.part"
     shutil.copy(ROOT / "data" / ("cache.sqlite" if LANG == "hi" else f"{LANG}/cache.sqlite"), part)
     part.replace(cache)
-os.environ.setdefault("PRAMAAN_CACHE", str(cache))
+os.environ.setdefault("PAKKA_CACHE", str(cache))
 
 if not (TMP / "models" / LANG / "model.onnx_data").exists():
     # Not fatal: without the model the server still starts and /api/health reports the scripted guard.
@@ -38,4 +43,4 @@ if not (TMP / "models" / LANG / "model.onnx_data").exists():
     if fetched.returncode:
         print(f"acoustic model download failed ({fetched.returncode})", file=sys.stderr)
 
-from pramaan.live.server import app  # noqa: E402, F401
+from pakka.live.server import app  # noqa: E402, F401

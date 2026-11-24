@@ -16,7 +16,7 @@ from ..audio import sha
 from ..cache import Cache, CacheMiss, Entry, Timed, default_cache
 from ..types import Family, Hypothesis
 
-log = logging.getLogger("pramaan.sources")
+log = logging.getLogger("pakka.sources")
 
 TRIES = 2
 BACKOFF_S = 1.5

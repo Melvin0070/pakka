@@ -2,11 +2,11 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from pramaan.decide import decide
-from pramaan.lattice import build
-from pramaan.question import option_order, phrase, roman_cardinal
-from pramaan.score import FEATURES, features, fixed_rule, score
-from pramaan.types import Evidence, Hypothesis, Policy, SlotDecision, Verdict, WitnessScore
+from pakka.decide import decide
+from pakka.lattice import build
+from pakka.question import option_order, phrase, roman_cardinal
+from pakka.score import FEATURES, features, fixed_rule, score
+from pakka.types import Evidence, Hypothesis, Policy, SlotDecision, Verdict, WitnessScore
 
 POLICY = Policy()
 

@@ -1,4 +1,4 @@
-"""Measure what happens after Pramaan asks: replay each asked test action through the live server, followed
+"""Measure what happens after Pakka asks: replay each asked test action through the live server, followed
 by a spoken answer, and record what is finally committed.
 
 The answers are synthetic and cooperative (the same voice states the true value of the slot asked about, over
@@ -23,12 +23,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from eval.common import EVIDENCE, load, split, within  # noqa: E402
-from pramaan import audio  # noqa: E402
-from pramaan.decide import decide  # noqa: E402
-from pramaan.lexicon import HI_0_99, HI_WEEKDAYS  # noqa: E402
-from pramaan.pipeline import load_policy  # noqa: E402
-from pramaan.render import hindi_cardinal  # noqa: E402
-from pramaan.types import Verdict  # noqa: E402
+from pakka import audio  # noqa: E402
+from pakka.decide import decide  # noqa: E402
+from pakka.lexicon import HI_0_99, HI_WEEKDAYS  # noqa: E402
+from pakka.pipeline import load_policy  # noqa: E402
+from pakka.render import hindi_cardinal  # noqa: E402
+from pakka.types import Verdict  # noqa: E402
 
 ANSWERS = ROOT / "data" / "clips" / "answers"
 OUT = ROOT / "results" / "questions.json"

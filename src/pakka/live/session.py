@@ -26,7 +26,7 @@ from .ledger import Entry, Ledger
 from .ring import RATE, RingBuffer, audio_sha
 from .tooling import TOOL_NAME, clean_args
 
-log = logging.getLogger("pramaan.live")
+log = logging.getLogger("pakka.live")
 
 LEAD_IN_MS = 300
 MAX_QUESTIONS = 2

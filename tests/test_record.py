@@ -5,8 +5,8 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from pramaan import audio
-from pramaan.live import record
+from pakka import audio
+from pakka.live import record
 
 
 @pytest.fixture

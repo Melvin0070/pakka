@@ -15,12 +15,12 @@ from pathlib import Path
 
 import numpy as np
 
-from pramaan import audio
-from pramaan.cache import CacheMiss
-from pramaan.evidence import assemble
-from pramaan.sources import realtime_agent
-from pramaan.sources.registry import gather
-from pramaan.witness import Witness
+from pakka import audio
+from pakka.cache import CacheMiss
+from pakka.evidence import assemble
+from pakka.sources import realtime_agent
+from pakka.sources.registry import gather
+from pakka.witness import Witness
 
 ROOT = Path(__file__).resolve().parents[1]
 

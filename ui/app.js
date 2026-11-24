@@ -192,7 +192,7 @@ function doubtsFrom(decision) {
 const SLOT_NAME = {amount_rupees: 'amount', phone: 'number', weekday: 'day', day_of_month: 'date', pincode: 'PIN code', account_number: 'account number'};
 function leftNote() {
   if (!S.left) return;
-  const ref = S.truth || S.committed, label = S.truth ? 'The caller said' : 'Pramaan checked it as';
+  const ref = S.truth || S.committed, label = S.truth ? 'The caller said' : 'Pakka checked it as';
   if (!ref) { stamp('L', 'same', 'Acted', 'nothing checked'); return; }
   const wrong = Object.keys(ref).filter(k => !same(S.left.values[k], ref[k]));
   if (!wrong.length) { note('L', ''); stamp('L', 'same', 'Right this time', 'nothing was checked'); return; }
@@ -430,8 +430,8 @@ function renderAnalysis(a) {
   }
   const names = {'B-2M': 'gpt-transcribe vs VerbX', 'B-2S': 'gpt-transcribe vs Sarvam'};
   $('matched').innerHTML = Object.entries(a.matched).map(([k, m]) => `<tr><td>${esc(names[k] || k)}</td><td class="n">${m.baseline_wrong} wrong, ${m.baseline_asked} asked</td>` +
-    `<td class="n">${m.pramaan_asked_there == null ? 'not reachable' : `${m.pramaan_wrong_at_no_more_questions} wrong, ${m.pramaan_asked_there} asked`}</td>` +
-    `<td class="n">${m.pramaan_asked_at_no_more_errors == null ? 'not reachable' : `${m.pramaan_wrong_there} wrong, ${m.pramaan_asked_at_no_more_errors} asked`}</td></tr>`).join('');
+    `<td class="n">${m.pakka_asked_there == null ? 'not reachable' : `${m.pakka_wrong_at_no_more_questions} wrong, ${m.pakka_asked_there} asked`}</td>` +
+    `<td class="n">${m.pakka_asked_at_no_more_errors == null ? 'not reachable' : `${m.pakka_wrong_there} wrong, ${m.pakka_asked_at_no_more_errors} asked`}</td></tr>`).join('');
   const lang = {hi: 'Hindi and Hinglish', en: 'English'};
   const two = arm => arm ? `${arm.wrong_silent} / ${arm.asked}` : '–';
   $('slices').innerHTML = Object.entries(a.by.language).map(([k, v]) => `<tr><td>${esc(lang[k] || k)}</td><td class="n">${v.n}</td><td class="n">${two(v['B-2S'])}</td><td class="n">${two(v.P)}</td></tr>`).join('') +
@@ -582,13 +582,13 @@ async function loadOverview() {
   const get = u => fetch('/api/' + u).then(x => x.ok ? x.json() : null).catch(() => null);
   const [strong, fresh, first, human, sc] = await Promise.all([get('results?set=strong'), get('results?set=fresh2').then(x => x || get('results?set=fresh')), get('results?set=synthetic'), get('results?set=human'), get('scenarios')]);
   const base = fresh || first;
-  // Transcript baselines are paired with Pramaan on the short-prompt agent, its weaker result on these calls.
+  // Transcript baselines are paired with Pakka on the short-prompt agent, its weaker result on these calls.
   const picks = [
     {label: 'Realtime, tuned prompt', lab: 'Realtime model, tuned prompt', r: strong, id: 'A', note: 'an agent prompted specifically for Indian numbers, and a policy frozen before scoring'},
     {label: 'Realtime, basic prompt', lab: 'Realtime model, basic prompt', r: base, id: 'A', note: 'a short generic agent prompt, and a policy frozen before scoring'},
     {label: 'Sarvam', lab: 'Sarvam, then fill the form', r: base, id: 'S', note: 'Sarvam saaras:v3 read through our number normaliser'},
     {label: 'OpenAI transcribe', lab: 'gpt-transcribe, then fill the form', r: base, id: 'B', note: 'gpt-transcribe read through our number normaliser'},
-    {label: 'OpenAI + Sarvam check', lab: 'Ask when OpenAI and Sarvam disagree', r: base, id: 'B-2S', note: 'the strongest simple baseline. Its error gap to Pramaan is within noise; Pramaan’s edge is fewer questions and keeping the speech-to-speech agent'},
+    {label: 'OpenAI + Sarvam check', lab: 'Ask when OpenAI and Sarvam disagree', r: base, id: 'B-2S', note: 'the strongest simple baseline. Its error gap to Pakka is within noise; Pakka’s edge is fewer questions and keeping the speech-to-speech agent'},
   ].filter(p => p.r && p.r.arms.some(x => x.id === p.id));
   const pc = (k, n) => (100 * k / n).toFixed(1) + '%';
   const renderScore = p => {
@@ -608,7 +608,7 @@ async function loadOverview() {
     $('baBeforeDots').setAttribute('aria-label', `${A.wrong_silent} of ${A.n} wrong, ${A.asked} asked`);
     $('baAfterDots').setAttribute('aria-label', `${P.wrong_silent} of ${P.n} wrong, ${P.asked} asked`);
     $('baNote').textContent = `Same ${ds.n_actions} calls on both sides: ${ds.n_speakers} held-out synthetic voices over a phone channel, ${p.note}.` +
-      ` With 95% confidence at most ${(100 * p.r.certificate.upper_bound).toFixed(1)}% of the actions Pramaan let through are wrong.` +
+      ` With 95% confidence at most ${(100 * p.r.certificate.upper_bound).toFixed(1)}% of the actions Pakka let through are wrong.` +
       (human ? ` Recorded people so far: ${human.dataset.n_speakers}, ${human.dataset.n_actions} calls, on the Results tab.` : '');
     for (const b of $('baPick').children) b.setAttribute('aria-pressed', String(b.textContent === p.label));
   };
@@ -689,7 +689,7 @@ function themeLabel() {
 $('theme').addEventListener('click', () => {
   const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
-  try { localStorage.setItem('pramaan-theme', next); } catch (e) { /* private mode: the choice lasts for this page only */ }
+  try { localStorage.setItem('pakka-theme', next); } catch (e) { /* private mode: the choice lasts for this page only */ }
   themeLabel();
 });
 themeLabel();

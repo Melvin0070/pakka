@@ -13,7 +13,7 @@ import httpx
 import websockets
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL = os.environ.get("PRAMAAN_REALTIME_MODEL", "gpt-realtime-2.1")
+MODEL = os.environ.get("PAKKA_REALTIME_MODEL", "gpt-realtime-2.1")
 URL = "http://127.0.0.1:8765"
 
 
@@ -71,7 +71,7 @@ async def main() -> int:
     )
     line(clips > 0 or None, "replayable clips", str(clips))
     try:
-        from pramaan.pipeline import Pipeline  # type: ignore[attr-defined]  # noqa: F401
+        from pakka.pipeline import Pipeline  # type: ignore[attr-defined]  # noqa: F401
 
         line(True, "evidence pipeline importable")
     except Exception as e:  # noqa: BLE001

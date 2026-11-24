@@ -1,6 +1,6 @@
 """The ledger as the live session uses it: one row per (session, operation, entity version).
 
-`SqlLedger` adapts pramaan.executor (the durable, sole tool runner). `MemoryLedger` has the same
+`SqlLedger` adapts pakka.executor (the durable, sole tool runner). `MemoryLedger` has the same
 semantics with no storage and is what the session falls back to if the executor cannot be imported.
 """
 
@@ -104,7 +104,7 @@ class MemoryLedger:
 
 
 class SqlLedger:
-    """pramaan.executor.Ledger behind the same interface; the executor stays the only thing that runs the tool."""
+    """pakka.executor.Ledger behind the same interface; the executor stays the only thing that runs the tool."""
 
     def __init__(self, tool: ToolFn, path: str = ":memory:") -> None:
         from ..executor import Ledger as Executor

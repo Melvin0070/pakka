@@ -4,13 +4,13 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from pramaan import confusables, lang
-from pramaan.cache import params_sha
-from pramaan.lexicon import TE_0_99, WEEKDAYS
-from pramaan.normalise import parse_number, values
-from pramaan.render import renderings, telugu_amount_renderings, telugu_cardinal, telugu_ordinal
-from pramaan.sources import gpt4o_transcribe, gpt_transcribe, realtime_agent, saaras, verbx
-from pramaan.witness import Pieces, build_graph, phone_edges
+from pakka import confusables, lang
+from pakka.cache import params_sha
+from pakka.lexicon import TE_0_99, WEEKDAYS
+from pakka.normalise import parse_number, values
+from pakka.render import renderings, telugu_amount_renderings, telugu_cardinal, telugu_ordinal
+from pakka.sources import gpt4o_transcribe, gpt_transcribe, realtime_agent, saaras, verbx
+from pakka.witness import Pieces, build_graph, phone_edges
 
 
 @given(st.integers(1, 99_99_99_999))
@@ -92,7 +92,7 @@ def test_telugu_confusables():
 
 def test_hindi_cache_keys_did_not_move(monkeypatch):
     """Each key is the hash of a recogniser's settings. If one moves, the committed Hindi evidence is orphaned."""
-    monkeypatch.delenv("PRAMAAN_LANG", raising=False)
+    monkeypatch.delenv("PAKKA_LANG", raising=False)
     got = {
         "gpt-transcribe": params_sha(gpt_transcribe.plain().params),
         "gpt-transcribe+hints": params_sha(gpt_transcribe.hinted().params),
@@ -106,7 +106,7 @@ def test_hindi_cache_keys_did_not_move(monkeypatch):
 
 
 def test_telugu_settings_are_separate(monkeypatch):
-    monkeypatch.setenv("PRAMAAN_LANG", "te")
+    monkeypatch.setenv("PAKKA_LANG", "te")
     assert gpt_transcribe.plain().params["languages"] == ["te", "en"]
     assert saaras.source().params["language_code"] == "te-IN"
     assert "Telugu" in realtime_agent.params()["instructions"]

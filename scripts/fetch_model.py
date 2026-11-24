@@ -11,7 +11,7 @@ import httpx
 
 REPO = "https://huggingface.co/OpenVoiceOS/ai4bharat-indicconformer-{lang}-onnx/resolve/main"
 MODELS = pathlib.Path(
-    os.environ.get("PRAMAAN_MODELS") or pathlib.Path(__file__).resolve().parent.parent / "models"
+    os.environ.get("PAKKA_MODELS") or pathlib.Path(__file__).resolve().parent.parent / "models"
 )
 FP32 = ("config.json", "vocab.txt", "model.onnx", "model.onnx_data")
 INT8 = ("model.int8.onnx",)

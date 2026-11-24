@@ -1,7 +1,7 @@
 from hypothesis import given
 from hypothesis import strategies as st
 
-from pramaan.lattice import (
+from pakka.lattice import (
     align,
     build,
     build_network,
@@ -9,7 +9,7 @@ from pramaan.lattice import (
     differing_positions,
     medoid,
 )
-from pramaan.types import Evidence, Hypothesis
+from pakka.types import Evidence, Hypothesis
 
 phones = st.from_regex(r"[6-9][0-9]{9}", fullmatch=True)
 

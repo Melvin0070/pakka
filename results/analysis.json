@@ -5,18 +5,18 @@
   "B-2M": {
    "baseline_asked": 151,
    "baseline_wrong": 10,
-   "pramaan_wrong_at_no_more_questions": 5,
-   "pramaan_asked_there": 118,
-   "pramaan_asked_at_no_more_errors": 31,
-   "pramaan_wrong_there": 9
+   "pakka_wrong_at_no_more_questions": 5,
+   "pakka_asked_there": 118,
+   "pakka_asked_at_no_more_errors": 31,
+   "pakka_wrong_there": 9
   },
   "B-2S": {
    "baseline_asked": 70,
    "baseline_wrong": 6,
-   "pramaan_wrong_at_no_more_questions": 7,
-   "pramaan_asked_there": 37,
-   "pramaan_asked_at_no_more_errors": 117,
-   "pramaan_wrong_there": 6
+   "pakka_wrong_at_no_more_questions": 7,
+   "pakka_asked_there": 37,
+   "pakka_asked_at_no_more_errors": 117,
+   "pakka_wrong_there": 6
   }
  },
  "agent_errors": {
@@ -30,7 +30,7 @@
  "shared_transcriber_errors": {
   "n": 6,
   "two_model_baseline": "acted on, wrong",
-  "pramaan": {
+  "pakka": {
    "acted on, wrong": 4,
    "caller asked": 2
   }

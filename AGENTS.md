@@ -1,9 +1,9 @@
-# Pramaan (प्रमाण): a voice agent may not act on a number it cannot prove it heard
+# Pakka (पक्का): a voice agent may not act on a number it cannot prove it heard
 
 **Live, no login, nothing to install:**
 
-- Hindi and Hinglish: https://pramaan-voice.vercel.app
-- Telugu: https://pramaan-voice-te.vercel.app
+- Hindi and Hinglish: https://pakka.vercel.app
+- Telugu: https://pakka-te.vercel.app
 
 **Runs locally with no API key, no account and no network after setup** (about 3 minutes, 481 MB download):
 
@@ -24,7 +24,7 @@ entirely. The agent then confirms confidently and the wrong value is in the syst
 phone-grade test calls `gpt-realtime-2.1` alone acted on a wrong amount, date or phone number in 29.5% to
 38.6% of calls, and still 18.2% with a prompt written specifically for Indian numbers.
 
-**What Pramaan does.** It sits at the commit point. Every tool call that carries an amount, date, phone
+**What Pakka does.** It sits at the commit point. Every tool call that carries an amount, date, phone
 number, PIN code or account number is held for at most 1.2 seconds while independent evidence about the same
 audio is gathered. Then one pure function decides:
 
@@ -35,7 +35,7 @@ audio is gathered. Then one pure function decides:
 
 **The result**, same recordings, same frozen policy (`50d83054eef1`), 8 held-out speakers:
 
-| Test set (220 calls each) | Model alone, wrong and acted on | With Pramaan, wrong | With Pramaan, caller asked |
+| Test set (220 calls each) | Model alone, wrong and acted on | With Pakka, wrong | With Pakka, caller asked |
 |---|---|---|---|
 | Hindi/Hinglish, locked set 2, number-specific agent prompt | 18.2% | **0.5%** | 4.5% |
 | Hindi/Hinglish, locked set 2, generic agent prompt | 29.5% | **0.9%** | 5.9% |
@@ -48,7 +48,7 @@ value with no question, 21 led to a question, 9 got through. Every number above 
 from committed evidence, with no key and no network. Speakers are synthetic; see
 [What is simulated](#what-is-simulated-mocked-or-not-finished).
 
-**Why it is hard, and what was built to solve it** (all in `src/pramaan/`, about 7,000 lines, 695 tests):
+**Why it is hard, and what was built to solve it** (all in `src/pakka/`, about 7,000 lines, 695 tests):
 
 | Piece | What it does | File |
 |---|---|---|
@@ -57,19 +57,19 @@ from committed evidence, with no key and no network. Speakers are synthetic; see
 | Value lattice | Support is counted per model family, never per model, so two OpenAI transcribers agreeing is one vote. Phone numbers are aligned into a 10-slot confusion network by a weighted edit-distance dynamic programme that also names the contested digit | `lattice.py` |
 | Acoustic witness | An open AI4Bharat IndicConformer CTC model runs on the CPU. For each candidate value an exact CTC forward pass scores a graph of every way that value can be spoken, in the same sentence context, written in numpy. The score is a likelihood ratio against the best rival, including confusable values nobody transcribed (उनतालीस / उनचास, thirteen / thirty, a dropped digit). No torch, no alignment library | `witness.py`, `confusables.py`, `render.py` |
 | Decision | A pure function of evidence and a frozen, hashed policy. The live server and the offline evaluation call the same function | `decide.py` |
-| Risk certificate | Policy chosen on 4 tuning speakers only, frozen with a hash, then one exact Clopper-Pearson bound on 8 held-out speakers: at 95% confidence at most 3.0% to 3.5% of the actions Pramaan lets through are wrong on the Hindi sets | `gate.py`, `eval/tune.py` |
+| Risk certificate | Policy chosen on 4 tuning speakers only, frozen with a hash, then one exact Clopper-Pearson bound on 8 held-out speakers: at 95% confidence at most 3.0% to 3.5% of the actions Pakka lets through are wrong on the Hindi sets | `gate.py`, `eval/tune.py` |
 | At-most-once executor | The guard is the only tool runner. Rows are unique per business operation and entity version, so barge-in, retries and regenerated tool calls cannot execute twice, and a caller correction voids outstanding confirmations | `executor.py`, `live/ledger.py` |
 | Evidence bundles | Every decision is stored as canonical JSON, content-addressed and hash-chained. `replay()` re-derives a stored decision and fails on any difference | `bundle.py` |
 | One-question loop | The question names the single digit or the two candidate values, in Hindi or Telugu. Short answers ("saat", "doosra wala") count only when two independent families agree | `question.py`, `live/session.py` |
 | Second language as a swap | Telugu is a lexicon, a renderer and a different acoustic model. Lattice, decision rule and policy are unchanged | `lang.py` |
 
-Pramaan uses no model internals, so it wraps any speech-to-speech stack. Recogniser cost is about $1.92 per
+Pakka uses no model internals, so it wraps any speech-to-speech stack. Recogniser cost is about $1.92 per
 1,000 checked actions; the added hold in live runs was about 350 ms at the median.
 
 ## The brief, and where each answer can be checked
 
 The challenge reads: *"India is a voice country. Beyond the model, there is so much to invent in the
-harness. Show us: the same recordings on a base model and on your system."* Pramaan is that, literally:
+harness. Show us: the same recordings on a base model and on your system."* Pakka is that, literally:
 it changes nothing in the model, and every screen and table puts the same recording through the base model
 and through the harness side by side.
 
@@ -78,7 +78,7 @@ need no key.
 
 | What to judge | What we claim | Check it in under a minute |
 |---|---|---|
-| Fit to the brief | Same recordings, base model against our system, at every touch point | `make play`: each call prints "WITHOUT PRAMAAN executed" and "WITH PRAMAAN executed" for one recording. Web UI: the two panes |
+| Fit to the brief | Same recordings, base model against our system, at every touch point | `make play`: each call prints "WITHOUT PAKKA executed" and "WITH PAKKA executed" for one recording. Web UI: the two panes |
 | Is the problem real | The base model acts on wrong money amounts, dates and phone numbers on about a third of phone-grade Indian calls, and still 18.2% with a number-specific prompt | Arm A in `results/headline.json`, `results/fresh2.json`, `results/strong_baseline.json`. Raw model responses are in `data/cache.sqlite` |
 | Does it work end to end | Sound in, checked action out, with repair, a question loop, an at-most-once ledger and an audit record | Journeys 1 to 4 below; `tests/test_live.py`, `tests/test_executor.py` |
 | Measured improvement | 29.5% wrong to 0.9% on the cleanest locked set, asking on 5.9% of calls | `make eval`, about 15 s, deterministic. CI fails if a published table differs from the committed evidence |
@@ -87,7 +87,7 @@ need no key.
 | Does each part earn its place | An ablation removes every stage in turn, and says where a stage did not help | Ablation rows in `README.md`; "With one part removed" on the Results tab |
 | Built for India | Hindi, Hinglish, Telugu and Indian English; lakh and crore; सवा, डेढ़, ढाई, पौने; "double nine"; 8 kHz phone channel with noise; Sarvam and AI4Bharat models in the loop | `tests/test_normalise.py`, `tests/test_telugu.py`; the Telugu demo |
 | Does it generalise | Telugu was added by swapping a lexicon and an acoustic model, and scored on the policy frozen on Hindi: 38.6% wrong to 3.2% | `make demo-offline-te`, `make play PORT=8766`; `results/te.md` |
-| Use of OpenAI | `gpt-realtime-2.1` is the agent being guarded and the base arm; `gpt-transcribe` and `gpt-4o-transcribe` are evidence sources; OpenAI text-to-speech generated the test speakers | `src/pramaan/sources/`, `src/pramaan/live/server.py` |
+| Use of OpenAI | `gpt-realtime-2.1` is the agent being guarded and the base arm; `gpt-transcribe` and `gpt-4o-transcribe` are evidence sources; OpenAI text-to-speech generated the test speakers | `src/pakka/sources/`, `src/pakka/live/server.py` |
 | Could it ship | No GPU. Each action costs about $0.002 to check. It degrades gently when a vendor is down. No double execution under barge-in or retries. Every decision can be replayed from its record | Cost, latency and vendor-outage tables in `results/analysis.md`; `bundle.py` |
 | Engineering quality | 695 offline tests including property tests, typed, linted, CI on every push | `make check && make test` |
 | Honesty | Synthetic speakers, a tied baseline, optimistic bounds and unfinished parts are stated, not hidden | "What is simulated, mocked or not finished" below; "Limits" in `README.md` |
@@ -118,15 +118,15 @@ Storage is SQLite files committed in `data/`. Built and run on macOS arm64; lint
 | `SARVAM_API_KEY` | Optional live evidence source (Sarvam `saaras:v3`) | off |
 | `VERBX_API_KEY` | Optional live evidence source (VerbX Vocaline) | off |
 | `ELEVENLABS_API_KEY` | Optional. Scribe adapter is wired but was never run | off |
-| `PRAMAAN_OFFLINE` | `1` = keyless replay mode. `make demo-offline` sets it | unset |
-| `PRAMAAN_LANG` | `hi` or `te`: recogniser settings, acoustic model, questions, demo calls | `hi` |
-| `PRAMAAN_REALTIME_MODEL` | Realtime model id | `gpt-realtime-2.1` |
-| `PRAMAAN_VOICE` | The agent's speaking voice in live calls | `marin` |
-| `PRAMAAN_CACHE` | Recogniser response cache. `make serve` points it at a throwaway copy | `data/cache.sqlite` |
-| `PRAMAAN_MODELS` | Where acoustic models are downloaded | `models/` |
-| `PRAMAAN_STATE` | Where evidence bundles and the acoustic cache are written | `data/` |
+| `PAKKA_OFFLINE` | `1` = keyless replay mode. `make demo-offline` sets it | unset |
+| `PAKKA_LANG` | `hi` or `te`: recogniser settings, acoustic model, questions, demo calls | `hi` |
+| `PAKKA_REALTIME_MODEL` | Realtime model id | `gpt-realtime-2.1` |
+| `PAKKA_VOICE` | The agent's speaking voice in live calls | `marin` |
+| `PAKKA_CACHE` | Recogniser response cache. `make serve` points it at a throwaway copy | `data/cache.sqlite` |
+| `PAKKA_MODELS` | Where acoustic models are downloaded | `models/` |
+| `PAKKA_STATE` | Where evidence bundles and the acoustic cache are written | `data/` |
 | `SARVAM_MODEL`, `SCRIBE_MODEL` | Vendor model ids | `saaras:v3`, `scribe_v1` |
-| `PRAMAAN_HOSTED_LIVE` | Hosting only (`main.py`): `1` lets a public deployment spend the keys | unset |
+| `PAKKA_HOSTED_LIVE` | Hosting only (`main.py`): `1` lets a public deployment spend the keys | unset |
 
 **No test key is committed.** The repository is public, so a key in it would be scraped. Two things replace
 it: the keyless replay mode below, and the two hosted URLs at the top, which run live on the author's keys
@@ -134,9 +134,9 @@ with the microphone on.
 
 ### What keyless replay mode is
 
-`PRAMAAN_OFFLINE=1` replaces only the paid network calls. For each recorded call, `gpt-realtime-2.1`'s tool
+`PAKKA_OFFLINE=1` replaces only the paid network calls. For each recorded call, `gpt-realtime-2.1`'s tool
 call and each recogniser's transcript are read from the committed cache (`data/cache.sqlite`), exactly as
-those models returned them, with their recorded latencies. Everything Pramaan itself does runs for real on
+those models returned them, with their recorded latencies. Everything Pakka itself does runs for real on
 every play: the acoustic model on the CPU, the normaliser, the lattice, the CTC scoring, the decision, the
 ledger and the evidence bundle. It is deterministic. Its limits: recorded calls only (the microphone is
 disabled and labelled "Your voice needs the network"), the agent's reply is text with no voice, and a call
@@ -148,7 +148,7 @@ There is nothing to seed. The test recordings' evidence, the frozen policy and t
 committed. There is one process (a FastAPI server that also serves the front end) and no workers.
 
 ```
-git clone https://github.com/Melvin0070/pramaan-voice.git && cd pramaan-voice
+git clone https://github.com/Melvin0070/pakka.git && cd pakka
 make setup            # uv sync + download the Hindi acoustic model (481 MB, Hugging Face, no login)
 make test             # 695 passed, 1 skipped, about 10 s, offline
 make eval             # about 15 s, offline: reprints every results table from committed evidence
@@ -198,9 +198,9 @@ make play PORT=8766            # the Telugu calls, with make demo-offline-te run
 ```
 
 For each call it prints what the caller said, the true value, what the model alone executed, what each
-recogniser heard and how fast, the decision, and what Pramaan executed. Expected in keyless mode:
+recogniser heard and how fast, the decision, and what Pakka executed. Expected in keyless mode:
 
-| Call id | Caller said | Model alone executes | Pramaan executes |
+| Call id | Caller said | Model alone executes | Pakka executes |
 |---|---|---|---|
 | `amount_dropped` | डेढ़ लाख का cheque वीरवार को मिलेगा | Thursday, **no amount** | ₹1,50,000 and Thursday (REPAIR: restored the dropped value) |
 | `phone_digit` | ...सात एक, डबल सेवन डबल एट, आठ सात एक सात | **8**177888717 | 7177888717 (REPAIR) |
@@ -217,10 +217,10 @@ recogniser heard and how fast, the decision, and what Pramaan executed. Expected
    mode, or shows the live model when keys are present. A banner reading "Scripted checks" must **not**
    appear; if it does, the evidence pipeline failed to load.
 2. The scoreboard at the top shows the measured before and after across the recorded test calls. Its
-   toggle switches which baseline Pramaan is compared against.
+   toggle switches which baseline Pakka is compared against.
 3. Under "Recorded calls" click **An amount the agent left out**. The caller's words appear and the audio
-   plays. Left pane, "Without Pramaan": the slip shows Thursday and an empty amount. Right pane, "With
-   Pramaan": the stamp shows the call held, then the slip fills with ₹1,50,000 and Thursday, and "Checked
+   plays. Left pane, "Without Pakka": the slip shows Thursday and an empty amount. Right pane, "With
+   Pakka": the stamp shows the call held, then the slip fills with ₹1,50,000 and Thursday, and "Checked
    against" lists each recogniser and what it heard.
 4. Click **Evidence is split, so it asks**. The right pane shows the agent's question about one digit.
    With live models (hosted URL or `make serve`) the recorded answer then plays and the right number,
@@ -245,14 +245,14 @@ when each answer arrived against the 1.2 s deadline, and the ledger transitions 
 
 **Results** shows every arm on the same calls, with a toggle for each set (synthetic voices, locked set 1,
 locked set 2, Telugu, strong prompt): the model alone, three transcribe-then-fill pipelines, two
-"ask when two models disagree" baselines, read-everything-back, and Pramaan. Below it: the ablation table
+"ask when two models disagree" baselines, read-everything-back, and Pakka. Below it: the ablation table
 (each stage removed in turn), what happened to the model's wrong values, the comparison against the
 strongest simple baseline at matched question budgets, slices by language and noise, and what happens when
 a vendor is down. The same tables are in `README.md` and `results/`.
 
 ### 5. Your own voice (hosted URLs, or `make serve` with a key)
 
-1. Open https://pramaan-voice.vercel.app in Chrome, with a headset if possible.
+1. Open https://pakka.vercel.app in Chrome, with a headset if possible.
 2. Click **Use your voice** and allow the microphone.
 3. Say an amount and a day in Hindi or Hinglish, for example "पौने तीन हज़ार रुपये शुक्रवार को दूँगा" or
    "ढाई लाख, pandrah tareekh ko". Or dictate a 10-digit number: "mera number note karo, nine eight double
@@ -299,7 +299,7 @@ Not finished, and not claimed:
   is. `make eval` needs only the evidence. Regenerating the clips needs a key and spends credits.
 - `make digits`, `make strong-baseline`, `make human` and `eval/g2.py` need those clips or new recordings.
   Their stored results are in `results/`.
-- Asking only when `gpt-transcribe` and Sarvam disagree is a strong, much simpler baseline. Pramaan does
+- Asking only when `gpt-transcribe` and Sarvam disagree is a strong, much simpler baseline. Pakka does
   **not** beat it on errors (the difference is within noise). Its measured advantage is fewer questions on
   every Hindi set (for example 4 against 15 on locked set 1), gentler behaviour when a vendor is down, and
   that it corrects the speech-to-speech model in place instead of replacing it with a transcript pipeline.
@@ -307,7 +307,7 @@ Not finished, and not claimed:
   optimistic. Locked set 2 was scored once after the last fix.
 - Telugu has no tuned policy of its own, no second locked set and no human recordings. Its bound is 6.4%,
   above the 5% the policy was frozen for.
-- PIN codes and account numbers are recognised only directly after a spoken label, which is why Pramaan
+- PIN codes and account numbers are recognised only directly after a spoken label, which is why Pakka
   asks on 24.1% of those calls.
 - One language per server process. A call that switches between Hindi and Telugu is not routed.
 - The ElevenLabs Scribe adapter has never been run. VerbX Vocaline's model lineage is undocumented and it
@@ -323,9 +323,9 @@ More detail: `README.md` (full tables, ablations, limits, prior art), `NOTE.md` 
 ## Repository map
 
 ```
-src/pramaan/        the guard: normalise, lattice, witness, decide, gate, executor, bundle, question
-src/pramaan/live/   FastAPI server, call session, ledger, keyless replay, recorder
-src/pramaan/sources recogniser adapters: OpenAI, Sarvam, VerbX, ElevenLabs, realtime agent
+src/pakka/        the guard: normalise, lattice, witness, decide, gate, executor, bundle, question
+src/pakka/live/   FastAPI server, call session, ledger, keyless replay, recorder
+src/pakka/sources recogniser adapters: OpenAI, Sarvam, VerbX, ElevenLabs, realtime agent
 ui/                 the front end (static, served by the same server): index.html, record.html
 eval/               policy tuning, every baseline arm, analysis
 scripts/            data generation, collection, play_call.py, fetch_model.py, selfcheck.py
